@@ -1,0 +1,16 @@
+language: php
+php:
+- 7.0
+- 7.1
+before_script:
+- composer self-update
+- composer install
+- chmod -R 777 storage
+script:
+- chmod -R 777 build/logs
+- mv .env.example .env
+- php artisan key:generate
+- phpunit
+notifications:
+  slack:
+    secure: tkF3LI7BbnSrdvY42LF21ZV11XHWsX2ABhnVa7Gir+1cGKEUjoiABdHUsJlzl62Fh4KnrpUlYr6BOMF7qoLQ0PD+ik7dM0A76I2tIyuXAlgEPvxJviDwnGD5nQd5FHk9L3m/MvZ37rtj/r6ImAXyZvAbfwIkkODTpkd1/pl437VRTWEkX8tgB3nQ1H8PxdifvkYQpFzQioeVqEZ0+DB4mLMgHlv68YbKptBpZ8bB5aaNd6VU9DAsRh5moP1UVN4VqrSSPfvEts5i3NoRMdjBKat7w1mfVCA7FeBD71Y4c5AoWXAeRTqWmBRyxFzX5fg/LQKSV1ZE4skPOugkObRm57+YFWQ9NcEJcqN0ejbIXlBwLcRa9l26ge1VkR0P0qNdMNbDLsJHSOX8d1EgD4pxbqfOhONQjx3YbK0/mbF0qO1pz6taBVJfsEI9ZU+OI1/90/WxUsOtTPbcM4THn/Y/OsWJ8V0R6k6GCU6pPATiPPrb5b7azfYTCsvfQyBv8+yz0PZ6D8VtZ2xpR5bpH0SxSMycrLbNtQE2ujYb2BKlO3PgiCOSTSrlVGHx4kh9JEFY/r8ZYzze6GSY9jqhRHZvMxybMPC7Ju6ymXyqmaN1xNZz9LTfem8f3JlTt9U4V3atMQnXnd0QGtO1ur5aAjN5XZPLotlNfJC8gaQdD68XW+Q=
