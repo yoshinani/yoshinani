@@ -21,6 +21,7 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
             <exclude>
+                <file>./app/Console/Kernel.php</file>
                 <file>./app/Http/Console/Kernel.php</file>
                 <file>./app/Http/Exceptions/Handler.php</file>
                 <file>./app/Http/Controllers/Controller.php</file>
