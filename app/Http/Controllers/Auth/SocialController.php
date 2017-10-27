@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
-use App\Services\SocialService;
+use Domain\Services\Auth\SocialService;
 
 class SocialController extends Controller
 {
