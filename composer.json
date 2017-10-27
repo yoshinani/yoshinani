@@ -29,7 +29,8 @@
             "database/factories"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Domain\\": "domain/"
         }
     },
     "autoload-dev": {

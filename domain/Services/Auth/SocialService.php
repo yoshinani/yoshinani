@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace Domain\Services\Auth;
 
 use DB;
 use Auth;
