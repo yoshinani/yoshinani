@@ -4,16 +4,20 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
+use Domain\Services\Auth\AuthService;
 use Domain\Services\Auth\SocialService;
 
 class SocialController extends Controller
 {
+    private $authService;
     private $socialService;
 
     public function __construct(
-        SocialService $authService
+        AuthService   $authService,
+        SocialService $socialService
     ) {
-        $this->socialService = $authService;
+        $this->authService   = $authService;
+        $this->socialService = $socialService;
     }
 
     public function redirectToProvider($provider)
@@ -31,10 +35,10 @@ class SocialController extends Controller
 
         $this->socialService->existsItems($providerUser);
 
-        $user = $this->socialService->findUser($providerUser);
+        $user = $this->authService->findUser($providerUser);
         if (is_null($user)) {
-            $this->socialService->registerUser($providerUser);
-            $user = $this->socialService->findUser($providerUser);
+            $this->authService->registerUser($providerUser);
+            $user = $this->authService->findUser($providerUser);
             $this->socialService->associationSocialAccount($providerUser, $provider, $user);
         } else {
             $socialAccount = $this->socialService->findSocialAccount($providerUser, $provider);
