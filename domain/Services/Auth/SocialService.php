@@ -6,9 +6,17 @@ use DB;
 use Auth;
 use Exception;
 use Laravel\Socialite\Contracts\User;
+use App\Repositories\SocialRepositoryInterface;
 
 class SocialService
 {
+    private $socialRepository;
+
+    public function __construct(SocialRepositoryInterface $socialRepository)
+    {
+        $this->socialRepository = $socialRepository;
+    }
+
     public function existsItems(User $providerUser)
     {
         if (is_null($providerUser->getName()) || is_null($providerUser->getEmail())) {
@@ -28,12 +36,9 @@ class SocialService
 
     public function findSocialAccount(User $providerUser, $provider)
     {
-        $result = DB::table('social_accounts')
-            ->where('provider_name', $provider)
-            ->where('provider_id', $providerUser->getId())
-            ->first();
+        $providerUserId = $providerUser->getId();
 
-        return $result;
+        return $this->socialRepository->findSocialAccount($providerUserId, $provider);
     }
 
     public function registerUser(User $providerUser)
@@ -48,13 +53,10 @@ class SocialService
 
     public function associationSocialAccount(User $providerUser, $provider, $user)
     {
-        DB::table('social_accounts')->insert(
-            [
-                'user_id'       => $user->id,
-                'provider_id'   => $providerUser->getId(),
-                'provider_name' => $provider,
-            ]
-        );
+        $providerUserId = $providerUser->getId();
+        $userId         = $user->id;
+
+        $this->socialRepository->associationSocialAccount($providerUserId, $provider, $userId);
     }
 
     public function socialLogin($user)

@@ -4,6 +4,6 @@ namespace App\Repositories;
 
 interface SocialRepositoryInterface
 {
-    public function findSocialAccount();
-    public function associationSocialAccount();
+    public function findSocialAccount($providerUserId, $provider);
+    public function associationSocialAccount($providerUserId, $provider, $userId);
 }
