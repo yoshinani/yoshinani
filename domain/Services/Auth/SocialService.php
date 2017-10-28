@@ -6,7 +6,7 @@ use DB;
 use Auth;
 use Exception;
 use Laravel\Socialite\Contracts\User;
-use Infrastructure\Repositories\SocialRepositoryInterface;
+use Infrastructure\Interfaces\SocialRepositoryInterface;
 
 class SocialService
 {
