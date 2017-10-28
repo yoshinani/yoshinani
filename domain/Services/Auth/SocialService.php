@@ -25,30 +25,11 @@ class SocialService
         return true;
     }
 
-    public function findUser(User $providerUser)
-    {
-        $result = DB::table('users')
-            ->where('email', $providerUser->getEmail())
-            ->first();
-
-        return $result;
-    }
-
     public function findSocialAccount(User $providerUser, $provider)
     {
         $providerUserId = $providerUser->getId();
 
         return $this->socialRepository->findSocialAccount($providerUserId, $provider);
-    }
-
-    public function registerUser(User $providerUser)
-    {
-        DB::table('users')->insert(
-            [
-                'email' => $providerUser->getEmail(),
-                'name' => $providerUser->getName(),
-            ]
-        );
     }
 
     public function associationSocialAccount(User $providerUser, $provider, $user)
