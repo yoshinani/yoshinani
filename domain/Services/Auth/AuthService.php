@@ -4,7 +4,7 @@ namespace Domain\Services\Auth;
 
 use DB;
 use Laravel\Socialite\Contracts\User;
-use App\Repositories\AuthRepositoryInterface;
+use Infrastructure\Repositories\AuthRepositoryInterface;
 
 class AuthService
 {
