@@ -23,6 +23,7 @@ class RepositoriesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('App\Repositories\AuthRepositoryInterface', 'App\Repositories\AuthRepository');
         $this->app->bind('App\Repositories\SocialRepositoryInterface', 'App\Repositories\SocialRepository');
     }
 }
