@@ -3,6 +3,7 @@
 namespace Infrastructure\Repositories;
 
 use DB;
+use Infrastructure\Interfaces\SocialRepositoryInterface;
 
 class SocialRepository implements SocialRepositoryInterface
 {

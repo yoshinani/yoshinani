@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Repositories;
+namespace Infrastructure\Interfaces;
 
 interface SocialRepositoryInterface
 {
