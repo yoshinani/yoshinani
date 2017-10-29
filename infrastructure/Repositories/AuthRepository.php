@@ -2,28 +2,25 @@
 
 namespace Infrastructure\Repositories;
 
-use DB;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
+use Infrastructure\DataSources\Database\Users;
 
 class AuthRepository implements AuthRepositoryInterface
 {
+    private $users;
+
+    public function __construct(Users $users)
+    {
+        $this->users = $users;
+    }
 
     public function findUser($providerUserEmail)
     {
-        $result = DB::table('users')
-            ->where('email', $providerUserEmail)
-            ->first();
-
-        return $result;
+        return $this->users->getUser($providerUserEmail);
     }
 
     public function registerUser($providerUserEmail, $providerUserName)
     {
-        DB::table('users')->insert(
-            [
-                'email' => $providerUserEmail,
-                'name'  => $providerUserName,
-            ]
-        );
+        $this->users->setUser($providerUserEmail, $providerUserName);
     }
 }
