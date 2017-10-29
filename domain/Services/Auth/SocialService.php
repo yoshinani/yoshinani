@@ -2,7 +2,6 @@
 
 namespace Domain\Services\Auth;
 
-use DB;
 use Auth;
 use Exception;
 use Laravel\Socialite\Contracts\User;

@@ -2,7 +2,6 @@
 
 namespace Domain\Services\Auth;
 
-use DB;
 use Laravel\Socialite\Contracts\User;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 
