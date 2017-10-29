@@ -2,19 +2,21 @@
 
 namespace Infrastructure\Repositories;
 
-use DB;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Infrastructure\DataSources\Database\SocialAccounts;
 
 class SocialRepository implements SocialRepositoryInterface
 {
+    private $socialAccounts;
+
+    public function __construct(SocialAccounts $socialAccounts)
+    {
+        $this->socialAccounts = $socialAccounts;
+    }
 
     public function findSocialAccount($providerUserId, $provider)
     {
-        $result = DB::table('social_accounts')
-            ->where('provider_name', $provider)
-            ->where('provider_id', $providerUserId)
-            ->first();
-        return $result;
+        return $this->socialAccounts->getSocialAccount($providerUserId, $provider);
     }
 
     public function associationSocialAccount($providerUserId, $provider, $userId)
