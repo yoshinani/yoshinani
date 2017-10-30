@@ -21,12 +21,6 @@ class SocialRepository implements SocialRepositoryInterface
 
     public function associationSocialAccount($providerUserId, $provider, $userId)
     {
-        DB::table('social_accounts')->insert(
-            [
-                'user_id'       => $userId,
-                'provider_id'   => $providerUserId,
-                'provider_name' => $provider,
-            ]
-        );
+        $this->socialAccounts->setSocialAccount($providerUserId, $provider, $userId);
     }
 }
