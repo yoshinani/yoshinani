@@ -6,18 +6,26 @@ use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use Domain\Services\Auth\AuthService;
 use Domain\Services\Auth\SocialService;
+use Infrastructure\Interfaces\AuthRepositoryInterface;
+Use Infrastructure\Interfaces\SocialRepositoryInterface;
 
 class SocialController extends Controller
 {
     private $authService;
     private $socialService;
+    private $authRepository;
+    private $socialRepository;
 
     public function __construct(
         AuthService   $authService,
-        SocialService $socialService
+        SocialService $socialService,
+        AuthRepositoryInterface $authRepository,
+        SocialRepositoryInterface $socialRepository
     ) {
         $this->authService   = $authService;
         $this->socialService = $socialService;
+        $this->authRepository = $authRepository;
+        $this->socialRepository = $socialRepository;
     }
 
     public function redirectToProvider($provider)
@@ -35,15 +43,15 @@ class SocialController extends Controller
 
         $this->socialService->existsItems($providerUser);
 
-        $user = $this->authService->findUser($providerUser);
+        $user = $this->authRepository->findUser($providerUser);
         if (is_null($user)) {
-            $this->authService->registerUser($providerUser);
-            $user = $this->authService->findUser($providerUser);
-            $this->socialService->associationSocialAccount($providerUser, $provider, $user);
+            $this->authRepository->registerUser($providerUser);
+            $user = $this->authRepository->findUser($providerUser);
+            $this->socialRepository->associationSocialAccount($providerUser, $provider, $user);
         } else {
-            $socialAccount = $this->socialService->findSocialAccount($providerUser, $provider);
+            $socialAccount = $this->socialRepository->findSocialAccount($providerUser, $provider);
             if (is_null($socialAccount)) {
-                $this->socialService->associationSocialAccount($providerUser, $provider, $user);
+                $this->socialRepository->associationSocialAccount($providerUser, $provider, $user);
             }
         }
 

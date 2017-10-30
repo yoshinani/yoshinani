@@ -4,6 +4,7 @@ namespace Infrastructure\Repositories;
 
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 use Infrastructure\DataSources\Database\Users;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class AuthRepository implements AuthRepositoryInterface
 {
@@ -14,13 +15,16 @@ class AuthRepository implements AuthRepositoryInterface
         $this->users = $users;
     }
 
-    public function findUser($providerUserEmail)
+    public function findUser(ProviderUser $providerUser)
     {
+        $providerUserEmail = $providerUser->getEmail();
         return $this->users->getUser($providerUserEmail);
     }
 
-    public function registerUser($providerUserEmail, $providerUserName)
+    public function registerUser(ProviderUser $providerUser)
     {
+        $providerUserEmail = $providerUser->getEmail();
+        $providerUserName  = $providerUser->getName();
         $this->users->setUser($providerUserEmail, $providerUserName);
     }
 }

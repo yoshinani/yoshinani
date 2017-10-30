@@ -4,6 +4,7 @@ namespace Infrastructure\Repositories;
 
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Infrastructure\DataSources\Database\SocialAccounts;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class SocialRepository implements SocialRepositoryInterface
 {
@@ -14,13 +15,16 @@ class SocialRepository implements SocialRepositoryInterface
         $this->socialAccounts = $socialAccounts;
     }
 
-    public function findSocialAccount($providerUserId, $provider)
+    public function findSocialAccount(ProviderUser $providerUser, $provider)
     {
+        $providerUserId = $providerUser->getId();
         return $this->socialAccounts->getSocialAccount($providerUserId, $provider);
     }
 
-    public function associationSocialAccount($providerUserId, $provider, $userId)
+    public function associationSocialAccount(ProviderUser $providerUser, $provider, $user)
     {
+        $providerUserId = $providerUser->getId();
+        $userId         = $user->id;
         $this->socialAccounts->setSocialAccount($providerUserId, $provider, $userId);
     }
 }
