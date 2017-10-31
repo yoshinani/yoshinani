@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
+use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use Domain\Services\Auth\AuthService;
 use Domain\Services\Auth\SocialService;
@@ -37,7 +39,7 @@ class SocialController extends Controller
     {
         try {
             $providerUser = Socialite::driver($provider)->user();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return redirect('/login');
         }
 
@@ -55,7 +57,9 @@ class SocialController extends Controller
             }
         }
 
-        $this->socialService->socialLogin($user);
+        if (!Auth::loginUsingId($user->id)) {
+            throw new Exception('It is a User that does not exist');
+        }
 
         return redirect()->to('/home');
     }
