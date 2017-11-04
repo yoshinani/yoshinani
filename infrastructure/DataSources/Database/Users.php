@@ -4,23 +4,32 @@ namespace Infrastructure\DataSources\Database;
 
 class Users extends Bass
 {
-    public function getUser($providerUserEmail)
+    public function findUser($email)
     {
         $result = $this->db->table('users')
-            ->where('email', $providerUserEmail)
+            ->where('email', $email)
             ->first();
 
         return $result;
     }
 
-    public function setUser($providerUserEmail, $providerUserName)
+    public function getUserId($email)
     {
-        $this->db->table('users')
-            ->insert(
+        $result = $this->db->table('users')
+            ->where('email', $email)
+            ->value('id');
+        return $result;
+    }
+
+    public function setUser(array $userInfo)
+    {
+        $result = $this->db->table('users')
+            ->insertGetId(
                 [
-                    'email' => $providerUserEmail,
-                    'name'  => $providerUserName,
+                    'email' => $userInfo['email'],
+                    'name'  => $userInfo['name'],
                 ]
             );
+        return $result;
     }
 }

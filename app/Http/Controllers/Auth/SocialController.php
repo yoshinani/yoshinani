@@ -8,25 +8,21 @@ use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use Domain\Services\Auth\AuthService;
 use Domain\Services\Auth\SocialService;
-use Infrastructure\Interfaces\AuthRepositoryInterface;
 Use Infrastructure\Interfaces\SocialRepositoryInterface;
 
 class SocialController extends Controller
 {
     private $authService;
     private $socialService;
-    private $authRepository;
     private $socialRepository;
 
     public function __construct(
         AuthService   $authService,
         SocialService $socialService,
-        AuthRepositoryInterface $authRepository,
         SocialRepositoryInterface $socialRepository
     ) {
         $this->authService   = $authService;
         $this->socialService = $socialService;
-        $this->authRepository = $authRepository;
         $this->socialRepository = $socialRepository;
     }
 
@@ -45,19 +41,21 @@ class SocialController extends Controller
 
         $this->socialService->existsItems($providerUser);
 
-        $user = $this->authRepository->findUser($providerUser);
-        if (is_null($user)) {
-            $this->authRepository->registerUser($providerUser);
-            $user = $this->authRepository->findUser($providerUser);
-            $this->socialRepository->associationSocialAccount($providerUser, $provider, $user);
+        $userValueObject = $this->socialRepository->findUser($providerUser);
+        if (is_null($userValueObject)) {
+            $userId = $this->socialRepository->registerUser($providerUser, $provider);
+            $userValueObject = $this->socialRepository->findUser($providerUser);
+            $this->socialRepository->associationSocialAccount($providerUser, $provider, $userValueObject, $userId);
         } else {
-            $socialAccount = $this->socialRepository->findSocialAccount($providerUser, $provider);
-            if (is_null($socialAccount)) {
-                $this->socialRepository->associationSocialAccount($providerUser, $provider, $user);
+            $providerUserValueObject = $this->socialRepository->findSocialAccount($providerUser, $provider);
+            if (is_null($providerUserValueObject)) {
+                $userId = $this->socialRepository->getUserId($providerUser);
+                $this->socialRepository->associationSocialAccount($providerUser, $provider, $userValueObject, $userId);
             }
+            $userId = $this->socialRepository->getUserId($providerUser);
         }
 
-        if (!Auth::loginUsingId($user->id)) {
+        if (!Auth::loginUsingId($userId)) {
             throw new Exception('It is a User that does not exist');
         }
 
