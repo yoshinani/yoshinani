@@ -60,6 +60,7 @@
                                 </a>
                             </div>
                         </div>
+                        @include('parts.social')
                     </form>
                 </div>
             </div>
