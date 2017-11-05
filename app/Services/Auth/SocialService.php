@@ -1,7 +1,8 @@
 <?php
 
-namespace Domain\Services\Auth;
+namespace App\Services\Auth;
 
+use Auth;
 use Exception;
 use Laravel\Socialite\Contracts\User;
 
@@ -13,5 +14,12 @@ class SocialService
             throw new Exception('Name or email is missing');
         }
         return true;
+    }
+
+    public function socialLogin($userId)
+    {
+        if (!Auth::loginUsingId($userId)) {
+            throw new Exception('It is a User that does not exist');
+        }
     }
 }
