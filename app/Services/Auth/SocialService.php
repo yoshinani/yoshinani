@@ -18,6 +18,12 @@ class SocialService
 
     public function socialLogin($userId)
     {
+        /*
+         * TODO
+         * 複数のsocialAccountを利用していた場合providerUserIdのConflictが考えられる
+         * ProviderUserIdとProviderNameで検索をかけて該当するレコードを取得する
+         * そのUserIdを利用してログインするように変更する
+         */
         if (!Auth::loginUsingId($userId)) {
             throw new Exception('It is a User that does not exist');
         }

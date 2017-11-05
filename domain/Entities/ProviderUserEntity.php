@@ -31,8 +31,8 @@ class ProviderUserEntity implements Arrayable
             'id'             => $this->id,
             'providerName'   => $this->providerName,
             'providerUserId' => $this->providerUserId,
-            'name'           => $this->providerUserName,
-            'email'          => $this->providerUserEmail,
+            'providerUserName'  => $this->providerUserName,
+            'providerUserEmail' => $this->providerUserEmail,
         ];
     }
 }

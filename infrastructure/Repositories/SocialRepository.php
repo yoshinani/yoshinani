@@ -41,7 +41,7 @@ class SocialRepository implements SocialRepositoryInterface
 
     public function findSocialAccount(ProviderUser $providerUser, $provider)
     {
-        $result = $this->socialAccounts->getSocialAccount($providerUser->getId(), $providerUser->getName());
+        $result = $this->socialAccounts->getSocialAccount($provider, $providerUser->getId());
         if (!$result) {
             return null;
         }

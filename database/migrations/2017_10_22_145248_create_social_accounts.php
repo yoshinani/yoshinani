@@ -17,8 +17,9 @@ class CreateSocialAccounts extends Migration
 
             $table->increments('id');
             $table->bigInteger('user_id');
-            $table->string('provider_name')->nullable();
-            $table->string('provider_id')->unique()->nullable();
+            $table->string('provider_name');
+            $table->string('provider_user_id');
+            $table->string('provider_user_name');
             $table->timestamps();
 
         });
