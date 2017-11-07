@@ -4,8 +4,6 @@ namespace App\Services\Auth;
 
 use Auth;
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\ValueObjects\SocialAccountValueObject;
-use Domain\ValueObjects\UserValueObject;
 use Exception;
 use Laravel\Socialite\Contracts\User;
 

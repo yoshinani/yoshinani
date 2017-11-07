@@ -3,7 +3,6 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\ProviderUserEntity;
-use Domain\Entities\UserEntity;
 use Domain\ValueObjects\ProviderUserValueObject;
 use Domain\ValueObjects\SocialAccountValueObject;
 use Domain\ValueObjects\UserValueObject;
