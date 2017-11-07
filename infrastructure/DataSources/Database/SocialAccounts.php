@@ -14,12 +14,12 @@ class SocialAccounts extends Bass
         return $result;
     }
 
-    public function setSocialAccount(array $providerUserEntity, array $userEntity)
+    public function setSocialAccount(array $providerUserEntity)
     {
         $this->db->table('social_accounts')
             ->insert(
                 [
-                    'user_id'            => $userEntity['id'],
+                    'user_id'            => $providerUserEntity['id'],
                     'provider_name'      => $providerUserEntity['providerName'],
                     'provider_user_id'   => $providerUserEntity['providerUserId'],
                     'provider_user_name' => $providerUserEntity['providerUserName'],

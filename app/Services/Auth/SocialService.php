@@ -3,6 +3,9 @@
 namespace App\Services\Auth;
 
 use Auth;
+use Domain\Entities\SocialUserAccountEntity;
+use Domain\ValueObjects\SocialAccountValueObject;
+use Domain\ValueObjects\UserValueObject;
 use Exception;
 use Laravel\Socialite\Contracts\User;
 
@@ -16,7 +19,7 @@ class SocialService
         return true;
     }
 
-    public function socialLogin($userId)
+    public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, User $providerUser, string $provider)
     {
         /*
          * TODO
@@ -24,7 +27,18 @@ class SocialService
          * ProviderUserIdとProviderNameで検索をかけて該当するレコードを取得する
          * そのUserIdを利用してログインするように変更する
          */
-        if (!Auth::loginUsingId($userId)) {
+
+        $socialUserAccount = $socialUserAccountEntity->toArray();
+
+        if (!$socialUserAccount['providerName'] === $provider) {
+            throw new Exception('Authentication drivers do not match');
+        }
+
+        if (!$socialUserAccount['providerUserId'] === $providerUser->getId()) {
+            throw new Exception('It does not match the ID of SNSAccount');
+        }
+
+        if (!Auth::loginUsingId($socialUserAccount['id'])) {
             throw new Exception('It is a User that does not exist');
         }
     }

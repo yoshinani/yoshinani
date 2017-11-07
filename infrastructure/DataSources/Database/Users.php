@@ -21,13 +21,13 @@ class Users extends Bass
         return $result;
     }
 
-    public function setUser(array $userInfo)
+    public function setUser(string $userEmail, string $userName)
     {
         $result = $this->db->table('users')
             ->insertGetId(
                 [
-                    'email' => $userInfo['email'],
-                    'name'  => $userInfo['name'],
+                    'email' => $userEmail,
+                    'name'  => $userName,
                 ]
             );
         return $result;

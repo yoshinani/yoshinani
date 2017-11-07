@@ -5,6 +5,7 @@ namespace Infrastructure\Repositories;
 use Domain\Entities\ProviderUserEntity;
 use Domain\Entities\UserEntity;
 use Domain\ValueObjects\ProviderUserValueObject;
+use Domain\ValueObjects\SocialAccountValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Infrastructure\DataSources\Database\SocialAccounts;
@@ -41,25 +42,22 @@ class SocialRepository implements SocialRepositoryInterface
 
     public function findSocialAccount(ProviderUser $providerUser, $provider)
     {
-        $result = $this->socialAccounts->getSocialAccount($provider, $providerUser->getId());
-        if (!$result) {
+        $socialAccountRecord = (array)$this->socialAccounts->getSocialAccount($provider, $providerUser->getId());
+        if (!$socialAccountRecord) {
             return null;
         }
-        return new ProviderUserValueObject($provider, $providerUser);
+        return new SocialAccountValueObject($socialAccountRecord);
     }
 
-    public function registerUser(ProviderUser $providerUser, string $provider)
+    public function registerUser(ProviderUser $providerUser)
     {
-        $providerUserObject = new ProviderUserValueObject($provider, $providerUser);
-        $providerUserEntity = new ProviderUserEntity($providerUser->getId(), $providerUserObject);
-        return $this->users->setUser($providerUserEntity->toArray());
+        return $this->users->setUser($providerUser->getEmail(), $providerUser->getName());
     }
 
     public function associationSocialAccount(ProviderUser $providerUser, $provider, UserValueObject $userValueObject, int $userId)
     {
-        $providerUserObject = new ProviderUserValueObject($provider, $providerUser);
-        $providerUserEntity = new ProviderUserEntity($providerUser->getId(), $providerUserObject);
-        $userEntity = new UserEntity($userId, $userValueObject);
-        $this->socialAccounts->setSocialAccount($providerUserEntity->toArray(), $userEntity->toArray());
+        $providerUserObject = new ProviderUserValueObject($userId, $provider, $providerUser);
+        $providerUserEntity = new ProviderUserEntity($userId, $userValueObject, $providerUserObject);
+        $this->socialAccounts->setSocialAccount($providerUserEntity->toArray());
     }
 }

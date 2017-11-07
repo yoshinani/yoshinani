@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Domain\Entities\SocialUserAccountEntity;
 use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\Auth\AuthService;
@@ -42,19 +43,22 @@ class SocialController extends Controller
 
         $userValueObject = $this->socialRepository->findUser($providerUser);
         if (is_null($userValueObject)) {
-            $userId = $this->socialRepository->registerUser($providerUser, $provider);
+            $this->socialRepository->registerUser($providerUser);
             $userValueObject = $this->socialRepository->findUser($providerUser);
-            $this->socialRepository->associationSocialAccount($providerUser, $provider, $userValueObject, $userId);
-        } else {
-            $providerUserValueObject = $this->socialRepository->findSocialAccount($providerUser, $provider);
-            if (is_null($providerUserValueObject)) {
-                $userId = $this->socialRepository->getUserId($providerUser);
-                $this->socialRepository->associationSocialAccount($providerUser, $provider, $userValueObject, $userId);
-            }
-            $userId = $this->socialRepository->getUserId($providerUser);
         }
 
-        $this->socialService->socialLogin($userId);
+        $socialAccountValueObject = $this->socialRepository->findSocialAccount($providerUser, $provider);
+        if (is_null($socialAccountValueObject)) {
+            $userId = $this->socialRepository->getUserId($providerUser);
+            $this->socialRepository->associationSocialAccount($providerUser, $provider, $userValueObject, $userId);
+            $socialAccountValueObject = $this->socialRepository->findSocialAccount($providerUser, $provider);
+        }
+
+        $userId = $this->socialRepository->getUserId($providerUser);
+
+        $socialAccountUserEntity = new SocialUserAccountEntity($userId, $userValueObject, $socialAccountValueObject);
+
+        $this->socialService->socialLogin($socialAccountUserEntity, $providerUser, $provider);
 
         return redirect()->to('/home');
     }

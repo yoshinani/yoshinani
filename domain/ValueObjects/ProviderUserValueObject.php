@@ -6,20 +6,24 @@ use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class ProviderUserValueObject
 {
-    protected $providerName;
-    protected $id;
-    protected $name;
-    protected $email;
+    private $userId;
+    private $providerName;
+    private $providerUserId;
+    private $providerUserName;
+    private $providerUserEmail;
 
-    public function __construct(
-        string $provider,
-        ProviderUser $providerUser
-    )
+    public function __construct(int $userId, string $provider, ProviderUser $providerUser)
     {
+        $this->userId = $userId;
         $this->providerName = $provider;
-        $this->id           = $providerUser->getId();
-        $this->name         = $providerUser->getName();
-        $this->email        = $providerUser->getEmail();
+        $this->providerUserId = $providerUser->getId();
+        $this->providerUserName = $providerUser->getName();
+        $this->providerUserEmail = $providerUser->getEmail();
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
     }
 
     public function getProviderName()
@@ -27,18 +31,18 @@ class ProviderUserValueObject
         return $this->providerName;
     }
 
-    public function getId(): int
+    public function getProviderUserId()
     {
-        return $this->id;
+        return $this->providerUserId;
     }
 
-    public function getName(): string
+    public function getProviderUserName()
     {
-        return $this->name;
+        return $this->providerUserName;
     }
 
-    public function getEmail(): string
+    public function getProviderUserEmail()
     {
-        return $this->email;
+        return $this->providerUserEmail;
     }
 }
