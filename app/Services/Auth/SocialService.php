@@ -21,13 +21,6 @@ class SocialService
 
     public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, User $providerUser, string $provider)
     {
-        /*
-         * TODO
-         * 複数のsocialAccountを利用していた場合providerUserIdのConflictが考えられる
-         * ProviderUserIdとProviderNameで検索をかけて該当するレコードを取得する
-         * そのUserIdを利用してログインするように変更する
-         */
-
         $socialUserAccount = $socialUserAccountEntity->toArray();
 
         if (!$socialUserAccount['providerName'] === $provider) {
