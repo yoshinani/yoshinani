@@ -9,10 +9,8 @@ use Illuminate\Contracts\Support\Arrayable;
 class SocialUserAccountEntity implements Arrayable
 {
     private $id;
-    private $userValueObjectId;
     private $userName;
     private $userEmail;
-    private $socialAccountValueObjectId;
     private $providerName;
     private $providerUserId;
 
@@ -23,12 +21,10 @@ class SocialUserAccountEntity implements Arrayable
         SocialAccountValueObject $socialAccountValueObject
     )
     {
-        $this->id = $userId;
-        $this->userValueObjectId = $userId;$userValueObject->getId();
-        $this->userName = $userValueObject->getName();
-        $this->userEmail = $userValueObject->getEmail();
-        $this->socialAccountValueObjectId = $socialAccountValueObject->getUserId();
-        $this->providerName = $socialAccountValueObject->getProviderName();
+        $this->id             = $userId;
+        $this->userName       = $userValueObject->getUserName();
+        $this->userEmail      = $userValueObject->getUserEmail();
+        $this->providerName   = $socialAccountValueObject->getProviderName();
         $this->providerUserId = $socialAccountValueObject->getProviderUserId();
     }
 
@@ -40,11 +36,9 @@ class SocialUserAccountEntity implements Arrayable
     public function toArray()
     {
         return [
-            'id' => $this->id,
-            'userValueObjectId' => $this->userValueObjectId,
-            'userName' => $this->userName,
-            'userEmail' => $this->userEmail,
-            'socialAccountValueObjectId' => $this->socialAccountValueObjectId,
+            'id'             => $this->id,
+            'userName'       => $this->userName,
+            'userEmail'      => $this->userEmail,
             'providerName'   => $this->providerName,
             'providerUserId' => $this->providerUserId,
         ];

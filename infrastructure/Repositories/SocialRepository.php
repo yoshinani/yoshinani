@@ -55,7 +55,7 @@ class SocialRepository implements SocialRepositoryInterface
 
     public function associationSocialAccount(ProviderUser $providerUser, $provider, UserValueObject $userValueObject, int $userId)
     {
-        $providerUserObject = new ProviderUserValueObject($userId, $provider, $providerUser);
+        $providerUserObject = new ProviderUserValueObject($provider, $providerUser);
         $providerUserEntity = new ProviderUserEntity($userId, $userValueObject, $providerUserObject);
         $this->socialAccounts->setSocialAccount($providerUserEntity->toArray());
     }

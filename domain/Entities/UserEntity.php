@@ -8,7 +8,6 @@ use Illuminate\Contracts\Support\Arrayable;
 class UserEntity implements Arrayable
 {
     private $id;
-    private $userId;
     private $userName;
     private $userEmail;
 
@@ -18,10 +17,9 @@ class UserEntity implements Arrayable
         UserValueObject $userValueObject
     )
     {
-        $this->id = $userId;
-        $this->userId = $userId;$userValueObject->getId();
-        $this->userName = $userValueObject->getName();
-        $this->userEmail = $userValueObject->getEmail();
+        $this->id        = $userId;
+        $this->userName  = $userValueObject->getUserName();
+        $this->userEmail = $userValueObject->getUserEmail();
     }
 
     /**
@@ -32,9 +30,8 @@ class UserEntity implements Arrayable
     public function toArray()
     {
         return [
-            'id' => $this->id,
-            'userId' => $this->userId,
-            'userName' => $this->userName,
+            'id'        => $this->id,
+            'userName'  => $this->userName,
             'userEmail' => $this->userEmail
         ];
     }

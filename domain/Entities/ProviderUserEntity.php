@@ -8,10 +8,8 @@ use Illuminate\Contracts\Support\Arrayable;
 class ProviderUserEntity implements Arrayable
 {
     private $id;
-    private $userValueObjectId;
     private $userName;
     private $userEmail;
-    private $providerUserValueObjectId;
     private $providerName;
     private $providerUserId;
     private $providerUserName;
@@ -24,14 +22,12 @@ class ProviderUserEntity implements Arrayable
         ProviderUserValueObject $providerUser
     )
     {
-        $this->id = $userId;
-        $this->userValueObjectId = $userValueObject->getId();
-        $this->userName = $userValueObject->getName();
-        $this->userEmail = $userValueObject->getEmail();
-        $this->providerUserValueObjectId = $providerUser->getUserId();
-        $this->providerName = $providerUser->getProviderName();
-        $this->providerUserId = $providerUser->getProviderUserId();
-        $this->providerUserName = $providerUser->getProviderUserName();
+        $this->id                = $userId;
+        $this->userName          = $userValueObject->getUserName();
+        $this->userEmail         = $userValueObject->getUserEmail();
+        $this->providerName      = $providerUser->getProviderName();
+        $this->providerUserId    = $providerUser->getProviderUserId();
+        $this->providerUserName  = $providerUser->getProviderUserName();
         $this->providerUserEmail = $providerUser->getProviderUserEmail();
 
     }
@@ -40,14 +36,12 @@ class ProviderUserEntity implements Arrayable
     {
         return [
             'id'                => $this->id,
-            'userValueObjectId' => $this->userValueObjectId,
             'userName'          => $this->userName,
             'userEmail'         => $this->userEmail,
-            'providerUserValueObjectId' => $this->providerUserValueObjectId,
-            'providerName'              => $this->providerName,
-            'providerUserId'            => $this->providerUserId,
-            'providerUserName'          => $this->providerUserName,
-            'providerUserEmail'         => $this->providerUserEmail,
+            'providerName'      => $this->providerName,
+            'providerUserId'    => $this->providerUserId,
+            'providerUserName'  => $this->providerUserName,
+            'providerUserEmail' => $this->providerUserEmail,
         ];
     }
 }

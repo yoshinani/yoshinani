@@ -6,39 +6,39 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class UserValueObject implements Arrayable
 {
-    private $id;
-    private $name;
-    private $email;
+    private $userId;
+    private $userName;
+    private $userEmail;
 
     public function __construct($userInfo)
     {
-        $this->id              = $userInfo->id;
-        $this->name            = $userInfo->name;
-        $this->email           = $userInfo->email;
+        $this->userId    = $userInfo->id;
+        $this->userName  = $userInfo->name;
+        $this->userEmail = $userInfo->email;
     }
 
     public function toArray()
     {
         return [
-            'id'            => $this->id,
-            'name'          => $this->name,
-            'email'         => $this->email,
+            'userId'            => $this->userId,
+            'userName'          => $this->userName,
+            'userEmail'         => $this->userEmail,
         ];
     }
 
-    public function getId(): int
+    public function getUserId(): int
     {
-        return $this->id;
+        return $this->userId;
     }
 
-    public function getName(): string
+    public function getUserName(): string
     {
-        return $this->name;
+        return $this->userName;
     }
 
-    public function getEmail(): string
+    public function getUserEmail(): string
     {
-        return $this->email;
+        return $this->userEmail;
     }
 
 }
