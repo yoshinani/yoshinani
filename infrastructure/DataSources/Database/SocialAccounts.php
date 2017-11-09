@@ -7,8 +7,8 @@ class SocialAccounts extends Bass
     public function getSocialAccount(string $socialServiceName, int $socialUserId)
     {
         $result = $this->db->table('social_accounts')
-            ->where('provider_name', $socialServiceName)
-            ->where('provider_user_id', $socialUserId)
+            ->where('social_service_name', $socialServiceName)
+            ->where('social_user_id', $socialUserId)
             ->first();
 
         return $result;
@@ -20,9 +20,9 @@ class SocialAccounts extends Bass
             ->insert(
                 [
                     'user_id'            => $socialUserEntity['id'],
-                    'provider_name'      => $socialUserEntity['socialServiceName'],
-                    'provider_user_id'   => $socialUserEntity['socialUserId'],
-                    'provider_user_name' => $socialUserEntity['socialUserName'],
+                    'social_service_name'      => $socialUserEntity['socialServiceName'],
+                    'social_user_id'   => $socialUserEntity['socialUserId'],
+                    'social_user_name' => $socialUserEntity['socialUserName'],
                 ]
             );
     }

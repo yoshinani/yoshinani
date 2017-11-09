@@ -17,9 +17,9 @@ class CreateSocialAccounts extends Migration
 
             $table->increments('id');
             $table->bigInteger('user_id');
-            $table->string('provider_name');
-            $table->string('provider_user_id');
-            $table->string('provider_user_name');
+            $table->string('social_service_name');
+            $table->string('social_user_id');
+            $table->string('social_user_name');
             $table->timestamps();
 
         });
