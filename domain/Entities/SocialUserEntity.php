@@ -1,38 +1,37 @@
 <?php
-
 namespace Domain\Entities;
 
-use Domain\ValueObjects\SocialAccountValueObject;
+use Domain\ValueObjects\SocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
-class SocialUserAccountEntity implements Arrayable
+class SocialUserEntity implements Arrayable
 {
     private $id;
     private $userName;
     private $userEmail;
     private $socialServiceName;
     private $socialUserId;
+    private $socialUserName;
+    private $socialUserEmail;
 
 
     public function __construct(
         int $userId,
         UserValueObject $userValueObject,
-        SocialAccountValueObject $socialAccountValueObject
+        SocialUserValueObject $socialUserValueObject
     )
     {
         $this->id                = $userId;
         $this->userName          = $userValueObject->getUserName();
         $this->userEmail         = $userValueObject->getUserEmail();
-        $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
-        $this->socialUserId      = $socialAccountValueObject->getSocialUserId();
+        $this->socialServiceName = $socialUserValueObject->getSocialServiceName();
+        $this->socialUserId      = $socialUserValueObject->getSocialUserId();
+        $this->socialUserName    = $socialUserValueObject->getSocialUserName();
+        $this->socialUserEmail   = $socialUserValueObject->getSocialUserEmail();
+
     }
 
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
     public function toArray()
     {
         return [
@@ -41,6 +40,8 @@ class SocialUserAccountEntity implements Arrayable
             'userEmail'         => $this->userEmail,
             'socialServiceName' => $this->socialServiceName,
             'socialUserId'      => $this->socialUserId,
+            'socialUserName'    => $this->socialUserName,
+            'socialUserEmail'   => $this->socialUserEmail,
         ];
     }
 }

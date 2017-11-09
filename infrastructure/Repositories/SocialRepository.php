@@ -2,14 +2,14 @@
 
 namespace Infrastructure\Repositories;
 
-use Domain\Entities\ProviderUserEntity;
-use Domain\ValueObjects\ProviderUserValueObject;
+use Domain\Entities\SocialUserEntity;
 use Domain\ValueObjects\SocialAccountValueObject;
+use Domain\ValueObjects\SocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Infrastructure\DataSources\Database\SocialAccounts;
 use Infrastructure\DataSources\Database\Users;
-use Laravel\Socialite\Contracts\User as ProviderUser;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialRepository implements SocialRepositoryInterface
 {
@@ -25,38 +25,38 @@ class SocialRepository implements SocialRepositoryInterface
         $this->users          = $users;
     }
 
-    public function findUser(ProviderUser $providerUser)
+    public function findUser(SocialUser $socialUser)
     {
-        $result = $this->users->findUser($providerUser->getEmail());
+        $result = $this->users->findUser($socialUser->getEmail());
         if (!$result) {
             return null;
         }
         return new UserValueObject($result);
     }
 
-    public function getUserId(ProviderUser $providerUser)
+    public function getUserId(SocialUser $socialUser)
     {
-        return $this->users->getUserId($providerUser->getEmail());
+        return $this->users->getUserId($socialUser->getEmail());
     }
 
-    public function findSocialAccount(ProviderUser $providerUser, $provider)
+    public function findSocialAccount(SocialUser $socialUser, $provider)
     {
-        $socialAccountRecord = (array)$this->socialAccounts->getSocialAccount($provider, $providerUser->getId());
+        $socialAccountRecord = (array)$this->socialAccounts->getSocialAccount($provider, $socialUser->getId());
         if (!$socialAccountRecord) {
             return null;
         }
         return new SocialAccountValueObject($socialAccountRecord);
     }
 
-    public function registerUser(ProviderUser $providerUser)
+    public function registerUser(SocialUser $socialUser)
     {
-        return $this->users->setUser($providerUser->getEmail(), $providerUser->getName());
+        return $this->users->setUser($socialUser->getEmail(), $socialUser->getName());
     }
 
-    public function associationSocialAccount(ProviderUser $providerUser, $provider, UserValueObject $userValueObject, int $userId)
+    public function associationSocialAccount(SocialUser $socialUser, $provider, UserValueObject $userValueObject, int $userId)
     {
-        $providerUserObject = new ProviderUserValueObject($provider, $providerUser);
-        $providerUserEntity = new ProviderUserEntity($userId, $userValueObject, $providerUserObject);
-        $this->socialAccounts->setSocialAccount($providerUserEntity->toArray());
+        $socialUserObject = new SocialUserValueObject($provider, $socialUser);
+        $socialUserEntity = new SocialUserEntity($userId, $userValueObject, $socialUserObject);
+        $this->socialAccounts->setSocialAccount($socialUserEntity->toArray());
     }
 }

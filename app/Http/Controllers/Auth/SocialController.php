@@ -34,31 +34,31 @@ class SocialController extends Controller
     public function handleProviderCallback($provider)
     {
         try {
-            $providerUser = Socialite::driver($provider)->user();
+            $socialUser = Socialite::driver($provider)->user();
         } catch (Exception $e) {
             return redirect('/login');
         }
 
-        $this->socialService->existsItems($providerUser);
+        $this->socialService->existsItems($socialUser);
 
-        $userValueObject = $this->socialRepository->findUser($providerUser);
+        $userValueObject = $this->socialRepository->findUser($socialUser);
         if (is_null($userValueObject)) {
-            $this->socialRepository->registerUser($providerUser);
-            $userValueObject = $this->socialRepository->findUser($providerUser);
+            $this->socialRepository->registerUser($socialUser);
+            $userValueObject = $this->socialRepository->findUser($socialUser);
         }
 
-        $socialAccountValueObject = $this->socialRepository->findSocialAccount($providerUser, $provider);
+        $socialAccountValueObject = $this->socialRepository->findSocialAccount($socialUser, $provider);
         if (is_null($socialAccountValueObject)) {
-            $userId = $this->socialRepository->getUserId($providerUser);
-            $this->socialRepository->associationSocialAccount($providerUser, $provider, $userValueObject, $userId);
-            $socialAccountValueObject = $this->socialRepository->findSocialAccount($providerUser, $provider);
+            $userId = $this->socialRepository->getUserId($socialUser);
+            $this->socialRepository->associationSocialAccount($socialUser, $provider, $userValueObject, $userId);
+            $socialAccountValueObject = $this->socialRepository->findSocialAccount($socialUser, $provider);
         }
 
-        $userId = $this->socialRepository->getUserId($providerUser);
+        $userId = $this->socialRepository->getUserId($socialUser);
 
         $socialAccountUserEntity = new SocialUserAccountEntity($userId, $userValueObject, $socialAccountValueObject);
 
-        $this->socialService->socialLogin($socialAccountUserEntity, $providerUser, $provider);
+        $this->socialService->socialLogin($socialAccountUserEntity, $socialUser, $provider);
 
         return redirect()->to('/home');
     }

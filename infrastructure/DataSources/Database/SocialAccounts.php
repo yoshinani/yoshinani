@@ -4,25 +4,25 @@ namespace Infrastructure\DataSources\Database;
 
 class SocialAccounts extends Bass
 {
-    public function getSocialAccount(string $provider, int $providerUserId)
+    public function getSocialAccount(string $provider, int $socialUserId)
     {
         $result = $this->db->table('social_accounts')
             ->where('provider_name', $provider)
-            ->where('provider_user_id', $providerUserId)
+            ->where('provider_user_id', $socialUserId)
             ->first();
 
         return $result;
     }
 
-    public function setSocialAccount(array $providerUserEntity)
+    public function setSocialAccount(array $socialUserEntity)
     {
         $this->db->table('social_accounts')
             ->insert(
                 [
-                    'user_id'            => $providerUserEntity['id'],
-                    'provider_name'      => $providerUserEntity['providerName'],
-                    'provider_user_id'   => $providerUserEntity['providerUserId'],
-                    'provider_user_name' => $providerUserEntity['providerUserName'],
+                    'user_id'            => $socialUserEntity['id'],
+                    'provider_name'      => $socialUserEntity['socialServiceName'],
+                    'provider_user_id'   => $socialUserEntity['socialUserId'],
+                    'provider_user_name' => $socialUserEntity['socialUserName'],
                 ]
             );
     }

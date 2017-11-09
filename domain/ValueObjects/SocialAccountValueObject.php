@@ -5,14 +5,14 @@ namespace Domain\ValueObjects;
 class SocialAccountValueObject
 {
     protected $userId;
-    protected $providerName;
-    protected $providerUserId;
+    protected $socialUserName;
+    protected $socialUserId;
 
     public function __construct(array $socialAccountRecord)
     {
         $this->userId          = $socialAccountRecord['user_id'];
-        $this->providerName    = $socialAccountRecord['provider_name'];
-        $this->providerUserId  = $socialAccountRecord['provider_user_id'];
+        $this->socialUserName    = $socialAccountRecord['provider_name'];
+        $this->socialUserId  = $socialAccountRecord['provider_user_id'];
     }
 
     public function getUserId()
@@ -20,13 +20,13 @@ class SocialAccountValueObject
         return $this->userId;
     }
 
-    public function getProviderName()
+    public function getSocialServiceName()
     {
-        return $this->providerName;
+        return $this->socialUserName;
     }
 
-    public function getProviderUserId()
+    public function getSocialUserId()
     {
-        return$this->providerUserId;
+        return$this->socialUserId;
     }
 }

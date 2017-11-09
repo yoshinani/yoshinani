@@ -5,27 +5,27 @@ namespace App\Services\Auth;
 use Auth;
 use Domain\Entities\SocialUserAccountEntity;
 use Exception;
-use Laravel\Socialite\Contracts\User;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialService
 {
-    public function existsItems(User $providerUser)
+    public function existsItems(SocialUser $socialUser)
     {
-        if (is_null($providerUser->getName()) || is_null($providerUser->getEmail())) {
+        if (is_null($socialUser->getName()) || is_null($socialUser->getEmail())) {
             throw new Exception('Name or email is missing');
         }
         return true;
     }
 
-    public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, User $providerUser, string $provider)
+    public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, SocialUser $socialUser, string $provider)
     {
         $socialUserAccount = $socialUserAccountEntity->toArray();
 
-        if (!$socialUserAccount['providerName'] === $provider) {
+        if (!$socialUserAccount['socialServiceName'] === $provider) {
             throw new Exception('Authentication drivers do not match');
         }
 
-        if (!$socialUserAccount['providerUserId'] === $providerUser->getId()) {
+        if (!$socialUserAccount['socialUserId'] === $socialUser->getId()) {
             throw new Exception('It does not match the ID of SNSAccount');
         }
 
