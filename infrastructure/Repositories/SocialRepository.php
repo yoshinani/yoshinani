@@ -39,9 +39,9 @@ class SocialRepository implements SocialRepositoryInterface
         return $this->users->getUserId($socialUser->getEmail());
     }
 
-    public function findSocialAccount(SocialUser $socialUser, $provider)
+    public function findSocialAccount(SocialUser $socialUser, $socialServiceName)
     {
-        $socialAccountRecord = (array)$this->socialAccounts->getSocialAccount($provider, $socialUser->getId());
+        $socialAccountRecord = (array)$this->socialAccounts->getSocialAccount($socialServiceName, $socialUser->getId());
         if (!$socialAccountRecord) {
             return null;
         }
@@ -53,9 +53,9 @@ class SocialRepository implements SocialRepositoryInterface
         return $this->users->setUser($socialUser->getEmail(), $socialUser->getName());
     }
 
-    public function associationSocialAccount(SocialUser $socialUser, $provider, UserValueObject $userValueObject, int $userId)
+    public function associationSocialAccount(SocialUser $socialUser, $socialServiceName, UserValueObject $userValueObject, int $userId)
     {
-        $socialUserObject = new SocialUserValueObject($provider, $socialUser);
+        $socialUserObject = new SocialUserValueObject($socialServiceName, $socialUser);
         $socialUserEntity = new SocialUserEntity($userId, $userValueObject, $socialUserObject);
         $this->socialAccounts->setSocialAccount($socialUserEntity->toArray());
     }

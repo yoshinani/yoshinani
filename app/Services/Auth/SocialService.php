@@ -17,11 +17,11 @@ class SocialService
         return true;
     }
 
-    public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, SocialUser $socialUser, string $provider)
+    public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, SocialUser $socialUser, string $socialServiceName)
     {
         $socialUserAccount = $socialUserAccountEntity->toArray();
 
-        if (!$socialUserAccount['socialServiceName'] === $provider) {
+        if (!$socialUserAccount['socialServiceName'] === $socialServiceName) {
             throw new Exception('Authentication drivers do not match');
         }
 
