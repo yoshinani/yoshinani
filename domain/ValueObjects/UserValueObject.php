@@ -2,9 +2,7 @@
 
 namespace Domain\ValueObjects;
 
-use Illuminate\Contracts\Support\Arrayable;
-
-class UserValueObject implements Arrayable
+class UserValueObject
 {
     private $userId;
     private $userName;
@@ -15,15 +13,6 @@ class UserValueObject implements Arrayable
         $this->userId    = $userInfo->id;
         $this->userName  = $userInfo->name;
         $this->userEmail = $userInfo->email;
-    }
-
-    public function toArray()
-    {
-        return [
-            'userId'            => $this->userId,
-            'userName'          => $this->userName,
-            'userEmail'         => $this->userEmail,
-        ];
     }
 
     public function getUserId(): int

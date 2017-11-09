@@ -14,7 +14,6 @@ class SocialService
         if (is_null($socialUser->getName()) || is_null($socialUser->getEmail())) {
             throw new Exception('Name or email is missing');
         }
-        return true;
     }
 
     public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, SocialUser $socialUser, string $socialServiceName)
