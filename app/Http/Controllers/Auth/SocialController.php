@@ -47,18 +47,18 @@ class SocialController extends Controller
             $userValueObject = $this->socialRepository->findUser($socialUser);
         }
 
-        $socialAccountValueObject = $this->socialRepository->findSocialAccount($socialUser, $socialServiceName);
+        $socialAccountValueObject = $this->socialRepository->findSocialAccount($socialServiceName, $socialUser);
         if (is_null($socialAccountValueObject)) {
             $userId = $this->socialRepository->getUserId($socialUser);
-            $this->socialRepository->associationSocialAccount($socialUser, $socialServiceName, $userValueObject, $userId);
-            $socialAccountValueObject = $this->socialRepository->findSocialAccount($socialUser, $socialServiceName);
+            $this->socialRepository->associationSocialAccount($userId, $socialServiceName, $socialUser, $userValueObject);
+            $socialAccountValueObject = $this->socialRepository->findSocialAccount($socialServiceName, $socialUser);
         }
 
         $userId = $this->socialRepository->getUserId($socialUser);
 
         $socialAccountUserEntity = new SocialUserAccountEntity($userId, $userValueObject, $socialAccountValueObject);
 
-        $this->socialService->socialLogin($socialAccountUserEntity, $socialUser, $socialServiceName);
+        $this->socialService->socialLogin($socialServiceName, $socialUser, $socialAccountUserEntity);
 
         return redirect()->to('/home');
     }

@@ -16,7 +16,7 @@ class SocialService
         }
     }
 
-    public function socialLogin(SocialUserAccountEntity $socialUserAccountEntity, SocialUser $socialUser, string $socialServiceName)
+    public function socialLogin(string $socialServiceName, SocialUser $socialUser, SocialUserAccountEntity $socialUserAccountEntity)
     {
         $socialUserAccount = $socialUserAccountEntity->toArray();
 

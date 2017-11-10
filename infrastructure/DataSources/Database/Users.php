@@ -4,7 +4,7 @@ namespace Infrastructure\DataSources\Database;
 
 class Users extends Bass
 {
-    public function findUser($email)
+    public function findUser(string $email)
     {
         $result = $this->db->table('users')
             ->where('email', $email)
@@ -13,7 +13,7 @@ class Users extends Bass
         return $result;
     }
 
-    public function getUserId($email)
+    public function getUserId(string $email)
     {
         $result = $this->db->table('users')
             ->where('email', $email)

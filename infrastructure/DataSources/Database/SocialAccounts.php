@@ -4,7 +4,7 @@ namespace Infrastructure\DataSources\Database;
 
 class SocialAccounts extends Bass
 {
-    public function getSocialAccount(string $socialServiceName, int $socialUserId)
+    public function getSocialAccount(int $socialUserId, string $socialServiceName)
     {
         $result = $this->db->table('social_accounts')
             ->where('social_service_name', $socialServiceName)
@@ -20,7 +20,7 @@ class SocialAccounts extends Bass
             ->insert(
                 [
                     'user_id'            => $socialUserEntity['id'],
-                    'social_service_name'      => $socialUserEntity['socialServiceName'],
+                    'social_service_name'    => $socialUserEntity['socialServiceName'],
                     'social_user_id'   => $socialUserEntity['socialUserId'],
                     'social_user_name' => $socialUserEntity['socialUserName'],
                 ]
