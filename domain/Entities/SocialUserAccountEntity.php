@@ -6,6 +6,10 @@ use Domain\ValueObjects\SocialAccountValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * Class SocialUserAccountEntity
+ * @package Domain\Entities
+ */
 class SocialUserAccountEntity implements Arrayable
 {
     private $id;
@@ -14,7 +18,12 @@ class SocialUserAccountEntity implements Arrayable
     private $socialServiceName;
     private $socialUserId;
 
-
+    /**
+     * SocialUserAccountEntity constructor.
+     * @param int $userId
+     * @param UserValueObject $userValueObject
+     * @param SocialAccountValueObject $socialAccountValueObject
+     */
     public function __construct(
         int $userId,
         UserValueObject $userValueObject,

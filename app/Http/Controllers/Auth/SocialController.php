@@ -10,12 +10,22 @@ use App\Services\Auth\AuthService;
 use App\Services\Auth\SocialService;
 Use Infrastructure\Interfaces\SocialRepositoryInterface;
 
+/**
+ * Class SocialController
+ * @package App\Http\Controllers\Auth
+ */
 class SocialController extends Controller
 {
     private $authService;
     private $socialService;
     private $socialRepository;
 
+    /**
+     * SocialController constructor.
+     * @param AuthService $authService
+     * @param SocialService $socialService
+     * @param SocialRepositoryInterface $socialRepository
+     */
     public function __construct(
         AuthService   $authService,
         SocialService $socialService,
@@ -26,11 +36,19 @@ class SocialController extends Controller
         $this->socialRepository = $socialRepository;
     }
 
+    /**
+     * @param $socialServiceName
+     * @return mixed
+     */
     public function redirectToSocialService($socialServiceName)
     {
         return Socialite::driver($socialServiceName)->redirect();
     }
 
+    /**
+     * @param $socialServiceName
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function handleSocialServiceCallback($socialServiceName)
     {
         try {

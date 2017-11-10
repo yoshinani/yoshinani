@@ -2,8 +2,17 @@
 
 namespace Infrastructure\DataSources\Database;
 
+/**
+ * Class SocialAccounts
+ * @package Infrastructure\DataSources\Database
+ */
 class SocialAccounts extends Bass
 {
+    /**
+     * @param int $socialUserId
+     * @param string $socialServiceName
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
     public function getSocialAccount(int $socialUserId, string $socialServiceName)
     {
         $result = $this->db->table('social_accounts')
@@ -14,6 +23,9 @@ class SocialAccounts extends Bass
         return $result;
     }
 
+    /**
+     * @param array $socialUserEntity
+     */
     public function setSocialAccount(array $socialUserEntity)
     {
         $this->db->table('social_accounts')

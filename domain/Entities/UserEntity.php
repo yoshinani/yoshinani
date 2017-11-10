@@ -5,13 +5,21 @@ namespace Domain\Entities;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * Class UserEntity
+ * @package Domain\Entities
+ */
 class UserEntity implements Arrayable
 {
     private $id;
     private $userName;
     private $userEmail;
 
-
+    /**
+     * UserEntity constructor.
+     * @param int $userId
+     * @param UserValueObject $userValueObject
+     */
     public function __construct(
         int $userId,
         UserValueObject $userValueObject

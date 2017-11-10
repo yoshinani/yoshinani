@@ -7,8 +7,16 @@ use Domain\Entities\SocialUserAccountEntity;
 use Exception;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
+/**
+ * Class SocialService
+ * @package App\Services\Auth
+ */
 class SocialService
 {
+    /**
+     * @param SocialUser $socialUser
+     * @throws Exception
+     */
     public function existsItems(SocialUser $socialUser)
     {
         if (is_null($socialUser->getName()) || is_null($socialUser->getEmail())) {
@@ -16,6 +24,12 @@ class SocialService
         }
     }
 
+    /**
+     * @param string $socialServiceName
+     * @param SocialUser $socialUser
+     * @param SocialUserAccountEntity $socialUserAccountEntity
+     * @throws Exception
+     */
     public function socialLogin(string $socialServiceName, SocialUser $socialUser, SocialUserAccountEntity $socialUserAccountEntity)
     {
         $socialUserAccount = $socialUserAccountEntity->toArray();
