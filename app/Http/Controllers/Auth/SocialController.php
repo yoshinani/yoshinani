@@ -26,12 +26,12 @@ class SocialController extends Controller
         $this->socialRepository = $socialRepository;
     }
 
-    public function redirectToProvider($socialServiceName)
+    public function redirectToSocialService($socialServiceName)
     {
         return Socialite::driver($socialServiceName)->redirect();
     }
 
-    public function handleProviderCallback($socialServiceName)
+    public function handleSocialServiceCallback($socialServiceName)
     {
         try {
             $socialUser = Socialite::driver($socialServiceName)->user();

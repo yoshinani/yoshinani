@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('auth/{socialServiceName}',          'Auth\SocialController@redirectToProvider');
-Route::get('auth/{socialServiceName}/callback', 'Auth\SocialController@handleProviderCallback');
+Route::get('auth/{socialServiceName}',          'Auth\SocialController@redirectToSocialService');
+Route::get('auth/{socialServiceName}/callback', 'Auth\SocialController@handleSocialServiceCallback');
 
 Auth::routes();
 
