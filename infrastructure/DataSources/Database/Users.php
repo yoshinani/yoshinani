@@ -44,7 +44,7 @@ class Users extends Bass
             ->insertGetId(
                 [
                     'email' => $userEmail,
-                    'name'  => $userName,
+                    'name' => $userName,
                 ]
             );
         return $result;

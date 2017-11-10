@@ -28,13 +28,12 @@ class SocialUserAccountEntity implements Arrayable
         int $userId,
         UserValueObject $userValueObject,
         SocialAccountValueObject $socialAccountValueObject
-    )
-    {
-        $this->id                = $userId;
-        $this->userName          = $userValueObject->getUserName();
-        $this->userEmail         = $userValueObject->getUserEmail();
+    ) {
+        $this->id = $userId;
+        $this->userName = $userValueObject->getUserName();
+        $this->userEmail = $userValueObject->getUserEmail();
         $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
-        $this->socialUserId      = $socialAccountValueObject->getSocialUserId();
+        $this->socialUserId = $socialAccountValueObject->getSocialUserId();
     }
 
     /**
@@ -45,11 +44,11 @@ class SocialUserAccountEntity implements Arrayable
     public function toArray()
     {
         return [
-            'id'                => $this->id,
-            'userName'          => $this->userName,
-            'userEmail'         => $this->userEmail,
+            'id' => $this->id,
+            'userName' => $this->userName,
+            'userEmail' => $this->userEmail,
             'socialServiceName' => $this->socialServiceName,
-            'socialUserId'      => $this->socialUserId,
+            'socialUserId' => $this->socialUserId,
         ];
     }
 }

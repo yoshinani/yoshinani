@@ -36,7 +36,8 @@ class LogServiceProvider extends ServiceProvider
     public function createAppLogger()
     {
         $log = new Writer(
-            new Monolog($this->channel()), $this->app['events']
+            new Monolog($this->channel()),
+            $this->app['events']
         );
         $this->configureHandler($log, 'app');
         return $log;
@@ -50,7 +51,8 @@ class LogServiceProvider extends ServiceProvider
     public function createSqlLogger()
     {
         $log = new Writer(
-            new Monolog($this->channel()), $this->app['events']
+            new Monolog($this->channel()),
+            $this->app['events']
         );
         $this->configureHandler($log, 'sql');
         return $log;
@@ -184,5 +186,4 @@ class LogServiceProvider extends ServiceProvider
     {
         return php_sapi_name() == 'cli' ? 'cli_' : '';
     }
-
 }

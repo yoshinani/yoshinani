@@ -29,16 +29,14 @@ class SocialUserEntity implements Arrayable
         int $userId,
         UserValueObject $userValueObject,
         SocialUserValueObject $socialUserValueObject
-    )
-    {
-        $this->id                = $userId;
-        $this->userName          = $userValueObject->getUserName();
-        $this->userEmail         = $userValueObject->getUserEmail();
+    ) {
+        $this->id = $userId;
+        $this->userName = $userValueObject->getUserName();
+        $this->userEmail = $userValueObject->getUserEmail();
         $this->socialServiceName = $socialUserValueObject->getSocialServiceName();
-        $this->socialUserId      = $socialUserValueObject->getSocialUserId();
-        $this->socialUserName    = $socialUserValueObject->getSocialUserName();
-        $this->socialUserEmail   = $socialUserValueObject->getSocialUserEmail();
-
+        $this->socialUserId = $socialUserValueObject->getSocialUserId();
+        $this->socialUserName = $socialUserValueObject->getSocialUserName();
+        $this->socialUserEmail = $socialUserValueObject->getSocialUserEmail();
     }
 
     /**
@@ -49,13 +47,13 @@ class SocialUserEntity implements Arrayable
     public function toArray()
     {
         return [
-            'id'                => $this->id,
-            'userName'          => $this->userName,
-            'userEmail'         => $this->userEmail,
+            'id' => $this->id,
+            'userName' => $this->userName,
+            'userEmail' => $this->userEmail,
             'socialServiceName' => $this->socialServiceName,
-            'socialUserId'      => $this->socialUserId,
-            'socialUserName'    => $this->socialUserName,
-            'socialUserEmail'   => $this->socialUserEmail,
+            'socialUserId' => $this->socialUserId,
+            'socialUserName' => $this->socialUserName,
+            'socialUserEmail' => $this->socialUserEmail,
         ];
     }
 }

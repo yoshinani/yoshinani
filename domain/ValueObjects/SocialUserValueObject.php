@@ -23,9 +23,9 @@ class SocialUserValueObject
     public function __construct(string $socialServiceName, SocialUser $socialUser)
     {
         $this->socialServiceName = $socialServiceName;
-        $this->socialUserId      = $socialUser->getId();
-        $this->socialUserName    = $socialUser->getName();
-        $this->socialUserEmail   = $socialUser->getEmail();
+        $this->socialUserId = $socialUser->getId();
+        $this->socialUserName = $socialUser->getName();
+        $this->socialUserEmail = $socialUser->getEmail();
     }
 
     /**

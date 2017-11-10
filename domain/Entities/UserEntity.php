@@ -23,10 +23,9 @@ class UserEntity implements Arrayable
     public function __construct(
         int $userId,
         UserValueObject $userValueObject
-    )
-    {
-        $this->id        = $userId;
-        $this->userName  = $userValueObject->getUserName();
+    ) {
+        $this->id = $userId;
+        $this->userName = $userValueObject->getUserName();
         $this->userEmail = $userValueObject->getUserEmail();
     }
 
@@ -38,9 +37,9 @@ class UserEntity implements Arrayable
     public function toArray()
     {
         return [
-            'id'        => $this->id,
-            'userName'  => $this->userName,
-            'userEmail' => $this->userEmail
+            'id' => $this->id,
+            'userName' => $this->userName,
+            'userEmail' => $this->userEmail,
         ];
     }
 }
