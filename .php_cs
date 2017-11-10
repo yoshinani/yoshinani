@@ -4,15 +4,17 @@ $includedPaths = [
     'app',
     'config',
     'database',
-    'resources',
+    'domain',
+    'infrastructure',
     'routes',
     'tests',
 ];
 
 $excludedPaths = [
     'bootstrap',
-    'laradock.d',
     'public',
+    'resources',
+    'setup',
     'storage',
     'vendor',
 ];
