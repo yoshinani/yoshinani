@@ -28,10 +28,9 @@ class SocialRepository implements SocialRepositoryInterface
     public function __construct(
         SocialAccounts $socialAccounts,
         Users          $users
-    )
-    {
+    ) {
         $this->socialAccounts = $socialAccounts;
-        $this->users          = $users;
+        $this->users = $users;
     }
 
     /**

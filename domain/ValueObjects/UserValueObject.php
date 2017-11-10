@@ -18,8 +18,8 @@ class UserValueObject
      */
     public function __construct($userInfo)
     {
-        $this->userId    = $userInfo->id;
-        $this->userName  = $userInfo->name;
+        $this->userId = $userInfo->id;
+        $this->userName = $userInfo->name;
         $this->userEmail = $userInfo->email;
     }
 
@@ -46,5 +46,4 @@ class UserValueObject
     {
         return $this->userEmail;
     }
-
 }

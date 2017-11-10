@@ -14,14 +14,12 @@ class CreateSocialAccounts extends Migration
     public function up()
     {
         Schema::create('social_accounts', function (Blueprint $table) {
-
             $table->increments('id');
             $table->bigInteger('user_id');
             $table->string('social_service_name');
             $table->string('social_user_id');
             $table->string('social_user_name');
             $table->timestamps();
-
         });
     }
 

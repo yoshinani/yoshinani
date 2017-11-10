@@ -31,9 +31,9 @@ class SocialAccounts extends Bass
         $this->db->table('social_accounts')
             ->insert(
                 [
-                    'user_id'            => $socialUserEntity['id'],
-                    'social_service_name'    => $socialUserEntity['socialServiceName'],
-                    'social_user_id'   => $socialUserEntity['socialUserId'],
+                    'user_id' => $socialUserEntity['id'],
+                    'social_service_name' => $socialUserEntity['socialServiceName'],
+                    'social_user_id' => $socialUserEntity['socialUserId'],
                     'social_user_name' => $socialUserEntity['socialUserName'],
                 ]
             );

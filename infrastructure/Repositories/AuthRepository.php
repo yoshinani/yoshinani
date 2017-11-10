@@ -13,5 +13,4 @@ class AuthRepository implements AuthRepositoryInterface
     {
         $this->users = $users;
     }
-
 }

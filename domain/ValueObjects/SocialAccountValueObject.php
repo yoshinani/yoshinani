@@ -18,9 +18,9 @@ class SocialAccountValueObject
      */
     public function __construct(array $socialAccountRecord)
     {
-        $this->userId         = $socialAccountRecord['user_id'];
+        $this->userId = $socialAccountRecord['user_id'];
         $this->socialUserName = $socialAccountRecord['social_user_name'];
-        $this->socialUserId   = $socialAccountRecord['social_user_id'];
+        $this->socialUserId = $socialAccountRecord['social_user_id'];
     }
 
     /**

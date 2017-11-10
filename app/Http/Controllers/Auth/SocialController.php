@@ -8,7 +8,7 @@ use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\SocialService;
-Use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Infrastructure\Interfaces\SocialRepositoryInterface;
 
 /**
  * Class SocialController
@@ -31,7 +31,7 @@ class SocialController extends Controller
         SocialService $socialService,
         SocialRepositoryInterface $socialRepository
     ) {
-        $this->authService   = $authService;
+        $this->authService = $authService;
         $this->socialService = $socialService;
         $this->socialRepository = $socialRepository;
     }

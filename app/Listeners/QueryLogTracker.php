@@ -29,13 +29,13 @@ class QueryLogTracker
         foreach ($bindings as $i => $binding) {
             if ($binding instanceof DateTime) {
                 $bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
-            } else if (is_string($binding)) {
+            } elseif (is_string($binding)) {
                 $bindings[$i] = DB::getPdo()->quote($binding);
-            } else if (null === $binding) {
+            } elseif (null === $binding) {
                 $bindings[$i] = 'null';
             }
         }
-        $query = str_replace(array('%', '?', "\r", "\n", "\t"), array('%%', '%s', ' ', ' ', ' '), $event->sql);
+        $query = str_replace(['%', '?', "\r", "\n", "\t"], ['%%', '%s', ' ', ' ', ' '], $event->sql);
         $query = preg_replace('/\s+/uD', ' ', $query);
         $query = vsprintf($query, $bindings) . ';';
 
