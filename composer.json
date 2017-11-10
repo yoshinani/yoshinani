@@ -47,6 +47,8 @@
     },
     "scripts": {
         "test": "phpunit",
+        "fixer": "php-cs-fixer fix",
+        "fixer-dry-run": "php-cs-fixer fix --dry-run",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
