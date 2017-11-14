@@ -22,8 +22,11 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-    Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-    Route::post('register', 'Auth\RegisterController@register');
+
+    Route::get('register/edit', 'Auth\ManualController@registerEdit')->name('register');
+    Route::post('register/confirmation', 'Auth\ManualController@confirmationRegister')->name('confirmationRegister');
+    Route::post('register/complete', 'Auth\ManualController@completeRegister')->name('completeRegister');
+
     Route::get('auth/{socialServiceName}', 'Auth\SocialController@redirectToSocialService');
     Route::get('auth/{socialServiceName}/callback', 'Auth\SocialController@handleSocialServiceCallback');
 });
