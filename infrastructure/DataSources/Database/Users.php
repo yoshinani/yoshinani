@@ -1,6 +1,7 @@
 <?php
 
 namespace Infrastructure\DataSources\Database;
+use Domain\Entities\RegisterUserEntity;
 
 /**
  * Class Users
@@ -34,17 +35,19 @@ class Users extends Bass
     }
 
     /**
-     * @param string $userEmail
-     * @param string $userName
+     * @param RegisterUserEntity $registerUserEntity
+     * @internal param string $userEmail
+     * @internal param string $userName
      * @return int
      */
-    public function setUser(string $userEmail, string $userName)
+    public function setUser(RegisterUserEntity $registerUserEntity)
     {
         $result = $this->db->table('users')
             ->insertGetId(
                 [
-                    'email' => $userEmail,
-                    'name' => $userName,
+                    'email' => $registerUserEntity->getEmail(),
+                    'name' => $registerUserEntity->getName(),
+                    'password' => $registerUserEntity->getPassword(),
                 ]
             );
         return $result;
