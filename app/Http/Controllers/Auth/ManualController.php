@@ -74,4 +74,10 @@ class ManualController extends Controller
         $this->authService->login($oldRequest, $userEntity);
         return redirect()->to('/home');
     }
+
+    public function logout()
+    {
+        $this->authService->logout();
+        return redirect()->to('/login');
+    }
 }

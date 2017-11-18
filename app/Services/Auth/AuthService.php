@@ -33,4 +33,9 @@ class AuthService
         }
     }
 
+    public function logout()
+    {
+        Auth::logout();
+    }
+
 }
