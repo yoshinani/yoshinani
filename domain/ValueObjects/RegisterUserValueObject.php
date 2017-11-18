@@ -13,7 +13,7 @@ class RegisterUserValueObject
     private $userPassword;
 
     /**
-     * UserValueObject constructor.
+     * RegisterUserValueObject constructor.
      * @param $oldRequest
      */
     public function __construct($oldRequest)
