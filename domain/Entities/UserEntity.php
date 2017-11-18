@@ -2,8 +2,10 @@
 
 namespace Domain\Entities;
 
+use Domain\ValueObjects\PasswordValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
+use stdClass;
 
 /**
  * Class UserEntity
@@ -12,21 +14,27 @@ use Illuminate\Contracts\Support\Arrayable;
 class UserEntity implements Arrayable
 {
     private $id;
-    private $userName;
-    private $userEmail;
+    private $name;
+    private $email;
+    private $password;
 
     /**
      * UserEntity constructor.
-     * @param int $userId
+     * @param stdClass $userRecord
      * @param UserValueObject $userValueObject
+     * @param PasswordValueObject $passwordValueObject
+     * @internal param int $userId
      */
     public function __construct(
-        int $userId,
-        UserValueObject $userValueObject
+        stdClass $userRecord,
+        UserValueObject $userValueObject,
+        PasswordValueObject $passwordValueObject
     ) {
-        $this->id = $userId;
-        $this->userName = $userValueObject->getUserName();
-        $this->userEmail = $userValueObject->getUserEmail();
+        $this->id = $userRecord->id;
+        $this->name = $userValueObject->getUserName();
+        $this->email = $userValueObject->getUserEmail();
+        $this->password = $passwordValueObject->getUserPassword();
+
     }
 
     /**
@@ -38,8 +46,24 @@ class UserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'userName' => $this->userName,
-            'userEmail' => $this->userEmail,
+            'userName' => $this->name,
+            'userEmail' => $this->email,
+            'userPassword' => $this->password,
         ];
+    }
+
+    public function getUserId()
+    {
+        return $this->id;
+    }
+
+    public function getUserEmail()
+    {
+        return $this->email;
+    }
+
+    public function getUserPassword()
+    {
+        return $this->password;
     }
 }

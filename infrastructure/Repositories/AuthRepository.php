@@ -3,7 +3,10 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\RegisterUserEntity;
+use Domain\Entities\UserEntity;
+use Domain\ValueObjects\PasswordValueObject;
 use Domain\ValueObjects\RegisterUserValueObject;
+use Domain\ValueObjects\UserValueObject;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 use Infrastructure\DataSources\Database\Users;
 
@@ -31,5 +34,16 @@ class AuthRepository implements AuthRepositoryInterface
         $registerUserValueObject = new RegisterUserValueObject($oldRequest);
         $registerUserEntity = new RegisterUserEntity($oldRequest['email'], $registerUserValueObject);
         return $this->users->setUser($registerUserEntity);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findUser(array $oldRequest)
+    {
+        $userRecord = $this->users->findUser($oldRequest['email']);
+        $userValueObject = new UserValueObject($userRecord);
+        $passwordValueObject = new PasswordValueObject($userRecord);
+        return new UserEntity($userRecord, $userValueObject, $passwordValueObject);
     }
 }

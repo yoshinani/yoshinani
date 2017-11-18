@@ -57,7 +57,21 @@ class ManualController extends Controller
     {
         $oldRequest = $request->old();
         $userId = $this->authRepository->registerUser($oldRequest);
-        $this->authService->idLogin($userId);
+        $this->authService->login($userId);
+        return redirect()->to('/home');
+    }
+
+    public function loginEdit()
+    {
+        return view('auth.login.edit');
+    }
+
+    public function login(Request $request)
+    {
+        $request->flash();
+        $oldRequest = $request->old();
+        $userEntity = $this->authRepository->findUser($oldRequest);
+        $this->authService->login($oldRequest, $userEntity);
         return redirect()->to('/home');
     }
 }
