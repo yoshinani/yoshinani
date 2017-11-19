@@ -33,7 +33,7 @@ class AuthRepository implements AuthRepositoryInterface
     {
         $registerUserValueObject = new RegisterUserValueObject($oldRequest);
         $registerUserEntity = new RegisterUserEntity($oldRequest['email'], $registerUserValueObject);
-        return $this->users->setUser($registerUserEntity);
+        $this->users->setUser($registerUserEntity);
     }
 
     /**

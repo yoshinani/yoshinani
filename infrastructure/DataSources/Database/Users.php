@@ -43,7 +43,7 @@ class Users extends Bass
     public function setUser(RegisterUserEntity $registerUserEntity)
     {
         $result = $this->db->table('users')
-            ->insertGetId(
+            ->insert(
                 [
                     'email' => $registerUserEntity->getEmail(),
                     'name' => $registerUserEntity->getName(),
