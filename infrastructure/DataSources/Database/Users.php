@@ -13,14 +13,14 @@ use stdClass;
 class Users extends Bass
 {
     /**
-     * @param stdClass $oldRequest
+     * @param string $email
      * @return \Illuminate\Database\Eloquent\Model|null|static
      * @throws Exception
      */
-    public function findUser(stdClass $oldRequest)
+    public function findUser(string $email)
     {
         $result = $this->db->table('users')
-            ->where('email', $oldRequest->email)
+            ->where('email', $email)
             ->first();
         if (is_null($result)) {
             throw new Exception('User does not exist');

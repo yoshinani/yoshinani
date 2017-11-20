@@ -42,7 +42,8 @@ class AuthRepository implements AuthRepositoryInterface
      */
     public function findUser(array $oldRequest)
     {
-        $userRecord = (object)$this->users->findUser((object)$oldRequest);
+        $userRequestObject = (object)$oldRequest;
+        $userRecord = (object)$this->users->findUser($userRequestObject->email);
         $userValueObject = new UserValueObject($userRecord);
         $passwordValueObject = new PasswordValueObject($userRecord);
         return new UserEntity($userRecord, $userValueObject, $passwordValueObject);
