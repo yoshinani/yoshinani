@@ -1,6 +1,7 @@
 <?php
 
 namespace Infrastructure\DataSources\Database;
+
 use Domain\Entities\RegisterUserEntity;
 use stdClass;
 
@@ -42,7 +43,7 @@ class Users extends Bass
      * @internal param string $userName
      * @return int
      */
-    public function setUser(RegisterUserEntity $registerUserEntity)
+    public function registerUser(RegisterUserEntity $registerUserEntity)
     {
         $result = $this->db->table('users')
             ->insert(
