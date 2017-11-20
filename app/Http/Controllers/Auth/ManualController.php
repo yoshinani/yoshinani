@@ -63,11 +63,18 @@ class ManualController extends Controller
         return redirect()->to('/home');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function loginEdit()
     {
         return view('auth.login.edit');
     }
 
+    /**
+     * @param LoginRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(LoginRequest $request)
     {
         $request->flash();
@@ -77,6 +84,9 @@ class ManualController extends Controller
         return redirect()->to('/home');
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout()
     {
         $this->authService->logout();
