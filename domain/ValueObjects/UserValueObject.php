@@ -2,33 +2,25 @@
 
 namespace Domain\ValueObjects;
 
+use stdClass;
+
 /**
  * Class UserValueObject
  * @package Domain\ValueObjects
  */
 class UserValueObject
 {
-    private $userId;
     private $userName;
     private $userEmail;
 
     /**
      * UserValueObject constructor.
-     * @param $userInfo
+     * @param stdClass $userRecord
      */
-    public function __construct($userInfo)
+    public function __construct(stdClass $userRecord)
     {
-        $this->userId = $userInfo->id;
-        $this->userName = $userInfo->name;
-        $this->userEmail = $userInfo->email;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId(): int
-    {
-        return $this->userId;
+        $this->userName = $userRecord->name;
+        $this->userEmail = $userRecord->email;
     }
 
     /**

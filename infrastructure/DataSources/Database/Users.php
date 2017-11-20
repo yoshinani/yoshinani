@@ -2,6 +2,10 @@
 
 namespace Infrastructure\DataSources\Database;
 
+use Domain\Entities\RegisterUserEntity;
+use Exception;
+use stdClass;
+
 /**
  * Class Users
  * @package Infrastructure\DataSources\Database
@@ -9,44 +13,51 @@ namespace Infrastructure\DataSources\Database;
 class Users extends Bass
 {
     /**
-     * @param string $email
+     * @param stdClass $oldRequest
      * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @throws Exception
      */
-    public function findUser(string $email)
+    public function findUser(stdClass $oldRequest)
     {
         $result = $this->db->table('users')
-            ->where('email', $email)
+            ->where('email', $oldRequest->email)
             ->first();
-
+        if (is_null($result)) {
+            throw new Exception('User does not exist');
+        }
         return $result;
     }
 
     /**
      * @param string $email
      * @return mixed
+     * @throws Exception
      */
     public function getUserId(string $email)
     {
         $result = $this->db->table('users')
             ->where('email', $email)
             ->value('id');
+        if (is_null($result)) {
+            throw new Exception('User ID does not exist');
+        }
         return $result;
     }
 
     /**
-     * @param string $userEmail
-     * @param string $userName
-     * @return int
+     * @param RegisterUserEntity $registerUserEntity
+     * @internal param string $userEmail
+     * @internal param string $userName
      */
-    public function setUser(string $userEmail, string $userName)
+    public function registerUser(RegisterUserEntity $registerUserEntity)
     {
-        $result = $this->db->table('users')
-            ->insertGetId(
+        $this->db->table('users')
+            ->insert(
                 [
-                    'email' => $userEmail,
-                    'name' => $userName,
+                    'email' => $registerUserEntity->getEmail(),
+                    'name' => $registerUserEntity->getName(),
+                    'password' => $registerUserEntity->getPassword(),
                 ]
             );
-        return $result;
     }
 }
