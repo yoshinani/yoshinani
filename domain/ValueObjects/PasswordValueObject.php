@@ -16,7 +16,15 @@ class PasswordValueObject
     /**
      * @return string
      */
-    public function getUserPassword(): string
+    public function getEncryptionPassword(): string
+    {
+        return encrypt($this->userPassword);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDecryptionPassword(): string
     {
         return decrypt($this->userPassword);
     }

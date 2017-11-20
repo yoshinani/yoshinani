@@ -33,7 +33,7 @@ class UserEntity implements Arrayable
         $this->id = $userRecord->id;
         $this->name = $userValueObject->getUserName();
         $this->email = $userValueObject->getUserEmail();
-        $this->password = $passwordValueObject->getUserPassword();
+        $this->password = $passwordValueObject->getDecryptionPassword();
 
     }
 

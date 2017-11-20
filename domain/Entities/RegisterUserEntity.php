@@ -2,8 +2,10 @@
 
 namespace Domain\Entities;
 
-use Domain\ValueObjects\RegisterUserValueObject;
+use Domain\ValueObjects\PasswordValueObject;
+use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
+use stdClass;
 
 /**
  * Class RegisterUserEntity
@@ -12,17 +14,21 @@ use Illuminate\Contracts\Support\Arrayable;
 class RegisterUserEntity implements Arrayable
 {
     private $email;
-    private $registerUserValueObject;
+    private $userValueObject;
+    private $passwordValueObject;
 
     /**
      * RegisterUserEntity constructor.
-     * @param string $userEmail
-     * @param RegisterUserValueObject $registerUserValueObject
+     * @param stdClass $userRecord
+     * @param UserValueObject $userValueObject
+     * @param PasswordValueObject $passwordValueObject
+     * @internal param string $userEmail
      */
-    public function __construct(string $userEmail, RegisterUserValueObject $registerUserValueObject)
+    public function __construct(stdClass $userRecord, UserValueObject $userValueObject, PasswordValueObject $passwordValueObject)
     {
-        $this->email = $userEmail;
-        $this->registerUserValueObject = $registerUserValueObject;
+        $this->email = $userRecord->email;
+        $this->userValueObject = $userValueObject;
+        $this->passwordValueObject = $passwordValueObject;
     }
 
     /**
@@ -34,8 +40,8 @@ class RegisterUserEntity implements Arrayable
     {
         return [
             'email' => $this->email,
-            'name' => $this->registerUserValueObject->getUserName(),
-            'password' => $this->registerUserValueObject->getUserPassword(),
+            'name' => $this->userValueObject->getUserName(),
+            'password' => $this->passwordValueObject->getEncryptionPassword(),
         ];
     }
 
@@ -52,7 +58,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getName(): string
     {
-        return $this->registerUserValueObject->getUserName();
+        return $this->userValueObject->getUserName();
     }
 
     /**
@@ -60,6 +66,6 @@ class RegisterUserEntity implements Arrayable
      */
     public function getPassword(): string
     {
-        return $this->registerUserValueObject->getUserPassword();
+        return $this->passwordValueObject->getEncryptionPassword();
     }
 }
