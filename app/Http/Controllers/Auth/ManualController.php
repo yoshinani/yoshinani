@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -67,7 +68,7 @@ class ManualController extends Controller
         return view('auth.login.edit');
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $request->flash();
         $oldRequest = $request->old();

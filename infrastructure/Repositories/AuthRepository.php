@@ -39,6 +39,7 @@ class AuthRepository implements AuthRepositoryInterface
 
     /**
      * {@inheritdoc}
+     * TODO:Recordが見つからなかった時の処理を追加
      */
     public function findUser(array $oldRequest)
     {
