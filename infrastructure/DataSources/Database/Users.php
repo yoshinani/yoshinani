@@ -3,6 +3,7 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
+use Exception;
 use stdClass;
 
 /**
@@ -14,26 +15,32 @@ class Users extends Bass
     /**
      * @param stdClass $oldRequest
      * @return \Illuminate\Database\Eloquent\Model|null|static
-     * @internal param string $email
+     * @throws Exception
      */
     public function findUser(stdClass $oldRequest)
     {
         $result = $this->db->table('users')
             ->where('email', $oldRequest->email)
             ->first();
-
+        if (is_null($result)) {
+            throw new Exception('User does not exist');
+        }
         return $result;
     }
 
     /**
      * @param string $email
      * @return mixed
+     * @throws Exception
      */
     public function getUserId(string $email)
     {
         $result = $this->db->table('users')
             ->where('email', $email)
             ->value('id');
+        if (is_null($result)) {
+            throw new Exception('User ID does not exist');
+        }
         return $result;
     }
 
@@ -41,11 +48,10 @@ class Users extends Bass
      * @param RegisterUserEntity $registerUserEntity
      * @internal param string $userEmail
      * @internal param string $userName
-     * @return int
      */
     public function registerUser(RegisterUserEntity $registerUserEntity)
     {
-        $result = $this->db->table('users')
+        $this->db->table('users')
             ->insert(
                 [
                     'email' => $registerUserEntity->getEmail(),
@@ -53,6 +59,5 @@ class Users extends Bass
                     'password' => $registerUserEntity->getPassword(),
                 ]
             );
-        return $result;
     }
 }

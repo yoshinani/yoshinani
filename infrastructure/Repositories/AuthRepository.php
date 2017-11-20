@@ -39,11 +39,10 @@ class AuthRepository implements AuthRepositoryInterface
 
     /**
      * {@inheritdoc}
-     * TODO:Recordが見つからなかった時の処理を追加
      */
     public function findUser(array $oldRequest)
     {
-        $userRecord = $this->users->findUser((object)$oldRequest);
+        $userRecord = (object)$this->users->findUser((object)$oldRequest);
         $userValueObject = new UserValueObject($userRecord);
         $passwordValueObject = new PasswordValueObject($userRecord);
         return new UserEntity($userRecord, $userValueObject, $passwordValueObject);
