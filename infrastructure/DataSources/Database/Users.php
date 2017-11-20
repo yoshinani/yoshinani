@@ -2,6 +2,7 @@
 
 namespace Infrastructure\DataSources\Database;
 use Domain\Entities\RegisterUserEntity;
+use stdClass;
 
 /**
  * Class Users
@@ -10,13 +11,14 @@ use Domain\Entities\RegisterUserEntity;
 class Users extends Bass
 {
     /**
-     * @param string $email
+     * @param stdClass $oldRequest
      * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @internal param string $email
      */
-    public function findUser(string $email)
+    public function findUser(stdClass $oldRequest)
     {
         $result = $this->db->table('users')
-            ->where('email', $email)
+            ->where('email', $oldRequest->email)
             ->first();
 
         return $result;
