@@ -22,9 +22,6 @@ class Users extends Bass
         $result = $this->db->table('users')
             ->where('email', $email)
             ->first();
-        if (is_null($result)) {
-            throw new Exception('User does not exist');
-        }
         return $result;
     }
 
@@ -38,9 +35,6 @@ class Users extends Bass
         $result = $this->db->table('users')
             ->where('email', $email)
             ->value('id');
-        if (is_null($result)) {
-            throw new Exception('User ID does not exist');
-        }
         return $result;
     }
 

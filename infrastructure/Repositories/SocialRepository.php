@@ -3,6 +3,7 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\SocialUserEntity;
+use Domain\Entities\UserEntity;
 use Domain\ValueObjects\SocialAccountValueObject;
 use Domain\ValueObjects\SocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
@@ -39,10 +40,12 @@ class SocialRepository implements SocialRepositoryInterface
     public function findUser(SocialUser $socialUser)
     {
         $result = $this->users->findUser($socialUser->getEmail());
-        if (!$result) {
+        if (is_null($result)) {
             return null;
         }
-        return new UserValueObject($result);
+        $userRecord = (object)$result;
+        $userValueObject = new UserValueObject($userRecord);
+        return new UserEntity($userRecord, $userValueObject);
     }
 
     /**
