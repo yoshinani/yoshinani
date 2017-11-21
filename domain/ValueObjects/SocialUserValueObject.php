@@ -13,7 +13,6 @@ class SocialUserValueObject
     private $socialServiceName;
     private $socialUserId;
     private $socialUserName;
-    private $socialUserEmail;
 
     /**
      * SocialUserValueObject constructor.
@@ -25,7 +24,6 @@ class SocialUserValueObject
         $this->socialServiceName = $socialServiceName;
         $this->socialUserId = $socialUser->getId();
         $this->socialUserName = $socialUser->getName();
-        $this->socialUserEmail = $socialUser->getEmail();
     }
 
     /**
@@ -52,11 +50,4 @@ class SocialUserValueObject
         return $this->socialUserName;
     }
 
-    /**
-     * @return string
-     */
-    public function getSocialUserEmail()
-    {
-        return $this->socialUserEmail;
-    }
 }

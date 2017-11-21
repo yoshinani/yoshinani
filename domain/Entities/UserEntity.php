@@ -65,6 +65,9 @@ class UserEntity implements Arrayable
 
     public function getUserPassword()
     {
+        if (is_null($this->password)) {
+            return null;
+        }
         return $this->password;
     }
 }

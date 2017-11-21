@@ -13,27 +13,23 @@ use Illuminate\Contracts\Support\Arrayable;
 class SocialUserAccountEntity implements Arrayable
 {
     private $id;
-    private $userName;
-    private $userEmail;
     private $socialServiceName;
     private $socialUserId;
+    private $socialUserName;
 
     /**
      * SocialUserAccountEntity constructor.
      * @param int $userId
-     * @param UserValueObject $userValueObject
      * @param SocialAccountValueObject $socialAccountValueObject
      */
     public function __construct(
         int $userId,
-        UserValueObject $userValueObject,
         SocialAccountValueObject $socialAccountValueObject
     ) {
         $this->id = $userId;
-        $this->userName = $userValueObject->getUserName();
-        $this->userEmail = $userValueObject->getUserEmail();
         $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
         $this->socialUserId = $socialAccountValueObject->getSocialUserId();
+        $this->socialUserName = $socialAccountValueObject->getSocialUserName();
     }
 
     /**
@@ -45,10 +41,28 @@ class SocialUserAccountEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'userName' => $this->userName,
-            'userEmail' => $this->userEmail,
             'socialServiceName' => $this->socialServiceName,
             'socialUserId' => $this->socialUserId,
         ];
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getSocialServiceName()
+    {
+        return $this->socialServiceName;
+    }
+
+    public function getSocialUserId()
+    {
+        return $this->socialUserId;
+    }
+
+    public function getSocialUserName()
+    {
+        return $this->socialUserName;
     }
 }

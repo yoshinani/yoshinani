@@ -24,7 +24,7 @@ class RegisterUserEntity implements Arrayable
      * @param PasswordValueObject $passwordValueObject
      * @internal param string $userEmail
      */
-    public function __construct(stdClass $userRecord, UserValueObject $userValueObject, PasswordValueObject $passwordValueObject)
+    public function __construct(stdClass $userRecord, UserValueObject $userValueObject, PasswordValueObject $passwordValueObject = null)
     {
         $this->email = $userRecord->email;
         $this->userValueObject = $userValueObject;
@@ -62,10 +62,13 @@ class RegisterUserEntity implements Arrayable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPassword(): string
+    public function getPassword():?string
     {
+        if (is_null($this->passwordValueObject)) {
+            return null;
+        }
         return $this->passwordValueObject->getEncryptionPassword();
     }
 }
