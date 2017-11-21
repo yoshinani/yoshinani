@@ -18,8 +18,12 @@ class AuthService
      * @throws Exception
      * @internal param string $userId
      */
-    public function login(array $oldRequest, UserEntity $userEntity)
+    public function login(array $oldRequest, UserEntity $userEntity = null)
     {
+        if (is_null($userEntity)) {
+            throw new Exception('User does not exist');
+        }
+
         if (!$oldRequest['email'] == $userEntity->getUserEmail()) {
             throw new Exception('email does not match');
         }
