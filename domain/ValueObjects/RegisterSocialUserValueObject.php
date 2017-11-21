@@ -8,7 +8,7 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  * Class SocialUserValueObject
  * @package Domain\ValueObjects
  */
-class SocialUserValueObject
+class RegisterSocialUserValueObject
 {
     private $socialServiceName;
     private $socialUserId;

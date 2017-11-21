@@ -4,10 +4,10 @@ namespace Infrastructure\Repositories;
 
 use Domain\Entities\RegisterUserEntity;
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\SocialUserEntity;
+use Domain\Entities\RegisterSocialUserEntity;
 use Domain\Entities\UserEntity;
 use Domain\ValueObjects\SocialAccountValueObject;
-use Domain\ValueObjects\SocialUserValueObject;
+use Domain\ValueObjects\RegisterSocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Infrastructure\DataSources\Database\SocialAccounts;
@@ -91,8 +91,8 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
-        $socialUserObject = new SocialUserValueObject($socialServiceName, $socialUser);
-        $socialUserEntity = new SocialUserEntity($userId, $socialUserObject);
-        $this->socialAccounts->registerSocialAccount($socialUserEntity);
+        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
+        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
+        $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }

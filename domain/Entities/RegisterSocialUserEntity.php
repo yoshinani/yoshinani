@@ -1,7 +1,7 @@
 <?php
 namespace Domain\Entities;
 
-use Domain\ValueObjects\SocialUserValueObject;
+use Domain\ValueObjects\RegisterSocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -9,7 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
  * Class SocialUserEntity
  * @package Domain\Entities
  */
-class SocialUserEntity implements Arrayable
+class RegisterSocialUserEntity implements Arrayable
 {
     private $id;
     private $socialServiceName;
@@ -19,16 +19,16 @@ class SocialUserEntity implements Arrayable
     /**
      * SocialUserEntity constructor.
      * @param int $userId
-     * @param SocialUserValueObject $socialUserValueObject
+     * @param RegisterSocialUserValueObject $registerSocialUserValueObject
      */
     public function __construct(
         int $userId,
-        SocialUserValueObject $socialUserValueObject
+        RegisterSocialUserValueObject $registerSocialUserValueObject
     ) {
         $this->id = $userId;
-        $this->socialServiceName = $socialUserValueObject->getSocialServiceName();
-        $this->socialUserId = $socialUserValueObject->getSocialUserId();
-        $this->socialUserName = $socialUserValueObject->getSocialUserName();
+        $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
+        $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
+        $this->socialUserName = $registerSocialUserValueObject->getSocialUserName();
     }
 
     /**
