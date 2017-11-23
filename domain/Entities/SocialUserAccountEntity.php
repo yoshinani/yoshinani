@@ -15,7 +15,6 @@ class SocialUserAccountEntity implements Arrayable
     private $id;
     private $socialServiceName;
     private $socialUserId;
-    private $socialUserName;
 
     /**
      * SocialUserAccountEntity constructor.
@@ -29,7 +28,6 @@ class SocialUserAccountEntity implements Arrayable
         $this->id = $userId;
         $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
         $this->socialUserId = $socialAccountValueObject->getSocialUserId();
-        $this->socialUserName = $socialAccountValueObject->getSocialUserName();
     }
 
     /**
@@ -70,11 +68,4 @@ class SocialUserAccountEntity implements Arrayable
         return $this->socialUserId;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSocialUserName()
-    {
-        return $this->socialUserName;
-    }
 }
