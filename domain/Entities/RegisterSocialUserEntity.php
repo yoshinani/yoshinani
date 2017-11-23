@@ -14,7 +14,6 @@ class RegisterSocialUserEntity implements Arrayable
     private $id;
     private $socialServiceName;
     private $socialUserId;
-    private $socialUserName;
 
     /**
      * SocialUserEntity constructor.
@@ -28,7 +27,6 @@ class RegisterSocialUserEntity implements Arrayable
         $this->id = $userId;
         $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
         $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
-        $this->socialUserName = $registerSocialUserValueObject->getSocialUserName();
     }
 
     /**
@@ -42,7 +40,6 @@ class RegisterSocialUserEntity implements Arrayable
             'id' => $this->id,
             'socialServiceName' => $this->socialServiceName,
             'socialUserId' => $this->socialUserId,
-            'socialUserName' => $this->socialUserName,
         ];
     }
 
@@ -68,13 +65,5 @@ class RegisterSocialUserEntity implements Arrayable
     public function getSocialUserId()
     {
         return $this->socialUserId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSocialUserName()
-    {
-        return $this->socialUserName;
     }
 }
