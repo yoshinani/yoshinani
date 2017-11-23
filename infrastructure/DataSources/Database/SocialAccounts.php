@@ -2,6 +2,8 @@
 
 namespace Infrastructure\DataSources\Database;
 
+use Domain\Entities\RegisterSocialUserEntity;
+
 /**
  * Class SocialAccounts
  * @package Infrastructure\DataSources\Database
@@ -24,17 +26,17 @@ class SocialAccounts extends Bass
     }
 
     /**
-     * @param array $socialUserEntity
+     * @param RegisterSocialUserEntity $registerSocialUserEntity
      */
-    public function setSocialAccount(array $socialUserEntity)
+    public function registerSocialAccount(RegisterSocialUserEntity $registerSocialUserEntity)
     {
         $this->db->table('social_accounts')
             ->insert(
                 [
-                    'user_id' => $socialUserEntity['id'],
-                    'social_service_name' => $socialUserEntity['socialServiceName'],
-                    'social_user_id' => $socialUserEntity['socialUserId'],
-                    'social_user_name' => $socialUserEntity['socialUserName'],
+                    'user_id' => $registerSocialUserEntity->getId(),
+                    'social_service_name' => $registerSocialUserEntity->getSocialServiceName(),
+                    'social_user_id' => $registerSocialUserEntity->getSocialUserId(),
+                    'social_user_name' => $registerSocialUserEntity->getSocialUserName(),
                 ]
             );
     }

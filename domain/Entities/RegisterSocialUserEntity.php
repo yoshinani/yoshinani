@@ -1,16 +1,15 @@
 <?php
-
 namespace Domain\Entities;
 
-use Domain\ValueObjects\SocialAccountValueObject;
+use Domain\ValueObjects\RegisterSocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
- * Class SocialUserAccountEntity
+ * Class SocialUserEntity
  * @package Domain\Entities
  */
-class SocialUserAccountEntity implements Arrayable
+class RegisterSocialUserEntity implements Arrayable
 {
     private $id;
     private $socialServiceName;
@@ -18,18 +17,18 @@ class SocialUserAccountEntity implements Arrayable
     private $socialUserName;
 
     /**
-     * SocialUserAccountEntity constructor.
+     * SocialUserEntity constructor.
      * @param int $userId
-     * @param SocialAccountValueObject $socialAccountValueObject
+     * @param RegisterSocialUserValueObject $registerSocialUserValueObject
      */
     public function __construct(
         int $userId,
-        SocialAccountValueObject $socialAccountValueObject
+        RegisterSocialUserValueObject $registerSocialUserValueObject
     ) {
         $this->id = $userId;
-        $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
-        $this->socialUserId = $socialAccountValueObject->getSocialUserId();
-        $this->socialUserName = $socialAccountValueObject->getSocialUserName();
+        $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
+        $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
+        $this->socialUserName = $registerSocialUserValueObject->getSocialUserName();
     }
 
     /**
@@ -43,6 +42,7 @@ class SocialUserAccountEntity implements Arrayable
             'id' => $this->id,
             'socialServiceName' => $this->socialServiceName,
             'socialUserId' => $this->socialUserId,
+            'socialUserName' => $this->socialUserName,
         ];
     }
 
@@ -55,15 +55,15 @@ class SocialUserAccountEntity implements Arrayable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSocialServiceName():string
+    public function getSocialServiceName()
     {
         return $this->socialServiceName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSocialUserId()
     {
@@ -71,7 +71,7 @@ class SocialUserAccountEntity implements Arrayable
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getSocialUserName()
     {

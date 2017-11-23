@@ -2,14 +2,18 @@
 
 namespace Infrastructure\Repositories;
 
-use Domain\Entities\SocialUserEntity;
+use Domain\Entities\RegisterUserEntity;
+use Domain\Entities\SocialUserAccountEntity;
+use Domain\Entities\RegisterSocialUserEntity;
+use Domain\Entities\UserEntity;
 use Domain\ValueObjects\SocialAccountValueObject;
-use Domain\ValueObjects\SocialUserValueObject;
+use Domain\ValueObjects\RegisterSocialUserValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Infrastructure\DataSources\Database\SocialAccounts;
 use Infrastructure\DataSources\Database\Users;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use stdClass;
 
 /**
  * Class SocialRepository
@@ -39,10 +43,12 @@ class SocialRepository implements SocialRepositoryInterface
     public function findUser(SocialUser $socialUser)
     {
         $result = $this->users->findUser($socialUser->getEmail());
-        if (!$result) {
+        if (is_null($result)) {
             return null;
         }
-        return new UserValueObject($result);
+        $userRecord = (object)$result;
+        $userValueObject = new UserValueObject($userRecord);
+        return new UserEntity($userRecord, $userValueObject);
     }
 
     /**
@@ -56,30 +62,37 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findSocialAccount(string $socialServiceName, SocialUser $socialUser)
-    {
-        $socialAccountRecord = (array)$this->socialAccounts->getSocialAccount($socialUser->getId(), $socialServiceName);
-        if (!$socialAccountRecord) {
-            return null;
-        }
-        return new SocialAccountValueObject($socialAccountRecord);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function registerUser(SocialUser $socialUser)
     {
-        return $this->users->setUser($socialUser->getEmail(), $socialUser->getName());
+        $userInfo = new stdClass();
+        $userInfo->name = $socialUser->getName();
+        $userInfo->email = $socialUser->getEmail();
+        $userValueObject = new UserValueObject($userInfo);
+        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject);
+        $this->users->registerUser($registerUserEntity);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser, UserValueObject $userValueObject)
+    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
-        $socialUserObject = new SocialUserValueObject($socialServiceName, $socialUser);
-        $socialUserEntity = new SocialUserEntity($userId, $userValueObject, $socialUserObject);
-        $this->socialAccounts->setSocialAccount($socialUserEntity->toArray());
+        $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $socialServiceName);
+        if (is_null($result)) {
+            return null;
+        }
+        $socialAccountRecord = (object)$result;
+        $socialAccountValueObject = new SocialAccountValueObject($socialAccountRecord);
+        return new SocialUserAccountEntity($userId, $socialAccountValueObject);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
+    {
+        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
+        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
+        $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }
