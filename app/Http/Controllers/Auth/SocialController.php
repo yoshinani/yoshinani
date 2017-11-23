@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Domain\Entities\SocialUserAccountEntity;
 use Exception;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\Auth\AuthService;
