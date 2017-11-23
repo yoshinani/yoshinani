@@ -62,6 +62,19 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function registerUser(SocialUser $socialUser)
+    {
+        $userInfo = new stdClass();
+        $userInfo->name = $socialUser->getName();
+        $userInfo->email = $socialUser->getEmail();
+        $userValueObject = new UserValueObject($userInfo);
+        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject);
+        $this->users->registerUser($registerUserEntity);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
         $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $socialServiceName);
@@ -71,19 +84,6 @@ class SocialRepository implements SocialRepositoryInterface
         $socialAccountRecord = (object)$result;
         $socialAccountValueObject = new SocialAccountValueObject($socialAccountRecord);
         return new SocialUserAccountEntity($userId, $socialAccountValueObject);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function registerUser(SocialUser $socialUser)
-    {
-        $userInfo = new stdClass();
-        $userInfo->name = $socialUser->getName();
-        $userInfo->email = $socialUser->getEmail();
-        $userValueObject = new UserValueObject($userInfo);
-        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject);
-        $this->users->registerUser($registerUserEntity);
     }
 
     /**

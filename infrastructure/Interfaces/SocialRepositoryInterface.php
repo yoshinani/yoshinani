@@ -2,7 +2,6 @@
 
 namespace Infrastructure\Interfaces;
 
-use Domain\ValueObjects\UserValueObject;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**
@@ -11,14 +10,6 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  */
 interface SocialRepositoryInterface
 {
-    /**
-     * @param int $userId
-     * @param string $socialServiceName
-     * @param SocialUser $socialUser
-     * @return mixed
-     */
-    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser);
-
     /**
      * @param SocialUser $socialUser
      * @return mixed
@@ -36,6 +27,14 @@ interface SocialRepositoryInterface
      * @return mixed
      */
     public function registerUser(SocialUser $socialUser);
+
+    /**
+     * @param int $userId
+     * @param string $socialServiceName
+     * @param SocialUser $socialUser
+     * @return mixed
+     */
+    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser);
 
     /**
      * @param int $userId

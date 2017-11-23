@@ -28,18 +28,6 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(array $oldRequest)
-    {
-        $userRecord = (object)$oldRequest;
-        $userValueObject = new UserValueObject($userRecord);
-        $passwordValueObject = new PasswordValueObject($userRecord);
-        $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject, $passwordValueObject);
-        $this->users->registerUser($registerUserEntity);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function findUser(array $oldRequest)
     {
         $userRequestObject = (object)$oldRequest;
@@ -51,5 +39,17 @@ class AuthRepository implements AuthRepositoryInterface
         $userValueObject = new UserValueObject($userRecord);
         $passwordValueObject = new PasswordValueObject($userRecord);
         return new UserEntity($userRecord, $userValueObject, $passwordValueObject);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function registerUser(array $oldRequest)
+    {
+        $userRecord = (object)$oldRequest;
+        $userValueObject = new UserValueObject($userRecord);
+        $passwordValueObject = new PasswordValueObject($userRecord);
+        $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject, $passwordValueObject);
+        $this->users->registerUser($registerUserEntity);
     }
 }

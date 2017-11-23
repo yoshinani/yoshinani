@@ -12,11 +12,11 @@ interface AuthRepositoryInterface
      * @param array $oldRequest
      * @return mixed
      */
-    public function registerUser(array $oldRequest);
+    public function findUser(array $oldRequest);
 
     /**
      * @param array $oldRequest
      * @return mixed
      */
-    public function findUser(array $oldRequest);
+    public function registerUser(array $oldRequest);
 }
