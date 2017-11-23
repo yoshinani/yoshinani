@@ -36,7 +36,6 @@ class SocialAccounts extends Bass
                     'user_id' => $registerSocialUserEntity->getId(),
                     'social_service_name' => $registerSocialUserEntity->getSocialServiceName(),
                     'social_user_id' => $registerSocialUserEntity->getSocialUserId(),
-                    'social_user_name' => $registerSocialUserEntity->getSocialUserName(),
                 ]
             );
     }

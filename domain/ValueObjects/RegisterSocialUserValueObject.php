@@ -12,7 +12,6 @@ class RegisterSocialUserValueObject
 {
     private $socialServiceName;
     private $socialUserId;
-    private $socialUserName;
 
     /**
      * SocialUserValueObject constructor.
@@ -23,7 +22,6 @@ class RegisterSocialUserValueObject
     {
         $this->socialServiceName = $socialServiceName;
         $this->socialUserId = $socialUser->getId();
-        $this->socialUserName = $socialUser->getName();
     }
 
     /**
@@ -40,14 +38,6 @@ class RegisterSocialUserValueObject
     public function getSocialUserId()
     {
         return $this->socialUserId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSocialUserName()
-    {
-        return $this->socialUserName;
     }
 
 }
