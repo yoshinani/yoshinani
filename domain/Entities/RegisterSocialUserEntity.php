@@ -46,21 +46,33 @@ class RegisterSocialUserEntity implements Arrayable
         ];
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getSocialServiceName()
     {
         return $this->socialServiceName;
     }
 
+    /**
+     * @return string
+     */
     public function getSocialUserId()
     {
         return $this->socialUserId;
     }
 
+    /**
+     * @return string
+     */
     public function getSocialUserName()
     {
         return $this->socialUserName;

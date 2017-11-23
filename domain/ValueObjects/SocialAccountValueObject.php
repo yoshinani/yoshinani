@@ -35,6 +35,9 @@ class SocialAccountValueObject
         return $this->userId;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSocialServiceName()
     {
         return $this->socialServiceName;

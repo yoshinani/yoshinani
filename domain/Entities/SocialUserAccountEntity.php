@@ -46,21 +46,33 @@ class SocialUserAccountEntity implements Arrayable
         ];
     }
 
+    /**
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function getSocialServiceName()
+    /**
+     * @return mixed
+     */
+    public function getSocialServiceName():string
     {
         return $this->socialServiceName;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSocialUserId()
     {
         return $this->socialUserId;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSocialUserName()
     {
         return $this->socialUserName;
