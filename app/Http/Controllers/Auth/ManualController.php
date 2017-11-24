@@ -57,10 +57,9 @@ class ManualController extends Controller
     public function completeRegister(Request $request)
     {
         $oldRequest = $request->old();
-        $this->authRepository->registerUser($oldRequest);
-        $userEntity = $this->authRepository->findUser($oldRequest);
-        $userPasswordEntity = $this->authRepository->getUserPassword($userEntity->getUserId());
-        $this->authService->login($oldRequest, $userEntity, $userPasswordEntity);
+        $userId = $this->authRepository->registerUser($oldRequest);
+        $userDetailEntity = $this->authRepository->getUserDetail($userId);
+        $this->authService->login($oldRequest, $userDetailEntity);
         return redirect()->to('/home');
     }
 
@@ -80,9 +79,9 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userEntity = $this->authRepository->findUser($oldRequest);
-        $userPasswordEntity = $this->authRepository->getUserPassword($userEntity->getUserId());
-        $this->authService->login($oldRequest, $userEntity, $userPasswordEntity);
+        $userId = $this->authRepository->getUserId($oldRequest['email']);
+        $userDetailEntity = $this->authRepository->getUserDetail($userId);
+        $this->authService->login($oldRequest, $userDetailEntity);
         return redirect()->to('/home');
     }
 
