@@ -3,8 +3,6 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
-use Exception;
-use stdClass;
 
 /**
  * Class Users
@@ -15,7 +13,6 @@ class Users extends Bass
     /**
      * @param string $email
      * @return \Illuminate\Database\Eloquent\Model|null|static
-     * @throws Exception
      */
     public function findUser(string $email)
     {
@@ -28,7 +25,6 @@ class Users extends Bass
     /**
      * @param string $email
      * @return mixed
-     * @throws Exception
      */
     public function getUserId(string $email)
     {
@@ -38,20 +34,30 @@ class Users extends Bass
         return $result;
     }
 
+    public function getUserDetail($userId)
+    {
+        $result = $this->db->table('users')
+            ->join('users_password', 'users_password.user_id', '=', 'users.id')
+            ->where('users.id', $userId)
+            ->select('users.id', 'users.name', 'users.email', 'users_password.password')
+            ->first();
+        return $result;
+    }
+
     /**
      * @param RegisterUserEntity $registerUserEntity
-     * @internal param string $userEmail
-     * @internal param string $userName
+     * @return int
      */
     public function registerUser(RegisterUserEntity $registerUserEntity)
     {
-        $this->db->table('users')
-            ->insert(
+        $result = $this->db->table('users')
+            ->insertGetId(
                 [
                     'email' => $registerUserEntity->getEmail(),
                     'name' => $registerUserEntity->getName(),
-                    'password' => $registerUserEntity->getPassword(),
                 ]
             );
+        return $result;
     }
+
 }
