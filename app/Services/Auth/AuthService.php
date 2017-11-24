@@ -4,8 +4,6 @@ namespace App\Services\Auth;
 
 use Auth;
 use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserEntity;
-use Domain\Entities\UserPasswordEntity;
 use Exception;
 
 /**
