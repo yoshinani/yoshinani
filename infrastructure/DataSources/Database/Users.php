@@ -34,18 +34,30 @@ class Users extends Bass
         return $result;
     }
 
+    public function getUserDetail($userId)
+    {
+        $result = $this->db->table('users')
+            ->join('users_password', 'users_password.user_id', '=', 'users.id')
+            ->where('users.id', $userId)
+            ->select('users.id', 'users.name', 'users.email', 'users_password.password')
+            ->first();
+        return $result;
+    }
+
     /**
      * @param RegisterUserEntity $registerUserEntity
+     * @return int
      */
     public function registerUser(RegisterUserEntity $registerUserEntity)
     {
-        $this->db->table('users')
-            ->insert(
+        $result = $this->db->table('users')
+            ->insertGetId(
                 [
                     'email' => $registerUserEntity->getEmail(),
                     'name' => $registerUserEntity->getName(),
                 ]
             );
+        return $result;
     }
 
 }
