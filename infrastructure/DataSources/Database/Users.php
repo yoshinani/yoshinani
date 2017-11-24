@@ -3,8 +3,6 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
-use Exception;
-use stdClass;
 
 /**
  * Class Users
@@ -15,7 +13,6 @@ class Users extends Bass
     /**
      * @param string $email
      * @return \Illuminate\Database\Eloquent\Model|null|static
-     * @throws Exception
      */
     public function findUser(string $email)
     {
@@ -28,7 +25,6 @@ class Users extends Bass
     /**
      * @param string $email
      * @return mixed
-     * @throws Exception
      */
     public function getUserId(string $email)
     {
@@ -40,8 +36,6 @@ class Users extends Bass
 
     /**
      * @param RegisterUserEntity $registerUserEntity
-     * @internal param string $userEmail
-     * @internal param string $userName
      */
     public function registerUser(RegisterUserEntity $registerUserEntity)
     {
@@ -50,8 +44,8 @@ class Users extends Bass
                 [
                     'email' => $registerUserEntity->getEmail(),
                     'name' => $registerUserEntity->getName(),
-                    'password' => $registerUserEntity->getPassword(),
                 ]
             );
     }
+
 }
