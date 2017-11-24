@@ -46,6 +46,9 @@ class AuthRepository implements AuthRepositoryInterface
         return new UserEntity($userRecord, $userValueObject);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getUserPassword(int $userId)
     {
         $result = $this->usersPassword->getUserPassword($userId);
@@ -57,6 +60,9 @@ class AuthRepository implements AuthRepositoryInterface
         return new UserPasswordEntity($userId, $passwordValueObject);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getUserId(string $email)
     {
         $result = $this->users->getUserId($email);
@@ -66,6 +72,9 @@ class AuthRepository implements AuthRepositoryInterface
         return $result;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getUserDetail(int $userId)
     {
         $result = $this->users->getUserDetail($userId);
