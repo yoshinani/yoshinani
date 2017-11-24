@@ -15,6 +15,12 @@ interface AuthRepositoryInterface
     public function findUser(array $oldRequest);
 
     /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function getUserPassword(int $userId);
+
+    /**
      * @param array $oldRequest
      * @return mixed
      */
