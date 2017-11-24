@@ -15,5 +15,5 @@ sites:
         to: /home/vagrant/code/public
 databases:
     - homestead
-name: code
-hostname: code
+name: yoshinani
+hostname: yoshinani
