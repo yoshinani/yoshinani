@@ -21,6 +21,18 @@ interface AuthRepositoryInterface
     public function getUserPassword(int $userId);
 
     /**
+     * @param string $email
+     * @return mixed
+     */
+    public function getUserId(string $email);
+
+    /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function getUserDetail(int $userId);
+
+    /**
      * @param array $oldRequest
      * @return mixed
      */

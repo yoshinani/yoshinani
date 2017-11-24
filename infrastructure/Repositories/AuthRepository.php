@@ -4,6 +4,7 @@ namespace Infrastructure\Repositories;
 
 use Domain\Entities\RegisterUserEntity;
 use Domain\Entities\RegisterUserPasswordEntity;
+use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
 use Domain\Entities\UserPasswordEntity;
 use Domain\ValueObjects\PasswordValueObject;
@@ -56,6 +57,27 @@ class AuthRepository implements AuthRepositoryInterface
         return new UserPasswordEntity($userId, $passwordValueObject);
     }
 
+    public function getUserId(string $email)
+    {
+        $result = $this->users->getUserId($email);
+        if (is_null($result)) {
+            return null;
+        }
+        return $result;
+    }
+
+    public function getUserDetail(int $userId)
+    {
+        $result = $this->users->getUserDetail($userId);
+        if (is_null($result)) {
+            return null;
+        }
+        $userDetail = (object)$result;
+        $userValueObject = new UserValueObject($userDetail);
+        $passwordValueObject = new PasswordValueObject($userDetail);
+        return new UserDetailEntity($userDetail, $userValueObject, $passwordValueObject);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -64,10 +86,10 @@ class AuthRepository implements AuthRepositoryInterface
         $userRecord = (object)$oldRequest;
         $userValueObject = new UserValueObject($userRecord);
         $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject);
-        $this->users->registerUser($registerUserEntity);
-        $userId = $this->users->getUserId($registerUserEntity->getEmail());
+        $userId = $this->users->registerUser($registerUserEntity);
         $passwordValueObject = new PasswordValueObject($userRecord);
         $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $passwordValueObject);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
+        return $userId;
     }
 }
