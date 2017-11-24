@@ -16,26 +16,20 @@ class UserEntity implements Arrayable
     private $id;
     private $name;
     private $email;
-    private $password;
 
     /**
      * UserEntity constructor.
      * @param stdClass $userRecord
      * @param UserValueObject $userValueObject
-     * @param PasswordValueObject $passwordValueObject
      * @internal param int $userId
      */
     public function __construct(
         stdClass $userRecord,
-        UserValueObject $userValueObject,
-        PasswordValueObject $passwordValueObject = null
+        UserValueObject $userValueObject
     ) {
         $this->id = $userRecord->id;
         $this->name = $userValueObject->getUserName();
         $this->email = $userValueObject->getUserEmail();
-        if (!is_null($passwordValueObject)) {
-            $this->password = $passwordValueObject->getDecryptionPassword();
-        }
     }
 
     /**
@@ -49,7 +43,6 @@ class UserEntity implements Arrayable
             'id' => $this->id,
             'userName' => $this->name,
             'userEmail' => $this->email,
-            'userPassword' => $this->password,
         ];
     }
 
@@ -63,11 +56,4 @@ class UserEntity implements Arrayable
         return $this->email;
     }
 
-    public function getUserPassword()
-    {
-        if (is_null($this->password)) {
-            return null;
-        }
-        return $this->password;
-    }
 }
