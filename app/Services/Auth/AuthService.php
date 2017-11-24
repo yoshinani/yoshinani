@@ -4,6 +4,7 @@ namespace App\Services\Auth;
 
 use Auth;
 use Domain\Entities\UserEntity;
+use Domain\Entities\UserPasswordEntity;
 use Exception;
 
 /**
@@ -15,20 +16,25 @@ class AuthService
     /**
      * @param array $oldRequest
      * @param UserEntity $userEntity
+     * @param UserPasswordEntity $userPasswordEntity
      * @throws Exception
      * @internal param string $userId
      */
-    public function login(array $oldRequest, UserEntity $userEntity = null)
+    public function login(array $oldRequest, UserEntity $userEntity, UserPasswordEntity $userPasswordEntity)
     {
         if (is_null($userEntity)) {
             throw new Exception('User does not exist');
+        }
+
+        if (is_null($userPasswordEntity)) {
+            throw new Exception('Password does not exist');
         }
 
         if (!$oldRequest['email'] == $userEntity->getUserEmail()) {
             throw new Exception('email does not match');
         }
 
-        if (!$oldRequest['password'] == $userEntity->getUserPassword()) {
+        if (!$oldRequest['password'] == $userPasswordEntity->getPassword()) {
             throw new Exception('password does not match');
         }
 

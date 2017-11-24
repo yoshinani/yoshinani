@@ -59,7 +59,8 @@ class ManualController extends Controller
         $oldRequest = $request->old();
         $this->authRepository->registerUser($oldRequest);
         $userEntity = $this->authRepository->findUser($oldRequest);
-        $this->authService->login($oldRequest, $userEntity);
+        $userPasswordEntity = $this->authRepository->getUserPassword($userEntity->getUserId());
+        $this->authService->login($oldRequest, $userEntity, $userPasswordEntity);
         return redirect()->to('/home');
     }
 
@@ -80,7 +81,8 @@ class ManualController extends Controller
         $request->flash();
         $oldRequest = $request->old();
         $userEntity = $this->authRepository->findUser($oldRequest);
-        $this->authService->login($oldRequest, $userEntity);
+        $userPasswordEntity = $this->authRepository->getUserPassword($userEntity->getUserId());
+        $this->authService->login($oldRequest, $userEntity, $userPasswordEntity);
         return redirect()->to('/home');
     }
 
