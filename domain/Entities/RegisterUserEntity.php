@@ -3,6 +3,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\PasswordValueObject;
+use Domain\ValueObjects\TimeStampValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
@@ -15,17 +16,20 @@ class RegisterUserEntity implements Arrayable
 {
     private $email;
     private $userValueObject;
+    private $timeStampValueObject;
+
 
     /**
      * RegisterUserEntity constructor.
      * @param stdClass $userRecord
      * @param UserValueObject $userValueObject
-     * @internal param string $userEmail
+     * @param TimeStampValueObject $timeStampValueObject
      */
-    public function __construct(stdClass $userRecord, UserValueObject $userValueObject)
+    public function __construct(stdClass $userRecord, UserValueObject $userValueObject, TimeStampValueObject $timeStampValueObject)
     {
         $this->email = $userRecord->email;
         $this->userValueObject = $userValueObject;
+        $this->timeStampValueObject = $timeStampValueObject;
     }
 
     /**
@@ -37,7 +41,9 @@ class RegisterUserEntity implements Arrayable
     {
         return [
             'email' => $this->email,
-            'name' => $this->userValueObject->getUserName(),
+            'name' => $this->getName(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
         ];
     }
 
@@ -55,5 +61,15 @@ class RegisterUserEntity implements Arrayable
     public function getName(): string
     {
         return $this->userValueObject->getUserName();
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->timeStampValueObject->getCreatedAt();
+    }
+
+    public function getUpdatedAt()
+    {
+        return$this->timeStampValueObject->getUpdatedAt();
     }
 }

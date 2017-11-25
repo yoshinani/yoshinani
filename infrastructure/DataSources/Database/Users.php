@@ -55,6 +55,8 @@ class Users extends Bass
                 [
                     'email' => $registerUserEntity->getEmail(),
                     'name' => $registerUserEntity->getName(),
+                    'created_at' => $registerUserEntity->getCreatedAt(),
+                    'updated_at' => $registerUserEntity->getUpdatedAt(),
                 ]
             );
         return $result;
