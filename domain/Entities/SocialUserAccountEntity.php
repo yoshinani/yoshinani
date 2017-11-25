@@ -66,5 +66,4 @@ class SocialUserAccountEntity implements Arrayable
     {
         return $this->socialUserId;
     }
-
 }

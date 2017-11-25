@@ -56,5 +56,4 @@ class RegisterUserEntity implements Arrayable
     {
         return $this->userValueObject->getUserName();
     }
-
 }
