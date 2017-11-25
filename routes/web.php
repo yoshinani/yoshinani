@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-
     Route::get('login', 'Auth\ManualController@loginEdit')->name('login');
     Route::post('login', 'Auth\ManualController@login');
 

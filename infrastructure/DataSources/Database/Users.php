@@ -59,5 +59,4 @@ class Users extends Bass
             );
         return $result;
     }
-
 }
