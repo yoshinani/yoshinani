@@ -34,6 +34,10 @@ class Users extends Bass
         return $result;
     }
 
+    /**
+     * @param $userId
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
     public function getUserDetail($userId)
     {
         $result = $this->db->table('users')

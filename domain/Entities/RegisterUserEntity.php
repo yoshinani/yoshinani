@@ -18,7 +18,6 @@ class RegisterUserEntity implements Arrayable
     private $userValueObject;
     private $timeStampValueObject;
 
-
     /**
      * RegisterUserEntity constructor.
      * @param stdClass $userRecord
@@ -63,11 +62,17 @@ class RegisterUserEntity implements Arrayable
         return $this->userValueObject->getUserName();
     }
 
+    /**
+     * @return string
+     */
     public function getCreatedAt()
     {
         return $this->timeStampValueObject->getCreatedAt();
     }
 
+    /**
+     * @return string
+     */
     public function getUpdatedAt()
     {
         return$this->timeStampValueObject->getUpdatedAt();
