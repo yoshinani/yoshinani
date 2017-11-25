@@ -1,35 +1,19 @@
----
-ip: "192.168.10.10"
+ip: 192.168.10.10
 memory: 2048
 cpus: 1
 provider: virtualbox
-
 authorize: ~/.ssh/id_rsa.pub
-
 keys:
     - ~/.ssh/id_rsa
-
 folders:
-    #    - map: ~/code
-    - map: ~/workspace/applications/yoshinani
-      to: /home/vagrant/code
-
+    -
+        map: ~/yoshinani
+        to: /home/vagrant/code
 sites:
-    - map: yoshinani.dev
-      to: /home/vagrant/code/public
-
+    -
+        map: yoshinani.dev
+        to: /home/vagrant/code/public
 databases:
     - homestead
-
-# blackfire:
-#     - id: foo
-#       token: bar
-#       client-id: foo
-#       client-token: bar
-
-# ports:
-#     - send: 50000
-#       to: 5000
-#     - send: 7777
-#       to: 777
-#       protocol: udp
+name: yoshinani
+hostname: yoshinani

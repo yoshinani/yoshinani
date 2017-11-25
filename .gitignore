@@ -13,3 +13,6 @@ yarn-error.log
 .env
 .php_cs.cache
 _ide_helper.php
+Vagrantfile
+after.sh
+aliases
