@@ -55,5 +55,4 @@ class UserEntity implements Arrayable
     {
         return $this->email;
     }
-
 }

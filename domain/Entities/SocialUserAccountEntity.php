@@ -3,7 +3,6 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\SocialAccountValueObject;
-use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -67,5 +66,4 @@ class SocialUserAccountEntity implements Arrayable
     {
         return $this->socialUserId;
     }
-
 }

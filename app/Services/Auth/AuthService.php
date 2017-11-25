@@ -19,7 +19,6 @@ class AuthService
      */
     public function login(array $oldRequest, UserDetailEntity $userDetailEntity)
     {
-
         if (!$oldRequest['email'] == $userDetailEntity->getUserEmail()) {
             throw new Exception('email does not match');
         }
@@ -37,5 +36,4 @@ class AuthService
     {
         Auth::logout();
     }
-
 }

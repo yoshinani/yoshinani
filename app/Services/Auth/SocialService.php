@@ -32,17 +32,15 @@ class SocialService
      */
     public function socialLogin(string $socialServiceName, SocialUser $socialUser, SocialUserAccountEntity $socialUserAccountEntity)
     {
-        $socialUserAccount = $socialUserAccountEntity->toArray();
-
-        if (!$socialUserAccount['socialServiceName'] === $socialServiceName) {
+        if (!$socialUserAccountEntity->getSocialServiceName() === $socialServiceName) {
             throw new Exception('Authentication drivers do not match');
         }
 
-        if (!$socialUserAccount['socialUserId'] === $socialUser->getId()) {
+        if (!$socialUserAccountEntity->getSocialUserId() === $socialUser->getId()) {
             throw new Exception('It does not match the ID of SNSAccount');
         }
 
-        if (!Auth::loginUsingId($socialUserAccount['id'])) {
+        if (!Auth::loginUsingId($socialUserAccountEntity->getId())) {
             throw new Exception('It is a User that does not exist');
         }
     }

@@ -26,8 +26,7 @@ class ManualController extends Controller
     public function __construct(
         AuthRepositoryInterface $authRepository,
         AuthService $authService
-    )
-    {
+    ) {
         $this->authRepository = $authRepository;
         $this->authService = $authService;
     }
