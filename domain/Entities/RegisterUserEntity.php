@@ -28,8 +28,8 @@ class RegisterUserEntity implements Arrayable
     {
         $this->email = $userRecord->email;
         $this->name = $userValueObject->getUserName();
-        $this->createdAt = $timeStampValueObject->getMakeUp();
-        $this->updatedAt = $timeStampValueObject->getMakeUp();
+        $this->createdAt = $timeStampValueObject->getNow();
+        $this->updatedAt = $timeStampValueObject->getNow();
     }
 
     /**

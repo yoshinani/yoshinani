@@ -10,20 +10,20 @@ use Carbon\Carbon;
  */
 class TimeStampValueObject
 {
-    private $getMakeUp;
+    private $getNow;
 
     /**
      * TimeStampValueObject constructor.
      */
     public function __construct()
     {
-        $this->getMakeUp = $this->getMakeUp();
+        $this->getNow = $this->getNow();
     }
 
     /**
      * @return string
      */
-    public function getMakeUp()
+    public function getNow()
     {
         $carbon = Carbon::now();
         return $carbon->toDateTimeString();
