@@ -10,33 +10,23 @@ use Carbon\Carbon;
  */
 class TimeStampValueObject
 {
-    private $getCreatedAt;
-    private $getUpdatedAt;
+    private $getMakeUp;
 
     /**
      * TimeStampValueObject constructor.
      */
     public function __construct()
     {
-        $this->getCreatedAt = $this->getCreatedAt();
-        $this->getUpdatedAt = $this->getCreatedAt();
+        $this->getMakeUp = $this->getMakeUp();
     }
 
     /**
      * @return string
      */
-    public function getCreatedAt()
+    public function getMakeUp()
     {
         $carbon = Carbon::now();
         return $carbon->toDateTimeString();
     }
 
-    /**
-     * @return string
-     */
-    public function getUpdatedAt()
-    {
-        $carbon = Carbon::now();
-        return $carbon->toDateTimeString();
-    }
 }
