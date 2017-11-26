@@ -2,7 +2,6 @@
 
 namespace Domain\Entities;
 
-use Domain\ValueObjects\PasswordValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
@@ -15,8 +14,9 @@ use stdClass;
 class RegisterUserEntity implements Arrayable
 {
     private $email;
-    private $userValueObject;
-    private $timeStampValueObject;
+    private $name;
+    private $createdAt;
+    private $updatedAt;
 
     /**
      * RegisterUserEntity constructor.
@@ -27,8 +27,9 @@ class RegisterUserEntity implements Arrayable
     public function __construct(stdClass $userRecord, UserValueObject $userValueObject, TimeStampValueObject $timeStampValueObject)
     {
         $this->email = $userRecord->email;
-        $this->userValueObject = $userValueObject;
-        $this->timeStampValueObject = $timeStampValueObject;
+        $this->name = $userValueObject->getUserName();
+        $this->createdAt = $timeStampValueObject->getCreatedAt();
+        $this->updatedAt = $timeStampValueObject->getUpdatedAt();
     }
 
     /**
@@ -40,9 +41,9 @@ class RegisterUserEntity implements Arrayable
     {
         return [
             'email' => $this->email,
-            'name' => $this->getName(),
-            'created_at' => $this->getCreatedAt(),
-            'updated_at' => $this->getUpdatedAt(),
+            'name' => $this->name,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
         ];
     }
 
@@ -59,7 +60,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getName(): string
     {
-        return $this->userValueObject->getUserName();
+        return $this->name;
     }
 
     /**
@@ -67,7 +68,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getCreatedAt()
     {
-        return $this->timeStampValueObject->getCreatedAt();
+        return $this->createdAt;
     }
 
     /**
@@ -75,6 +76,6 @@ class RegisterUserEntity implements Arrayable
      */
     public function getUpdatedAt()
     {
-        return$this->timeStampValueObject->getUpdatedAt();
+        return$this->updatedAt;
     }
 }
