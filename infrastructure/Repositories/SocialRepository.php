@@ -8,6 +8,7 @@ use Domain\Entities\RegisterSocialUserEntity;
 use Domain\Entities\UserEntity;
 use Domain\ValueObjects\SocialAccountValueObject;
 use Domain\ValueObjects\RegisterSocialUserValueObject;
+use Domain\ValueObjects\TimeStampValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Infrastructure\DataSources\Database\SocialAccounts;
@@ -68,7 +69,8 @@ class SocialRepository implements SocialRepositoryInterface
         $userInfo->name = $socialUser->getName();
         $userInfo->email = $socialUser->getEmail();
         $userValueObject = new UserValueObject($userInfo);
-        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject);
+        $timeStampValueObject = new TimeStampValueObject();
+        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject, $timeStampValueObject);
         $this->users->registerUser($registerUserEntity);
     }
 
