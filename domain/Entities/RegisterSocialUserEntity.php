@@ -2,6 +2,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\RegisterSocialUserValueObject;
+use Domain\ValueObjects\TimeStampValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
@@ -14,19 +15,25 @@ class RegisterSocialUserEntity implements Arrayable
     private $id;
     private $socialServiceName;
     private $socialUserId;
+    private $createdAt;
+    private $updatedAt;
 
     /**
-     * SocialUserEntity constructor.
+     * RegisterSocialUserEntity constructor.
      * @param int $userId
      * @param RegisterSocialUserValueObject $registerSocialUserValueObject
+     * @param TimeStampValueObject $timeStampValueObject
      */
     public function __construct(
         int $userId,
-        RegisterSocialUserValueObject $registerSocialUserValueObject
+        RegisterSocialUserValueObject $registerSocialUserValueObject,
+        TimeStampValueObject $timeStampValueObject
     ) {
         $this->id = $userId;
         $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
         $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
+        $this->createdAt = $timeStampValueObject->getNow();
+        $this->updatedAt = $timeStampValueObject->getNow();
     }
 
     /**
@@ -40,6 +47,8 @@ class RegisterSocialUserEntity implements Arrayable
             'id' => $this->id,
             'socialServiceName' => $this->socialServiceName,
             'socialUserId' => $this->socialUserId,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
         ];
     }
 
@@ -65,5 +74,21 @@ class RegisterSocialUserEntity implements Arrayable
     public function getSocialUserId()
     {
         return $this->socialUserId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpdatedAt()
+    {
+        return$this->updatedAt;
     }
 }

@@ -94,7 +94,8 @@ class SocialRepository implements SocialRepositoryInterface
     public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
         $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
-        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
+        $timeStampValueObject = new TimeStampValueObject();
+        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject, $timeStampValueObject);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }
