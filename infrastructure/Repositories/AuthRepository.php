@@ -99,7 +99,7 @@ class AuthRepository implements AuthRepositoryInterface
         $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject, $timeStampValueObject);
         $userId = $this->users->registerUser($registerUserEntity);
         $passwordValueObject = new PasswordValueObject($userRecord);
-        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $passwordValueObject);
+        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $passwordValueObject, $timeStampValueObject);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
         return $userId;
     }

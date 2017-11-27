@@ -3,6 +3,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\PasswordValueObject;
+use Domain\ValueObjects\TimeStampValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -13,19 +14,24 @@ class RegisterUserPasswordEntity implements Arrayable
 {
     private $id;
     private $password;
+    private $createdAt;
+    private $updatedAt;
 
     /**
-     * UserEntity constructor.
+     * RegisterUserPasswordEntity constructor.
      * @param int $userId
      * @param PasswordValueObject $passwordValueObject
-     * @internal param int $userId
+     * @param TimeStampValueObject $timeStampValueObject
      */
     public function __construct(
         int $userId,
-        PasswordValueObject $passwordValueObject
+        PasswordValueObject $passwordValueObject,
+        TimeStampValueObject $timeStampValueObject
     ) {
         $this->id = $userId;
         $this->password = $passwordValueObject->getEncryptionPassword();
+        $this->createdAt = $timeStampValueObject->getNow();
+        $this->updatedAt = $timeStampValueObject->getNow();
     }
 
     /**
@@ -38,6 +44,8 @@ class RegisterUserPasswordEntity implements Arrayable
         return [
             'id' => $this->id,
             'password' => $this->password,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
         ];
     }
 
@@ -47,5 +55,21 @@ class RegisterUserPasswordEntity implements Arrayable
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpdatedAt()
+    {
+        return$this->updatedAt;
     }
 }
