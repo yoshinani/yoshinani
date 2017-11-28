@@ -33,6 +33,8 @@ class UsersPassword extends Bass
                 [
                     'user_id' => $userId,
                     'password' => $registerUserPasswordEntity->getPassword(),
+                    'created_at' => $registerUserPasswordEntity->getCreatedAt(),
+                    'updated_at' => $registerUserPasswordEntity->getUpdatedAt(),
                 ]
             );
     }
