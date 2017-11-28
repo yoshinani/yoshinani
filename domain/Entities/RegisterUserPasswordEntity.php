@@ -21,15 +21,14 @@ class RegisterUserPasswordEntity implements Arrayable
      * RegisterUserPasswordEntity constructor.
      * @param int $userId
      * @param PasswordValueObject $passwordValueObject
-     * @param TimeStampValueObject $timeStampValueObject
      */
     public function __construct(
         int $userId,
-        PasswordValueObject $passwordValueObject,
-        TimeStampValueObject $timeStampValueObject
+        PasswordValueObject $passwordValueObject
     ) {
         $this->id = $userId;
         $this->password = $passwordValueObject->getEncryptionPassword();
+        $timeStampValueObject = new TimeStampValueObject();
         $this->createdAt = $timeStampValueObject->getNow();
         $this->updatedAt = $timeStampValueObject->getNow();
     }

@@ -8,7 +8,6 @@ use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
 use Domain\Entities\UserPasswordEntity;
 use Domain\ValueObjects\PasswordValueObject;
-use Domain\ValueObjects\TimeStampValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
@@ -95,11 +94,10 @@ class AuthRepository implements AuthRepositoryInterface
     {
         $userRecord = (object)$oldRequest;
         $userValueObject = new UserValueObject($userRecord);
-        $timeStampValueObject = new TimeStampValueObject();
-        $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject, $timeStampValueObject);
+        $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject);
         $userId = $this->users->registerUser($registerUserEntity);
         $passwordValueObject = new PasswordValueObject($userRecord);
-        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $passwordValueObject, $timeStampValueObject);
+        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $passwordValueObject);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
         return $userId;
     }
