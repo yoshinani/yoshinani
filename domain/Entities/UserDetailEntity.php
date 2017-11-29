@@ -55,17 +55,25 @@ class UserDetailEntity implements Arrayable
         ];
     }
 
-
+    /**
+     * @return int
+     */
     public function getUserId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getUserEmail(): string
     {
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
     public function getPassword(): string
     {
         if (is_null($this->password)) {
