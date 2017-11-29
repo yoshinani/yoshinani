@@ -34,7 +34,7 @@ class SocialUserAccountEntity implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id,
@@ -46,23 +46,23 @@ class SocialUserAccountEntity implements Arrayable
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSocialServiceName():string
+    public function getSocialServiceName(): string
     {
         return $this->socialServiceName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSocialUserId()
+    public function getSocialUserId(): string
     {
         return $this->socialUserId;
     }

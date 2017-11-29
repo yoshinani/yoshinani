@@ -67,7 +67,7 @@ class RegisterUserPasswordEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUpdatedAt(): string 
+    public function getUpdatedAt(): string
     {
         return$this->updatedAt;
     }
