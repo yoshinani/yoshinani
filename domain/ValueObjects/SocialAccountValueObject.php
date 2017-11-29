@@ -26,25 +26,25 @@ class SocialAccountValueObject
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSocialServiceName()
+    public function getSocialServiceName(): string
     {
         return $this->socialServiceName;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getSocialUserId()
+    public function getSocialUserId(): string
     {
         return $this->socialUserId;
     }
