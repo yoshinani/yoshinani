@@ -2,8 +2,10 @@
 
 namespace Domain\Entities;
 
-use Domain\ValueObjects\TimeStampValueObject;
-use Domain\ValueObjects\UserValueObject;
+use Domain\ValueObjects\{
+    UserValueObject,
+    TimeStampValueObject
+};
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
@@ -37,7 +39,7 @@ class RegisterUserEntity implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'email' => $this->email,
@@ -66,7 +68,7 @@ class RegisterUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -74,7 +76,7 @@ class RegisterUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): string
     {
         return$this->updatedAt;
     }
