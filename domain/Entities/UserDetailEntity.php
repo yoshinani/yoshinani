@@ -66,7 +66,7 @@ class UserDetailEntity implements Arrayable
         return $this->email;
     }
 
-    public function getPassword(): string 
+    public function getPassword(): string
     {
         if (is_null($this->password)) {
             return null;

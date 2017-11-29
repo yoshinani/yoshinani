@@ -2,7 +2,6 @@
 
 namespace Domain\Entities;
 
-use Domain\ValueObjects\PasswordValueObject;
 use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
@@ -37,7 +36,7 @@ class UserEntity implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id,
@@ -46,12 +45,18 @@ class UserEntity implements Arrayable
         ];
     }
 
-    public function getUserId()
+    /**
+     * @return int
+     */
+    public function getUserId(): int
     {
         return $this->id;
     }
 
-    public function getUserEmail()
+    /**
+     * @return string
+     */
+    public function getUserEmail(): string
     {
         return $this->email;
     }
