@@ -14,7 +14,7 @@ class RegisterSocialUserValueObject
     private $socialUserId;
 
     /**
-     * SocialUserValueObject constructor.
+     * RegisterSocialUserValueObject constructor.
      * @param string $socialServiceName
      * @param SocialUser $socialUser
      */
@@ -27,7 +27,7 @@ class RegisterSocialUserValueObject
     /**
      * @return string
      */
-    public function getSocialServiceName()
+    public function getSocialServiceName(): string
     {
         return $this->socialServiceName;
     }
@@ -35,7 +35,7 @@ class RegisterSocialUserValueObject
     /**
      * @return string
      */
-    public function getSocialUserId()
+    public function getSocialUserId(): string
     {
         return $this->socialUserId;
     }
