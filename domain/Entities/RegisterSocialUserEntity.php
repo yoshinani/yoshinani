@@ -1,8 +1,10 @@
 <?php
 namespace Domain\Entities;
 
-use Domain\ValueObjects\RegisterSocialUserValueObject;
-use Domain\ValueObjects\TimeStampValueObject;
+use Domain\ValueObjects\{
+    RegisterSocialUserValueObject,
+    TimeStampValueObject
+};
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
@@ -39,7 +41,7 @@ class RegisterSocialUserEntity implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id,
@@ -53,7 +55,7 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -61,7 +63,7 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getSocialServiceName()
+    public function getSocialServiceName(): string
     {
         return $this->socialServiceName;
     }
@@ -69,7 +71,7 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getSocialUserId()
+    public function getSocialUserId(): string
     {
         return $this->socialUserId;
     }
@@ -77,7 +79,7 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -85,7 +87,7 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): string
     {
         return$this->updatedAt;
     }

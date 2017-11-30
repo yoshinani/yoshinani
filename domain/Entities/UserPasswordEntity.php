@@ -33,7 +33,7 @@ class UserPasswordEntity implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id,
@@ -44,7 +44,7 @@ class UserPasswordEntity implements Arrayable
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }

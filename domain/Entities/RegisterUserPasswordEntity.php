@@ -38,7 +38,7 @@ class RegisterUserPasswordEntity implements Arrayable
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id,
@@ -51,7 +51,7 @@ class RegisterUserPasswordEntity implements Arrayable
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -59,7 +59,7 @@ class RegisterUserPasswordEntity implements Arrayable
     /**
      * @return string
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -67,7 +67,7 @@ class RegisterUserPasswordEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): string
     {
         return$this->updatedAt;
     }
