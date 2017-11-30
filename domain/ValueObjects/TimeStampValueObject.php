@@ -23,7 +23,7 @@ class TimeStampValueObject
     /**
      * @return string
      */
-    public function getNow()
+    public function getNow(): string 
     {
         $carbon = Carbon::now();
         return $carbon->toDateTimeString();
