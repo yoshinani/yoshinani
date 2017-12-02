@@ -10,6 +10,8 @@ use stdClass;
  */
 class PasswordValueObject
 {
+    const NO_EXIST = 'Unregistered';
+
     private $userPassword;
 
     /**
@@ -22,9 +24,9 @@ class PasswordValueObject
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getEncryptionPassword(): string
+    public function getEncryptionPassword(): ?string
     {
         return encrypt($this->userPassword);
     }
@@ -34,6 +36,9 @@ class PasswordValueObject
      */
     public function getDecryptionPassword(): string
     {
+        if (is_null($this->userPassword)) {
+            return self::NO_EXIST;
+        }
         return decrypt($this->userPassword);
     }
 }

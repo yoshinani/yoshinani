@@ -30,14 +30,12 @@ class UserDetailEntity implements Arrayable
     public function __construct(
         stdClass $userRecord,
         UserValueObject $userValueObject,
-        PasswordValueObject $passwordValueObject = null
+        PasswordValueObject $passwordValueObject
     ) {
         $this->id = $userRecord->id;
         $this->name = $userValueObject->getUserName();
         $this->email = $userValueObject->getUserEmail();
-        if (!is_null($passwordValueObject)) {
-            $this->password = $passwordValueObject->getDecryptionPassword();
-        }
+        $this->password = $passwordValueObject->getDecryptionPassword();
     }
 
     /**
@@ -76,9 +74,6 @@ class UserDetailEntity implements Arrayable
      */
     public function getPassword(): string
     {
-        if (is_null($this->password)) {
-            return null;
-        }
         return $this->password;
     }
 }
