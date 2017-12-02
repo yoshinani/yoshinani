@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
-use App\Services\Auth\AuthService;
-use App\Services\Auth\SocialService;
+use App\Services\Auth\{
+    AuthService,
+    SocialService
+};
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 
 /**
