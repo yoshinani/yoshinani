@@ -40,7 +40,7 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findUser(SocialUser $socialUser)
+    public function findUser(SocialUser $socialUser): ?UserEntity
     {
         $result = $this->users->findUser($socialUser->getEmail());
         if (is_null($result)) {
@@ -54,7 +54,7 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserId(SocialUser $socialUser)
+    public function getUserId(SocialUser $socialUser): ?int
     {
         return $this->users->getUserId($socialUser->getEmail());
     }
@@ -75,7 +75,7 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
+    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser): ?SocialUserAccountEntity
     {
         $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $socialServiceName);
         if (is_null($result)) {
