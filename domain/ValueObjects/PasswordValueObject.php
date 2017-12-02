@@ -10,6 +10,8 @@ use stdClass;
  */
 class PasswordValueObject
 {
+    const PASSWORD = 'Unregistered';
+
     private $userPassword;
 
     /**
@@ -34,6 +36,9 @@ class PasswordValueObject
      */
     public function getDecryptionPassword(): string
     {
+        if (is_null($this->userPassword)) {
+            return self::PASSWORD;
+        }
         return decrypt($this->userPassword);
     }
 }
