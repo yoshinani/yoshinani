@@ -51,7 +51,7 @@ class RegisterUserPasswordEntity implements Arrayable
     /**
      * @return null|string
      */
-    public function getPassword():?string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
