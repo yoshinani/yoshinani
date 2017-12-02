@@ -3,6 +3,7 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterSocialUserEntity;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class SocialAccounts
@@ -13,9 +14,9 @@ class SocialAccounts extends Bass
     /**
      * @param int $socialUserId
      * @param string $socialServiceName
-     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @return Model|null
      */
-    public function getSocialAccount(int $socialUserId, string $socialServiceName)
+    public function getSocialAccount(int $socialUserId, string $socialServiceName): ?Model
     {
         $result = $this->db->table('social_accounts')
             ->where('social_service_name', $socialServiceName)
