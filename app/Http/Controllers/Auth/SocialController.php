@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\SocialService;
@@ -37,18 +38,18 @@ class SocialController extends Controller
 
     /**
      * @param $socialServiceName
-     * @return mixed
+     * @return RedirectResponse
      */
-    public function redirectToSocialService($socialServiceName)
+    public function redirectToSocialService($socialServiceName): RedirectResponse
     {
         return Socialite::driver($socialServiceName)->redirect();
     }
 
     /**
      * @param $socialServiceName
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse
      */
-    public function handleSocialServiceCallback($socialServiceName)
+    public function handleSocialServiceCallback($socialServiceName): RedirectResponse
     {
         try {
             $socialUser = Socialite::driver($socialServiceName)->user();
