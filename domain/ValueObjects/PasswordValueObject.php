@@ -24,9 +24,9 @@ class PasswordValueObject
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getEncryptionPassword(): string
+    public function getEncryptionPassword():?string
     {
         return encrypt($this->userPassword);
     }
