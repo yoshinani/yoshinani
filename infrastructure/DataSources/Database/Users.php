@@ -24,9 +24,9 @@ class Users extends Bass
 
     /**
      * @param string $email
-     * @return mixed
+     * @return int|null
      */
-    public function getUserId(string $email)
+    public function getUserId(string $email): ?int
     {
         $result = $this->db->table('users')
             ->where('email', $email)
@@ -52,7 +52,7 @@ class Users extends Bass
      * @param RegisterUserEntity $registerUserEntity
      * @return int
      */
-    public function registerUser(RegisterUserEntity $registerUserEntity)
+    public function registerUser(RegisterUserEntity $registerUserEntity): int
     {
         $result = $this->db->table('users')
             ->insertGetId(
