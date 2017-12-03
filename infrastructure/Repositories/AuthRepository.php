@@ -2,16 +2,22 @@
 
 namespace Infrastructure\Repositories;
 
-use Domain\Entities\RegisterUserEntity;
-use Domain\Entities\RegisterUserPasswordEntity;
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserEntity;
-use Domain\Entities\UserPasswordEntity;
-use Domain\ValueObjects\PasswordValueObject;
-use Domain\ValueObjects\UserValueObject;
-use Infrastructure\DataSources\Database\UsersPassword;
+use Domain\Entities\{
+    RegisterUserEntity,
+    RegisterUserPasswordEntity,
+    UserDetailEntity,
+    UserEntity,
+    UserPasswordEntity
+};
+use Domain\ValueObjects\{
+    PasswordValueObject,
+    UserValueObject
+};
+use Infrastructure\DataSources\Database\{
+    UsersPassword,
+    Users
+};
 use Infrastructure\Interfaces\AuthRepositoryInterface;
-use Infrastructure\DataSources\Database\Users;
 
 /**
  * Class AuthRepository

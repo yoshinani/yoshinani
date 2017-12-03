@@ -2,16 +2,22 @@
 
 namespace Infrastructure\Repositories;
 
-use Domain\Entities\RegisterUserEntity;
-use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\RegisterSocialUserEntity;
-use Domain\Entities\UserEntity;
-use Domain\ValueObjects\SocialAccountValueObject;
-use Domain\ValueObjects\RegisterSocialUserValueObject;
-use Domain\ValueObjects\UserValueObject;
+use Domain\Entities\{
+    RegisterUserEntity,
+    SocialUserAccountEntity,
+    RegisterSocialUserEntity,
+    UserEntity
+};
+use Domain\ValueObjects\{
+    SocialAccountValueObject,
+    RegisterSocialUserValueObject,
+    UserValueObject
+};
+use Infrastructure\DataSources\Database\{
+    SocialAccounts,
+    Users
+};
 use Infrastructure\Interfaces\SocialRepositoryInterface;
-use Infrastructure\DataSources\Database\SocialAccounts;
-use Infrastructure\DataSources\Database\Users;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
 
