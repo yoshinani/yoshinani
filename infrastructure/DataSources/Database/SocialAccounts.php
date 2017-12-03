@@ -3,6 +3,7 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterSocialUserEntity;
+use stdClass;
 
 /**
  * Class SocialAccounts
@@ -13,9 +14,9 @@ class SocialAccounts extends Bass
     /**
      * @param int $socialUserId
      * @param string $socialServiceName
-     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @return null|stdClass
      */
-    public function getSocialAccount(int $socialUserId, string $socialServiceName)
+    public function getSocialAccount(int $socialUserId, string $socialServiceName): ?stdClass
     {
         $result = $this->db->table('social_accounts')
             ->where('social_service_name', $socialServiceName)
