@@ -2,6 +2,10 @@
 
 namespace Infrastructure\Interfaces;
 
+use Domain\Entities\UserDetailEntity;
+use Domain\Entities\UserEntity;
+use Domain\Entities\UserPasswordEntity;
+
 /**
  * Interface AuthRepositoryInterface
  * @package Infrastructure\Interfaces
@@ -10,31 +14,31 @@ interface AuthRepositoryInterface
 {
     /**
      * @param array $oldRequest
-     * @return mixed
+     * @return UserEntity|null
      */
-    public function findUser(array $oldRequest);
+    public function findUser(array $oldRequest): ?UserEntity;
 
     /**
      * @param int $userId
-     * @return mixed
+     * @return UserPasswordEntity|null
      */
-    public function getUserPassword(int $userId);
+    public function getUserPassword(int $userId): ?UserPasswordEntity;
 
     /**
      * @param string $email
-     * @return mixed
+     * @return int|null
      */
-    public function getUserId(string $email);
+    public function getUserId(string $email): ?int;
 
     /**
      * @param int $userId
-     * @return mixed
+     * @return UserDetailEntity|null
      */
-    public function getUserDetail(int $userId);
+    public function getUserDetail(int $userId): ?UserDetailEntity;
 
     /**
      * @param array $oldRequest
-     * @return mixed
+     * @return int
      */
-    public function registerUser(array $oldRequest);
+    public function registerUser(array $oldRequest): int;
 }

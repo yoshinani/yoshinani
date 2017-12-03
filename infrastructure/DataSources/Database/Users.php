@@ -3,6 +3,7 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
+use stdClass;
 
 /**
  * Class Users
@@ -36,9 +37,9 @@ class Users extends Bass
 
     /**
      * @param $userId
-     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @return null|stdClass
      */
-    public function getUserDetail($userId)
+    public function getUserDetail($userId): ?stdClass
     {
         $result = $this->db->table('users')
             ->join('users_password', 'users_password.user_id', '=', 'users.id')
