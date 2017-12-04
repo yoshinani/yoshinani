@@ -40,7 +40,7 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findUser(array $oldRequest)
+    public function findUser(array $oldRequest): ?UserEntity
     {
         $userRequestObject = (object)$oldRequest;
         $result = $this->users->findUser($userRequestObject->email);
@@ -55,7 +55,7 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserPassword(int $userId)
+    public function getUserPassword(int $userId): ?UserPasswordEntity
     {
         $result = $this->usersPassword->getUserPassword($userId);
         if (is_null($result)) {
@@ -69,7 +69,7 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserId(string $email)
+    public function getUserId(string $email): ?int
     {
         $result = $this->users->getUserId($email);
         if (is_null($result)) {
@@ -81,7 +81,7 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserDetail(int $userId)
+    public function getUserDetail(int $userId): ?UserDetailEntity
     {
         $result = $this->users->getUserDetail($userId);
         if (is_null($result)) {
@@ -96,7 +96,7 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(array $oldRequest)
+    public function registerUser(array $oldRequest): int
     {
         $userRecord = (object)$oldRequest;
         $userValueObject = new UserValueObject($userRecord);
