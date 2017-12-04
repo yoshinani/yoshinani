@@ -46,7 +46,30 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findUser(SocialUser $socialUser): ?UserEntity
+    public function login(string $socialServiceName, SocialUser $socialUser): SocialUserAccountEntity
+    {
+        $userEntity = $this->findUser($socialUser);
+        if (is_null($userEntity)) {
+            $this->registerUser($socialUser);
+        }
+
+        $userId = $this->getUserId($socialUser);
+
+        $socialUserAccountEntity = $this->findSocialAccount($userId, $socialServiceName, $socialUser);
+        if (is_null($socialUserAccountEntity)) {
+            $userId = $this->getUserId($socialUser);
+            $this->associationSocialAccount($userId, $socialServiceName, $socialUser);
+            $socialUserAccountEntity = $this->findSocialAccount($userId, $socialServiceName, $socialUser);
+        }
+
+        return $socialUserAccountEntity;
+    }
+
+    /**
+     * @param SocialUser $socialUser
+     * @return UserEntity|null
+     */
+    protected function findUser(SocialUser $socialUser): ?UserEntity
     {
         $result = $this->users->findUser($socialUser->getEmail());
         if (is_null($result)) {
@@ -58,17 +81,9 @@ class SocialRepository implements SocialRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param SocialUser $socialUser
      */
-    public function getUserId(SocialUser $socialUser): ?int
-    {
-        return $this->users->getUserId($socialUser->getEmail());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function registerUser(SocialUser $socialUser)
+    protected function registerUser(SocialUser $socialUser)
     {
         $userInfo = new stdClass();
         $userInfo->name = $socialUser->getName();
@@ -79,9 +94,21 @@ class SocialRepository implements SocialRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param SocialUser $socialUser
+     * @return int|null
      */
-    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser): ?SocialUserAccountEntity
+    protected function getUserId(SocialUser $socialUser): ?int
+    {
+        return $this->users->getUserId($socialUser->getEmail());
+    }
+
+    /**
+     * @param int $userId
+     * @param string $socialServiceName
+     * @param SocialUser $socialUser
+     * @return SocialUserAccountEntity|null
+     */
+    protected function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser): ?SocialUserAccountEntity
     {
         $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $socialServiceName);
         if (is_null($result)) {
@@ -93,12 +120,15 @@ class SocialRepository implements SocialRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $userId
+     * @param string $socialServiceName
+     * @param SocialUser $socialUser
      */
-    public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
+    protected function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
         $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
         $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
+
 }

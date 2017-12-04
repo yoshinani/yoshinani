@@ -3,7 +3,6 @@
 namespace Infrastructure\Interfaces;
 
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\UserEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**
@@ -13,34 +12,9 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 interface SocialRepositoryInterface
 {
     /**
-     * @param SocialUser $socialUser
-     * @return UserEntity|null
-     */
-    public function findUser(SocialUser $socialUser): ?UserEntity;
-
-    /**
-     * @param SocialUser $socialUser
-     * @return int|null
-     */
-    public function getUserId(SocialUser $socialUser): ?int;
-
-    /**
-     * @param SocialUser $socialUser
-     */
-    public function registerUser(SocialUser $socialUser);
-
-    /**
-     * @param int $userId
      * @param string $socialServiceName
      * @param SocialUser $socialUser
-     * @return SocialUserAccountEntity|null
+     * @return SocialUserAccountEntity
      */
-    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser): ?SocialUserAccountEntity;
-
-    /**
-     * @param int $userId
-     * @param string $socialServiceName
-     * @param SocialUser $socialUser
-     */
-    public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser);
+    public function login(string $socialServiceName, SocialUser $socialUser): SocialUserAccountEntity;
 }
