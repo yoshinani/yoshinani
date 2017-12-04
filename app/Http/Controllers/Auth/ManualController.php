@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\Request;
+use Illuminate\Http\{
+    RedirectResponse,
+    Request
+};
+use App\Http\Requests\Auth\{
+    RegisterRequest,
+    LoginRequest
+};
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\Auth\AuthService;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 
@@ -51,7 +56,7 @@ class ManualController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function completeRegister(Request $request)
     {
@@ -72,7 +77,7 @@ class ManualController extends Controller
 
     /**
      * @param LoginRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function login(LoginRequest $request)
     {
@@ -85,7 +90,7 @@ class ManualController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function logout()
     {

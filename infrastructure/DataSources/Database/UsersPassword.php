@@ -3,6 +3,7 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserPasswordEntity;
+use stdClass;
 
 /**
  * Class UsersPassword
@@ -12,9 +13,9 @@ class UsersPassword extends Bass
 {
     /**
      * @param int $userId
-     * @return \Illuminate\Database\Eloquent\Model|null|static
+     * @return stdClass|null
      */
-    public function getUserPassword(int $userId)
+    public function getUserPassword(int $userId): ?stdClass
     {
         $result = $this->db->table('users_password')
             ->where('user_id', $userId)
