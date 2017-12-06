@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Exception;
-use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
-use App\Services\Auth\{
-    AuthService,
-    SocialService
-};
-use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
+use App\Services\Auth\SocialService;
+use Domain\Services\AuthService;
+use Exception;
 
 /**
  * Class SocialController
@@ -18,24 +15,20 @@ use Infrastructure\Interfaces\SocialRepositoryInterface;
  */
 class SocialController extends Controller
 {
-    private $authService;
     private $socialService;
-    private $socialRepository;
+    private $authDomainService;
 
     /**
      * SocialController constructor.
-     * @param AuthService $authService
      * @param SocialService $socialService
-     * @param SocialRepositoryInterface $socialRepository
+     * @param AuthService $authDomainService
      */
     public function __construct(
-        AuthService   $authService,
         SocialService $socialService,
-        SocialRepositoryInterface $socialRepository
+        AuthService $authDomainService
     ) {
-        $this->authService = $authService;
         $this->socialService = $socialService;
-        $this->socialRepository = $socialRepository;
+        $this->authDomainService = $authDomainService;
     }
 
     /**
@@ -50,6 +43,7 @@ class SocialController extends Controller
     /**
      * @param $socialServiceName
      * @return RedirectResponse
+     * @throws Exception
      */
     public function handleSocialServiceCallback($socialServiceName): RedirectResponse
     {
@@ -60,20 +54,7 @@ class SocialController extends Controller
         }
 
         $this->socialService->existsItems($socialUser);
-
-        $userEntity = $this->socialRepository->findUser($socialUser);
-        if (is_null($userEntity)) {
-            $this->socialRepository->registerUser($socialUser);
-        }
-
-        $userId = $this->socialRepository->getUserId($socialUser);
-        $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
-        if (is_null($socialUserAccountEntity)) {
-            $userId = $this->socialRepository->getUserId($socialUser);
-            $this->socialRepository->associationSocialAccount($userId, $socialServiceName, $socialUser);
-            $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
-        }
-
+        $socialUserAccountEntity = $this->authDomainService->socialLogin($socialServiceName, $socialUser);
         $this->socialService->socialLogin($socialServiceName, $socialUser, $socialUserAccountEntity);
 
         return redirect()->to('/home');
