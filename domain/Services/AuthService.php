@@ -2,7 +2,8 @@
 
 namespace Domain\Services;
 
-use Domain\Entities\SocialUserAccountEntity;
+use Auth;
+use Exception;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -27,9 +28,9 @@ class AuthService
     /**
      * @param string $socialServiceName
      * @param SocialUser $socialUser
-     * @return SocialUserAccountEntity
+     * @throws Exception
      */
-    public function socialLogin(string $socialServiceName, SocialUser $socialUser): SocialUserAccountEntity
+    public function socialLogin(string $socialServiceName, SocialUser $socialUser)
     {
         $userEntity = $this->socialRepository->findUser($socialUser);
         if (is_null($userEntity)) {
@@ -44,6 +45,16 @@ class AuthService
             $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
         }
 
-        return $socialUserAccountEntity;
+        if (!$socialUserAccountEntity->getSocialServiceName() === $socialServiceName) {
+            throw new Exception('Authentication drivers do not match');
+        }
+
+        if (!$socialUserAccountEntity->getSocialUserId() === $socialUser->getId()) {
+            throw new Exception('It does not match the ID of SNSAccount');
+        }
+
+        if (!Auth::loginUsingId($socialUserAccountEntity->getId())) {
+            throw new Exception('It is a User that does not exist');
+        }
     }
 }

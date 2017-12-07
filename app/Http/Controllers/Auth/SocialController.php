@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
-use App\Services\Auth\SocialService;
-use Domain\Services\AuthService;
+use App\Services\Auth\SocialService as SocialAppService;
+use Domain\Services\AuthService as AuthDomainService;
 use Exception;
 
 /**
@@ -15,19 +15,19 @@ use Exception;
  */
 class SocialController extends Controller
 {
-    private $socialService;
+    private $socialAppService;
     private $authDomainService;
 
     /**
      * SocialController constructor.
-     * @param SocialService $socialService
-     * @param AuthService $authDomainService
+     * @param SocialAppService $socialAppService
+     * @param AuthDomainService $authDomainService
      */
     public function __construct(
-        SocialService $socialService,
-        AuthService $authDomainService
+        SocialAppService $socialAppService,
+        AuthDomainService $authDomainService
     ) {
-        $this->socialService = $socialService;
+        $this->socialAppService = $socialAppService;
         $this->authDomainService = $authDomainService;
     }
 
@@ -53,9 +53,8 @@ class SocialController extends Controller
             return redirect('/login');
         }
 
-        $this->socialService->existsItems($socialUser);
-        $socialUserAccountEntity = $this->authDomainService->socialLogin($socialServiceName, $socialUser);
-        $this->socialService->socialLogin($socialServiceName, $socialUser, $socialUserAccountEntity);
+        $this->socialAppService->existsItems($socialUser);
+        $this->authDomainService->socialLogin($socialServiceName, $socialUser);
 
         return redirect()->to('/home');
     }
