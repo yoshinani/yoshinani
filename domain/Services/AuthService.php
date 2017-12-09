@@ -34,7 +34,7 @@ class AuthService
     {
         $hasEmail = $this->hasSocialEmail($socialUser);
         $hasUserName = $this->hasSocialUserName($socialUser);
-        if ($hasEmail === false && $hasUserName === false) {
+        if ($hasEmail === false || $hasUserName === false) {
             throw new Exception('Name or Email is missing');
         }
 
@@ -72,7 +72,7 @@ class AuthService
      */
     protected function hasSocialEmail(SocialUser $socialUser): bool
     {
-        if (!is_null($socialUser->getEmail())) {
+        if (is_null($socialUser->getEmail())) {
             return false;
         }
         return true;
@@ -84,7 +84,7 @@ class AuthService
      */
     protected function hasSocialUserName(SocialUser $socialUser): bool
     {
-        if (!is_null($socialUser->getName())) {
+        if (is_null($socialUser->getName())) {
             return false;
         }
         return true;
