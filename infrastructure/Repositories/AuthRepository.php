@@ -69,9 +69,9 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserId(string $email): ?int
+    public function getUserId(array $oldRequest): ?int
     {
-        $result = $this->users->getUserId($email);
+        $result = $this->users->getUserId($oldRequest['email']);
         if (is_null($result)) {
             return null;
         }
