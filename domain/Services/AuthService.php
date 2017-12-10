@@ -44,10 +44,10 @@ class AuthService
 
     /**
      * @param array $oldRequest
-     * @return UserDetailEntity|null
+     * @return UserDetailEntity
      * @throws Exception
      */
-    public function getUserDetail(array $oldRequest)
+    public function getUserDetail(array $oldRequest): UserDetailEntity
     {
         $userId = $this->authRepository->getUserId($oldRequest);
         if (is_null($userId)) {
