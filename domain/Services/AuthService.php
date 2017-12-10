@@ -3,11 +3,15 @@
 namespace Domain\Services;
 
 use Auth;
-use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\UserDetailEntity;
 use Exception;
-use Infrastructure\Interfaces\AuthRepositoryInterface;
-use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Domain\Entities\{
+    UserDetailEntity,
+    SocialUserAccountEntity
+};
+use Infrastructure\Interfaces\{
+    AuthRepositoryInterface,
+    SocialRepositoryInterface
+};
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**
