@@ -44,6 +44,20 @@ class AuthService
 
     /**
      * @param array $oldRequest
+     * @return UserDetailEntity|null
+     * @throws Exception
+     */
+    public function getUserDetail(array $oldRequest)
+    {
+        $userId = $this->authRepository->getUserId($oldRequest);
+        if (is_null($userId)) {
+            throw new Exception('User does not exist');
+        }
+        return $this->authRepository->getUserDetail($userId);
+    }
+
+    /**
+     * @param array $oldRequest
      * @param UserDetailEntity $userDetailEntity
      * @throws Exception
      */

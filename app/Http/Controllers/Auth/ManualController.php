@@ -80,9 +80,8 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userId = $this->authRepository->getUserId($oldRequest['email']);
-        $userDetailEntity = $this->authRepository->getUserDetail($userId);
-        $this->authService->login($oldRequest, $userDetailEntity);
+        $userDetailEntity = $this->authDomainService->getUserDetail($oldRequest);
+        $this->authDomainService->login($oldRequest, $userDetailEntity);
         return redirect()->to('/home');
     }
 
@@ -91,7 +90,7 @@ class ManualController extends Controller
      */
     public function logout()
     {
-        $this->authService->logout();
+        \Auth::logout();
         return redirect()->to('/login');
     }
 }
