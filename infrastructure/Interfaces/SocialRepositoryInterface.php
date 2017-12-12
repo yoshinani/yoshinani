@@ -42,5 +42,5 @@ interface SocialRepositoryInterface
      * @param string $socialServiceName
      * @param SocialUser $socialUser
      */
-    public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser);
+    public function synchronizeSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser);
 }

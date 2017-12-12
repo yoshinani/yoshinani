@@ -155,7 +155,7 @@ class AuthService
         $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
         if (is_null($socialUserAccountEntity)) {
             $userId = $this->socialRepository->getUserId($socialUser);
-            $this->socialRepository->associationSocialAccount($userId, $socialServiceName, $socialUser);
+            $this->socialRepository->synchronizeSocialAccount($userId, $socialServiceName, $socialUser);
             $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
         }
         return $socialUserAccountEntity;
