@@ -11,7 +11,7 @@ use App\Http\Requests\Auth\{
     LoginRequest
 };
 use App\Http\Controllers\Controller;
-use App\Services\Auth\AuthService;
+use Domain\Services\AuthService as AuthDomainService;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 
 /**
@@ -21,19 +21,15 @@ use Infrastructure\Interfaces\AuthRepositoryInterface;
 class ManualController extends Controller
 {
     private $authRepository;
-    private $authService;
+    private $authDomainService;
 
-    /**
-     * ManualController constructor.
-     * @param AuthRepositoryInterface $authRepository
-     * @param AuthService $authService
-     */
+
     public function __construct(
         AuthRepositoryInterface $authRepository,
-        AuthService $authService
+        AuthDomainService $authService
     ) {
         $this->authRepository = $authRepository;
-        $this->authService = $authService;
+        $this->authDomainService = $authService;
     }
 
     /**
@@ -57,13 +53,13 @@ class ManualController extends Controller
     /**
      * @param Request $request
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function completeRegister(Request $request)
     {
         $oldRequest = $request->old();
-        $userId = $this->authRepository->registerUser($oldRequest);
-        $userDetailEntity = $this->authRepository->getUserDetail($userId);
-        $this->authService->login($oldRequest, $userDetailEntity);
+        $userDetailEntity = $this->authDomainService->registerUser($oldRequest);
+        $this->authDomainService->login($oldRequest, $userDetailEntity);
         return redirect()->to('/home');
     }
 
@@ -78,14 +74,14 @@ class ManualController extends Controller
     /**
      * @param LoginRequest $request
      * @return RedirectResponse
+     * @throws \Exception
      */
     public function login(LoginRequest $request)
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userId = $this->authRepository->getUserId($oldRequest['email']);
-        $userDetailEntity = $this->authRepository->getUserDetail($userId);
-        $this->authService->login($oldRequest, $userDetailEntity);
+        $userDetailEntity = $this->authDomainService->getUserDetail($oldRequest);
+        $this->authDomainService->login($oldRequest, $userDetailEntity);
         return redirect()->to('/home');
     }
 
@@ -94,7 +90,7 @@ class ManualController extends Controller
      */
     public function logout()
     {
-        $this->authService->logout();
+        \Auth::logout();
         return redirect()->to('/login');
     }
 }

@@ -3,9 +3,15 @@
 namespace Domain\Services;
 
 use Auth;
-use Domain\Entities\SocialUserAccountEntity;
 use Exception;
-use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Domain\Entities\{
+    UserDetailEntity,
+    SocialUserAccountEntity
+};
+use Infrastructure\Interfaces\{
+    AuthRepositoryInterface,
+    SocialRepositoryInterface
+};
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**
@@ -14,16 +20,64 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  */
 class AuthService
 {
+    private $authRepository;
     private $socialRepository;
 
     /**
      * AuthService constructor.
+     * @param AuthRepositoryInterface $authRepository
      * @param SocialRepositoryInterface $socialRepository
      */
     public function __construct(
+        AuthRepositoryInterface $authRepository,
         SocialRepositoryInterface $socialRepository
     ) {
+        $this->authRepository = $authRepository;
         $this->socialRepository = $socialRepository;
+    }
+
+    /**
+     * @param array $oldRequest
+     * @return UserDetailEntity
+     */
+    public function registerUser(array $oldRequest): UserDetailEntity
+    {
+        $userId = $this->authRepository->registerUser($oldRequest);
+        return $this->authRepository->getUserDetail($userId);
+    }
+
+    /**
+     * @param array $oldRequest
+     * @return UserDetailEntity
+     * @throws Exception
+     */
+    public function getUserDetail(array $oldRequest): UserDetailEntity
+    {
+        $userId = $this->authRepository->getUserId($oldRequest);
+        if (is_null($userId)) {
+            throw new Exception('User does not exist');
+        }
+        return $this->authRepository->getUserDetail($userId);
+    }
+
+    /**
+     * @param array $oldRequest
+     * @param UserDetailEntity $userDetailEntity
+     * @throws Exception
+     */
+    public function login(array $oldRequest, UserDetailEntity $userDetailEntity)
+    {
+        if (!$oldRequest['email'] === $userDetailEntity->getUserEmail()) {
+            throw new Exception('email does not match');
+        }
+
+        if (!$oldRequest['password'] === $userDetailEntity->getPassword()) {
+            throw new Exception('password does not match');
+        }
+
+        if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
+            throw new Exception('It is a User that does not exist');
+        }
     }
 
     /**

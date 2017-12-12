@@ -25,10 +25,10 @@ interface AuthRepositoryInterface
     public function getUserPassword(int $userId): ?UserPasswordEntity;
 
     /**
-     * @param string $email
+     * @param array $oldRequest
      * @return int|null
      */
-    public function getUserId(string $email): ?int;
+    public function getUserId(array $oldRequest): ?int;
 
     /**
      * @param int $userId
