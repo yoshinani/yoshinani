@@ -95,7 +95,7 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function associationSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
+    public function synchronizeSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
         $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
         $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
