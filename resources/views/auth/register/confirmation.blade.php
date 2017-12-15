@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <label for="password" class="col-md-4 control-label">Password</label>
                                 <div class="col-md-6">
-                                    {{ old('password') }}
+                                    {{ str_repeat("*", strlen(old('password'))) }}
                                 </div>
                             </div>
                         </div>
