@@ -59,7 +59,8 @@ class ManualController extends Controller
     {
         $oldRequest = $request->old();
         $userDetailEntity = $this->authDomainService->registerUser($oldRequest);
-        $this->authDomainService->login($oldRequest, $userDetailEntity);
+        $message = $this->authDomainService->login($oldRequest, $userDetailEntity);
+        session()->flash('message', $message);
         return redirect()->to('/home');
     }
 
@@ -81,7 +82,8 @@ class ManualController extends Controller
         $request->flash();
         $oldRequest = $request->old();
         $userDetailEntity = $this->authDomainService->getUserDetail($oldRequest);
-        $this->authDomainService->login($oldRequest, $userDetailEntity);
+        $message = $this->authDomainService->login($oldRequest, $userDetailEntity);
+        session()->flash('message', $message);
         return redirect()->to('/home');
     }
 

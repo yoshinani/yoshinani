@@ -63,9 +63,10 @@ class AuthService
     /**
      * @param array $oldRequest
      * @param UserDetailEntity $userDetailEntity
+     * @return string
      * @throws Exception
      */
-    public function login(array $oldRequest, UserDetailEntity $userDetailEntity)
+    public function login(array $oldRequest, UserDetailEntity $userDetailEntity): string
     {
         if (!$oldRequest['email'] === $userDetailEntity->getUserEmail()) {
             throw new Exception('email does not match');
@@ -78,6 +79,7 @@ class AuthService
         if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
             throw new Exception('It is a User that does not exist');
         }
+        return 'Welcome!!'.$userDetailEntity->getUserName();
     }
 
     /**
