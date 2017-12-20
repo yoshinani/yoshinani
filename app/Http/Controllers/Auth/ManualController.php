@@ -60,8 +60,7 @@ class ManualController extends Controller
         $oldRequest = $request->old();
         $userDetailEntity = $this->authDomainService->registerUser($oldRequest);
         $message = $this->authDomainService->login($oldRequest, $userDetailEntity);
-        session()->flash('message', $message);
-        return redirect()->to('/home');
+        return redirect('/home')->with('message', $message);
     }
 
     /**
@@ -82,9 +81,11 @@ class ManualController extends Controller
         $request->flash();
         $oldRequest = $request->old();
         $userDetailEntity = $this->authDomainService->getUserDetail($oldRequest);
-        $message = $this->authDomainService->login($oldRequest, $userDetailEntity);
-        session()->flash('message', $message);
-        return redirect()->to('/home');
+        $result = $this->authDomainService->login($oldRequest, $userDetailEntity);
+        if (!$result) {
+            return back()->with('message', 'ログインに失敗しました');
+        }
+        return redirect('/home')->with('message', 'ようこそ '.$userDetailEntity->getUserName().' さん');
     }
 
     /**
