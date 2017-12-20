@@ -59,8 +59,11 @@ class ManualController extends Controller
     {
         $oldRequest = $request->old();
         $userDetailEntity = $this->authDomainService->registerUser($oldRequest);
-        $message = $this->authDomainService->login($oldRequest, $userDetailEntity);
-        return redirect('/home')->with('message', $message);
+        $result = $this->authDomainService->login($oldRequest, $userDetailEntity);
+        if (!$result) {
+            return back()->with('message', 'ログインに失敗しました');
+        }
+        return redirect('/home')->with('message', 'ようこそ '.$userDetailEntity->getUserName().' さん');
     }
 
     /**
