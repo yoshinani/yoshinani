@@ -63,21 +63,28 @@ class AuthService
     /**
      * @param array $oldRequest
      * @param UserDetailEntity $userDetailEntity
-     * @throws Exception
+     * @return bool
      */
-    public function login(array $oldRequest, UserDetailEntity $userDetailEntity)
+    public function login(array $oldRequest, UserDetailEntity $userDetailEntity): bool
     {
-        if (!$oldRequest['email'] === $userDetailEntity->getUserEmail()) {
-            throw new Exception('email does not match');
+        if ($oldRequest['email'] !== $userDetailEntity->getUserEmail()) {
+            \Log::info($oldRequest['email'].' does not match');
+            return false;
         }
 
-        if (!$oldRequest['password'] === $userDetailEntity->getPassword()) {
-            throw new Exception('password does not match');
+        if ($oldRequest['password'] !== $userDetailEntity->getPassword()) {
+            \Log::info('The password of '.$oldRequest['email'].' does not match');
+            return false;
         }
+
+        // TODO: deleted_at is null ?
 
         if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
-            throw new Exception('It is a User that does not exist');
+            \Log::info($oldRequest['email'].' failed to login');
+            return false;
         }
+
+        return true;
     }
 
     /**
