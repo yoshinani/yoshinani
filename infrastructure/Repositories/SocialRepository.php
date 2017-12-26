@@ -52,8 +52,7 @@ class SocialRepository implements SocialRepositoryInterface
             return null;
         }
         $userRecord = (object)$result;
-        $userValueObject = new UserValueObject($userRecord);
-        return new UserEntity($userRecord, $userValueObject);
+        return new UserEntity($userRecord);
     }
 
     /**
