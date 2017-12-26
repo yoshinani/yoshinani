@@ -4,6 +4,7 @@ namespace Domain\Entities;
 
 use Domain\ValueObjects\PasswordValueObject;
 use Illuminate\Contracts\Support\Arrayable;
+use stdClass;
 
 /**
  * Class RegisterUserPasswordEntity
@@ -15,16 +16,16 @@ class UserPasswordEntity implements Arrayable
     private $password;
 
     /**
-     * UserEntity constructor.
+     * UserPasswordEntity constructor.
      * @param int $userId
-     * @param PasswordValueObject $passwordValueObject
-     * @internal param int $userId
+     * @param stdClass $userPasswordRecord
      */
     public function __construct(
         int $userId,
-        PasswordValueObject $passwordValueObject
+        stdClass $userPasswordRecord
     ) {
         $this->id = $userId;
+        $passwordValueObject = new PasswordValueObject($userPasswordRecord);
         $this->password = $passwordValueObject->getDecryptionPassword();
     }
 

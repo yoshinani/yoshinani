@@ -61,8 +61,7 @@ class AuthRepository implements AuthRepositoryInterface
             return null;
         }
         $userPasswordRecord = (object)$result;
-        $passwordValueObject = new PasswordValueObject($userPasswordRecord);
-        return new UserPasswordEntity($userId, $passwordValueObject);
+        return new UserPasswordEntity($userId, $userPasswordRecord);
     }
 
     /**
