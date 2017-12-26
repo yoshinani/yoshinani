@@ -73,8 +73,7 @@ class SocialRepository implements SocialRepositoryInterface
         $userInfo = new stdClass();
         $userInfo->name = $socialUser->getName();
         $userInfo->email = $socialUser->getEmail();
-        $userValueObject = new UserValueObject($userInfo);
-        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject);
+        $registerUserEntity = new RegisterUserEntity($userInfo);
         $this->users->registerUser($registerUserEntity);
     }
 

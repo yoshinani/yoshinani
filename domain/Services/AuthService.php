@@ -93,14 +93,9 @@ class AuthService
      */
     public function socialRegisterUser(SocialUser $socialUser)
     {
-        $hasEmail = $this->hasSocialEmail($socialUser);
-        $hasUserName = $this->hasSocialUserName($socialUser);
-        if ($hasEmail === false || $hasUserName === false) {
-            throw new Exception('Name or Email is missing');
-        }
-
         $userEntity = $this->socialRepository->findUser($socialUser);
         if (is_null($userEntity)) {
+            $this->hasSocialRequiredInformation($socialUser);
             $this->socialRepository->registerUser($socialUser);
         }
     }
@@ -129,26 +124,18 @@ class AuthService
 
     /**
      * @param SocialUser $socialUser
-     * @return bool
+     * @throws Exception
      */
-    protected function hasSocialEmail(SocialUser $socialUser): bool
+    protected function hasSocialRequiredInformation(SocialUser $socialUser)
     {
         if (is_null($socialUser->getEmail())) {
-            return false;
+            throw new Exception('Email is missing');
         }
-        return true;
-    }
 
-    /**
-     * @param SocialUser $socialUser
-     * @return bool
-     */
-    protected function hasSocialUserName(SocialUser $socialUser): bool
-    {
         if (is_null($socialUser->getName())) {
-            return false;
+            throw new Exception('Name is missing');
         }
-        return true;
+
     }
 
     /**
