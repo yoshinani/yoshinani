@@ -10,7 +10,6 @@ use Domain\Entities\{
 };
 use Domain\ValueObjects\{
     SocialAccountValueObject,
-    RegisterSocialUserValueObject,
     UserValueObject
 };
 use Infrastructure\DataSources\Database\{
@@ -96,8 +95,7 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function synchronizeSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
-        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
-        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
+        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $socialServiceName, $socialUser);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }
