@@ -9,10 +9,6 @@ use Domain\Entities\{
     UserEntity,
     UserPasswordEntity
 };
-use Domain\ValueObjects\{
-    PasswordValueObject,
-    UserValueObject
-};
 use Infrastructure\DataSources\Database\{
     UsersPassword,
     Users
@@ -86,9 +82,7 @@ class AuthRepository implements AuthRepositoryInterface
             return null;
         }
         $userDetail = (object)$result;
-        $userValueObject = new UserValueObject($userDetail);
-        $passwordValueObject = new PasswordValueObject($userDetail);
-        return new UserDetailEntity($userDetail, $userValueObject, $passwordValueObject);
+        return new UserDetailEntity($userDetail);
     }
 
     /**
