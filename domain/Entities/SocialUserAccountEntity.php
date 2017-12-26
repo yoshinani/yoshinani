@@ -4,6 +4,7 @@ namespace Domain\Entities;
 
 use Domain\ValueObjects\SocialAccountValueObject;
 use Illuminate\Contracts\Support\Arrayable;
+use stdClass;
 
 /**
  * Class SocialUserAccountEntity
@@ -18,13 +19,14 @@ class SocialUserAccountEntity implements Arrayable
     /**
      * SocialUserAccountEntity constructor.
      * @param int $userId
-     * @param SocialAccountValueObject $socialAccountValueObject
+     * @param stdClass $socialAccountRecord
      */
     public function __construct(
         int $userId,
-        SocialAccountValueObject $socialAccountValueObject
+        stdClass $socialAccountRecord
     ) {
         $this->id = $userId;
+        $socialAccountValueObject = new SocialAccountValueObject($socialAccountRecord);
         $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
         $this->socialUserId = $socialAccountValueObject->getSocialUserId();
     }

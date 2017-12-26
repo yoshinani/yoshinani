@@ -86,8 +86,7 @@ class SocialRepository implements SocialRepositoryInterface
             return null;
         }
         $socialAccountRecord = (object)$result;
-        $socialAccountValueObject = new SocialAccountValueObject($socialAccountRecord);
-        return new SocialUserAccountEntity($userId, $socialAccountValueObject);
+        return new SocialUserAccountEntity($userId, $socialAccountRecord);
     }
 
     /**
