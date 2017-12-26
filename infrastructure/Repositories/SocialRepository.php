@@ -8,10 +8,6 @@ use Domain\Entities\{
     RegisterSocialUserEntity,
     UserEntity
 };
-use Domain\ValueObjects\{
-    SocialAccountValueObject,
-    UserValueObject
-};
 use Infrastructure\DataSources\Database\{
     SocialAccounts,
     Users
