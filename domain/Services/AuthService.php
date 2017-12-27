@@ -68,19 +68,29 @@ class AuthService
     public function login(array $oldRequest, UserDetailEntity $userDetailEntity): bool
     {
         if ($oldRequest['email'] !== $userDetailEntity->getUserEmail()) {
+            \Log::info("\n【ERROR】Email does not match\n"
+                .'Email:'.$oldRequest['email']
+                .'Password:'.encrypt($oldRequest['password'])
+            );
             \Log::info($oldRequest['email'].' does not match');
             return false;
         }
 
         if ($oldRequest['password'] !== $userDetailEntity->getPassword()) {
-            \Log::info('The password of '.$oldRequest['email'].' does not match');
+            \Log::info("\n【ERROR】Password does not match\n"
+                .'Email:'.$oldRequest['email']
+                .'Password:'.encrypt($oldRequest['password'])
+            );
             return false;
         }
 
         // TODO: deleted_at is null ?
 
         if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
-            \Log::info($oldRequest['email'].' failed to login');
+            \Log::info("\n【ERROR】It is a User that does not exist\n"
+                .'Email:'.$oldRequest['email']
+                .'Password:'.encrypt($oldRequest['password'])
+            );
             return false;
         }
 
@@ -114,7 +124,7 @@ class AuthService
     {
         $socialUserAccountEntity = $this->synchronizeSocialAccount($socialServiceName, $socialUser);
 
-        if ($socialUserAccountEntity->getSocialServiceName() === $socialServiceName) {
+        if ($socialUserAccountEntity->getSocialServiceName() !== $socialServiceName) {
             \Log::info("\n【ERROR】Authentication drivers do not match\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
                 .'Request:'.$socialServiceName.':'.$socialUser->getId()
@@ -122,7 +132,7 @@ class AuthService
             return false;
         }
 
-        if (!$socialUserAccountEntity->getSocialUserId() === $socialUser->getId()) {
+        if ($socialUserAccountEntity->getSocialUserId() !== $socialUser->getId()) {
             \Log::info("\n【ERROR】It does not match the ID of SNS Account\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
                 .'Request:'.$socialServiceName.':'.$socialUser->getId()
@@ -131,7 +141,7 @@ class AuthService
         }
 
         if (!Auth::loginUsingId($socialUserAccountEntity->getId())) {
-            \Log::info("【ERROR】It is a User that does not exist\n"
+            \Log::info("\n【ERROR】It is a User that does not exist\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
                 .'Request:'.$socialServiceName.':'.$socialUser->getId()
             );
