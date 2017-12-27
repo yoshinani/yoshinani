@@ -23,11 +23,11 @@ class RegisterUserEntity implements Arrayable
     /**
      * RegisterUserEntity constructor.
      * @param stdClass $userRecord
-     * @param UserValueObject $userValueObject
      */
-    public function __construct(stdClass $userRecord, UserValueObject $userValueObject)
+    public function __construct(stdClass $userRecord)
     {
-        $this->email = $userRecord->email;
+        $userValueObject = new UserValueObject($userRecord);
+        $this->email = $userValueObject->getUserEmail();
         $this->name = $userValueObject->getUserName();
         $timeStampValueObject = new TimeStampValueObject();
         $this->createdAt = $timeStampValueObject->getNow();

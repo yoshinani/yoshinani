@@ -19,14 +19,13 @@ class UserEntity implements Arrayable
     /**
      * UserEntity constructor.
      * @param stdClass $userRecord
-     * @param UserValueObject $userValueObject
      * @internal param int $userId
      */
     public function __construct(
-        stdClass $userRecord,
-        UserValueObject $userValueObject
+        stdClass $userRecord
     ) {
         $this->id = $userRecord->id;
+        $userValueObject = new UserValueObject($userRecord);
         $this->name = $userValueObject->getUserName();
         $this->email = $userValueObject->getUserEmail();
     }

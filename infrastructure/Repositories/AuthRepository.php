@@ -9,10 +9,6 @@ use Domain\Entities\{
     UserEntity,
     UserPasswordEntity
 };
-use Domain\ValueObjects\{
-    PasswordValueObject,
-    UserValueObject
-};
 use Infrastructure\DataSources\Database\{
     UsersPassword,
     Users
@@ -48,8 +44,7 @@ class AuthRepository implements AuthRepositoryInterface
             return null;
         }
         $userRecord = (object)$result;
-        $userValueObject = new UserValueObject($userRecord);
-        return new UserEntity($userRecord, $userValueObject);
+        return new UserEntity($userRecord);
     }
 
     /**
@@ -62,8 +57,7 @@ class AuthRepository implements AuthRepositoryInterface
             return null;
         }
         $userPasswordRecord = (object)$result;
-        $passwordValueObject = new PasswordValueObject($userPasswordRecord);
-        return new UserPasswordEntity($userId, $passwordValueObject);
+        return new UserPasswordEntity($userId, $userPasswordRecord);
     }
 
     /**
@@ -88,9 +82,7 @@ class AuthRepository implements AuthRepositoryInterface
             return null;
         }
         $userDetail = (object)$result;
-        $userValueObject = new UserValueObject($userDetail);
-        $passwordValueObject = new PasswordValueObject($userDetail);
-        return new UserDetailEntity($userDetail, $userValueObject, $passwordValueObject);
+        return new UserDetailEntity($userDetail);
     }
 
     /**
@@ -99,11 +91,9 @@ class AuthRepository implements AuthRepositoryInterface
     public function registerUser(array $oldRequest): int
     {
         $userRecord = (object)$oldRequest;
-        $userValueObject = new UserValueObject($userRecord);
-        $registerUserEntity = new RegisterUserEntity($userRecord, $userValueObject);
+        $registerUserEntity = new RegisterUserEntity($userRecord);
         $userId = $this->users->registerUser($registerUserEntity);
-        $passwordValueObject = new PasswordValueObject($userRecord);
-        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $passwordValueObject);
+        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $userRecord);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
         return $userId;
     }

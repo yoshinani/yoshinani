@@ -6,6 +6,7 @@ use Domain\ValueObjects\{
     TimeStampValueObject
 };
 use Illuminate\Contracts\Support\Arrayable;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**
  * Class SocialUserEntity
@@ -22,13 +23,16 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * RegisterSocialUserEntity constructor.
      * @param int $userId
-     * @param RegisterSocialUserValueObject $registerSocialUserValueObject
+     * @param string $socialServiceName
+     * @param SocialUser $socialUser
      */
     public function __construct(
         int $userId,
-        RegisterSocialUserValueObject $registerSocialUserValueObject
+        string $socialServiceName,
+        SocialUser $socialUser
     ) {
         $this->id = $userId;
+        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
         $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
         $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
         $timeStampValueObject = new TimeStampValueObject();

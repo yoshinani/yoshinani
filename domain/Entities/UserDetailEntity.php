@@ -21,20 +21,17 @@ class UserDetailEntity implements Arrayable
     private $password;
 
     /**
-     * UserEntity constructor.
-     * @param stdClass $userRecord
-     * @param UserValueObject $userValueObject
-     * @param PasswordValueObject $passwordValueObject
-     * @internal param int $userId
+     * UserDetailEntity constructor.
+     * @param stdClass $userDetail
      */
     public function __construct(
-        stdClass $userRecord,
-        UserValueObject $userValueObject,
-        PasswordValueObject $passwordValueObject
+        stdClass $userDetail
     ) {
-        $this->id = $userRecord->id;
+        $this->id = $userDetail->id;
+        $userValueObject = new UserValueObject($userDetail);
         $this->name = $userValueObject->getUserName();
         $this->email = $userValueObject->getUserEmail();
+        $passwordValueObject = new PasswordValueObject($userDetail);
         $this->password = $passwordValueObject->getDecryptionPassword();
     }
 

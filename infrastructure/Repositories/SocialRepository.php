@@ -8,11 +8,6 @@ use Domain\Entities\{
     RegisterSocialUserEntity,
     UserEntity
 };
-use Domain\ValueObjects\{
-    SocialAccountValueObject,
-    RegisterSocialUserValueObject,
-    UserValueObject
-};
 use Infrastructure\DataSources\Database\{
     SocialAccounts,
     Users
@@ -53,8 +48,7 @@ class SocialRepository implements SocialRepositoryInterface
             return null;
         }
         $userRecord = (object)$result;
-        $userValueObject = new UserValueObject($userRecord);
-        return new UserEntity($userRecord, $userValueObject);
+        return new UserEntity($userRecord);
     }
 
     /**
@@ -73,8 +67,7 @@ class SocialRepository implements SocialRepositoryInterface
         $userInfo = new stdClass();
         $userInfo->name = $socialUser->getName();
         $userInfo->email = $socialUser->getEmail();
-        $userValueObject = new UserValueObject($userInfo);
-        $registerUserEntity = new RegisterUserEntity($userInfo, $userValueObject);
+        $registerUserEntity = new RegisterUserEntity($userInfo);
         $this->users->registerUser($registerUserEntity);
     }
 
@@ -88,8 +81,7 @@ class SocialRepository implements SocialRepositoryInterface
             return null;
         }
         $socialAccountRecord = (object)$result;
-        $socialAccountValueObject = new SocialAccountValueObject($socialAccountRecord);
-        return new SocialUserAccountEntity($userId, $socialAccountValueObject);
+        return new SocialUserAccountEntity($userId, $socialAccountRecord);
     }
 
     /**
@@ -97,8 +89,7 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function synchronizeSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
     {
-        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
-        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $registerSocialUserValueObject);
+        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $socialServiceName, $socialUser);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }
