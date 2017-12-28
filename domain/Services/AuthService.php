@@ -5,6 +5,7 @@ namespace Domain\Services;
 use Auth;
 use Exception;
 use Domain\Entities\{
+    UserEntity,
     UserDetailEntity,
     SocialUserAccountEntity
 };
@@ -99,15 +100,19 @@ class AuthService
 
     /**
      * @param SocialUser $socialUser
+     * @return UserEntity
      * @throws Exception
      */
-    public function socialRegisterUser(SocialUser $socialUser)
+    public function socialRegisterUser(SocialUser $socialUser): UserEntity
     {
         $userEntity = $this->socialRepository->findUser($socialUser);
         if (is_null($userEntity)) {
             $this->hasSocialRequiredInformation($socialUser);
             $this->socialRepository->registerUser($socialUser);
+            $userEntity = $this->socialRepository->findUser($socialUser);
         }
+
+        return $userEntity;
     }
 
     /**

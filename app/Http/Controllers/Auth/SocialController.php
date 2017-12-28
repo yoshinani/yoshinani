@@ -48,9 +48,12 @@ class SocialController extends Controller
             return redirect('/login');
         }
 
-        $this->authDomainService->socialRegisterUser($socialUser);
-        $this->authDomainService->socialLogin($socialServiceName, $socialUser);
+        $userEntity = $this->authDomainService->socialRegisterUser($socialUser);
+        $result = $this->authDomainService->socialLogin($socialServiceName, $socialUser);
+        if (!$result) {
+            return back()->with('message', 'ログインに失敗しました');
+        }
 
-        return redirect()->to('/home');
+        return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
     }
 }
