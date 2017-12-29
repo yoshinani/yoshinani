@@ -55,6 +55,14 @@ class UserEntity implements Arrayable
     /**
      * @return string
      */
+    public function getUserName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
     public function getUserEmail(): string
     {
         return $this->email;
