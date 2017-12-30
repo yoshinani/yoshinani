@@ -13,10 +13,10 @@ use Domain\Entities\UserPasswordEntity;
 interface AuthRepositoryInterface
 {
     /**
-     * @param array $oldRequest
+     * @param string $email
      * @return UserEntity|null
      */
-    public function findUser(array $oldRequest): ?UserEntity;
+    public function findUser(string $email): ?UserEntity;
 
     /**
      * @param int $userId

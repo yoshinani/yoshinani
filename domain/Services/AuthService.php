@@ -39,12 +39,17 @@ class AuthService
 
     /**
      * @param array $oldRequest
-     * @return UserDetailEntity
+     * @return UserEntity
      */
-    public function registerUser(array $oldRequest): UserDetailEntity
+    public function registerUser(array $oldRequest): UserEntity
     {
-        $userId = $this->authRepository->registerUser($oldRequest);
-        return $this->authRepository->getUserDetail($userId);
+        $userEntity = $this->authRepository->findUser($oldRequest['email']);
+        if (is_null($userEntity)) {
+            $this->authRepository->registerUser($oldRequest);
+            $userEntity = $this->authRepository->findUser($oldRequest['email']);
+        }
+
+        return $userEntity;
     }
 
     /**
@@ -63,11 +68,13 @@ class AuthService
 
     /**
      * @param array $oldRequest
-     * @param UserDetailEntity $userDetailEntity
+     * @param int $userId
      * @return bool
      */
-    public function login(array $oldRequest, UserDetailEntity $userDetailEntity): bool
+    public function login(array $oldRequest, int $userId): bool
     {
+        $userDetailEntity = $this->authRepository->getUserDetail($userId);
+
         if ($oldRequest['email'] !== $userDetailEntity->getUserEmail()) {
             \Log::info("\n【ERROR】Email does not match\n"
                 .'Email:'.$oldRequest['email']
@@ -105,11 +112,12 @@ class AuthService
      */
     public function socialRegisterUser(SocialUser $socialUser): UserEntity
     {
-        $userEntity = $this->socialRepository->findUser($socialUser);
+        $email = $socialUser->getEmail();
+        $userEntity = $this->authRepository->findUser($email);
         if (is_null($userEntity)) {
             $this->hasSocialRequiredInformation($socialUser);
             $this->socialRepository->registerUser($socialUser);
-            $userEntity = $this->socialRepository->findUser($socialUser);
+            $userEntity = $this->authRepository->findUser($email);
         }
 
         return $userEntity;

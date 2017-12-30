@@ -58,12 +58,12 @@ class ManualController extends Controller
     public function completeRegister(Request $request)
     {
         $oldRequest = $request->old();
-        $userDetailEntity = $this->authDomainService->registerUser($oldRequest);
-        $result = $this->authDomainService->login($oldRequest, $userDetailEntity);
+        $userEntity = $this->authDomainService->registerUser($oldRequest);
+        $result = $this->authDomainService->login($oldRequest, $userEntity->getUserId());
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }
-        return redirect('/home')->with('message', 'ようこそ '.$userDetailEntity->getUserName().' さん');
+        return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
     }
 
     /**
@@ -83,12 +83,12 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userDetailEntity = $this->authDomainService->getUserDetail($oldRequest);
-        $result = $this->authDomainService->login($oldRequest, $userDetailEntity);
+        $userEntity = $this->authRepository->findUser($oldRequest['email']);
+        $result = $this->authDomainService->login($oldRequest, $userEntity->getUserId());
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }
-        return redirect('/home')->with('message', 'ようこそ '.$userDetailEntity->getUserName().' さん');
+        return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
     }
 
     /**
