@@ -36,10 +36,9 @@ class AuthRepository implements AuthRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findUser(array $oldRequest): ?UserEntity
+    public function findUser(string $email): ?UserEntity
     {
-        $userRequestObject = (object)$oldRequest;
-        $result = $this->users->findUser($userRequestObject->email);
+        $result = $this->users->findUser($email);
         if (is_null($result)) {
             return null;
         }

@@ -43,10 +43,10 @@ class AuthService
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity = $this->authRepository->findUser($oldRequest);
+        $userEntity = $this->authRepository->findUser($oldRequest['email']);
         if (is_null($userEntity)) {
             $this->authRepository->registerUser($oldRequest);
-            $userEntity = $this->authRepository->findUser($oldRequest);
+            $userEntity = $this->authRepository->findUser($oldRequest['email']);
         }
 
         return $userEntity;
