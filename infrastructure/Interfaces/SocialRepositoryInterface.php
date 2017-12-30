@@ -14,12 +14,6 @@ interface SocialRepositoryInterface
 {
     /**
      * @param SocialUser $socialUser
-     * @return UserEntity|null
-     */
-    public function findUser(SocialUser $socialUser): ?UserEntity;
-
-    /**
-     * @param SocialUser $socialUser
      * @return int|null
      */
     public function getUserId(SocialUser $socialUser): ?int;

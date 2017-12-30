@@ -41,19 +41,6 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findUser(SocialUser $socialUser): ?UserEntity
-    {
-        $result = $this->users->findUser($socialUser->getEmail());
-        if (is_null($result)) {
-            return null;
-        }
-        $userRecord = (object)$result;
-        return new UserEntity($userRecord);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getUserId(SocialUser $socialUser): ?int
     {
         return $this->users->getUserId($socialUser->getEmail());

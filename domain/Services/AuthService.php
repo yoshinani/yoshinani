@@ -112,11 +112,12 @@ class AuthService
      */
     public function socialRegisterUser(SocialUser $socialUser): UserEntity
     {
-        $userEntity = $this->socialRepository->findUser($socialUser);
+        $email = $socialUser->getEmail();
+        $userEntity = $this->authRepository->findUser($email);
         if (is_null($userEntity)) {
             $this->hasSocialRequiredInformation($socialUser);
             $this->socialRepository->registerUser($socialUser);
-            $userEntity = $this->socialRepository->findUser($socialUser);
+            $userEntity = $this->authRepository->findUser($email);
         }
 
         return $userEntity;
