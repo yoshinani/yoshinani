@@ -11,7 +11,7 @@ use App\Http\Requests\Auth\{
     LoginRequest
 };
 use App\Http\Controllers\Controller;
-use Domain\Services\AuthService as AuthDomainService;
+use Domain\Services\Auth\ManualService as AuthDomainService;
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 
 /**
