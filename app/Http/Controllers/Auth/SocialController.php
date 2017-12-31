@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
-use Domain\Services\AuthService as AuthDomainService;
+use Domain\Services\Auth\SocialService as AuthDomainService;
 use Exception;
 
 /**
