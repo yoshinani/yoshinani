@@ -66,6 +66,14 @@ class RegisterUserEntity implements Arrayable
     }
 
     /**
+     * @return bool
+     */
+    public function getActive(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return string
      */
     public function getCreatedAt(): string
