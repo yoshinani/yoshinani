@@ -83,7 +83,13 @@ class ManualService
             return false;
         }
 
-        // TODO: deleted_at is null ?
+        if (!$userDetailEntity->getActiveStatus()) {
+            \Log::info("\n【ERROR】Not a living user\n"
+                .'Email:'.$oldRequest['email']
+                .'Password:'.encrypt($oldRequest['password'])
+            );
+            return false;
+        }
 
         if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
             \Log::info("\n【ERROR】It is a User that does not exist\n"
