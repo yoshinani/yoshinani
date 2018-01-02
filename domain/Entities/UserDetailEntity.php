@@ -15,14 +15,13 @@ use stdClass;
  */
 class UserDetailEntity implements Arrayable
 {
+    CONST ON = 1;
+
     private $id;
     private $name;
     private $email;
     private $password;
     private $active;
-
-    CONST OFF = 0;
-    CONST ON = 1;
 
     /**
      * UserDetailEntity constructor.
