@@ -19,6 +19,10 @@ class UserDetailEntity implements Arrayable
     private $name;
     private $email;
     private $password;
+    private $active;
+
+    CONST OFF = 0;
+    CONST ON = 1;
 
     /**
      * UserDetailEntity constructor.
@@ -33,6 +37,7 @@ class UserDetailEntity implements Arrayable
         $this->email = $userValueObject->getUserEmail();
         $passwordValueObject = new PasswordValueObject($userDetail);
         $this->password = $passwordValueObject->getDecryptionPassword();
+        $this->active = $userDetail->active;
     }
 
     /**
@@ -47,6 +52,7 @@ class UserDetailEntity implements Arrayable
             'userName' => $this->name,
             'userEmail' => $this->email,
             'userPassword' => $this->password,
+            'activeStatus' => $this->active
         ];
     }
 
@@ -80,5 +86,17 @@ class UserDetailEntity implements Arrayable
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getActiveStatus(): bool
+    {
+        if ($this->active === self::ON) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
