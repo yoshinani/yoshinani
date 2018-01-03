@@ -8,7 +8,9 @@ use Domain\Entities\{
     RegisterSocialUserEntity
 };
 use Infrastructure\DataSources\Database\{
-    SocialAccounts, Users, UsersStatus
+    Users,
+    UsersStatus,
+    SocialAccounts
 };
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
