@@ -3,7 +3,6 @@
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
-use stdClass;
 
 /**
  * Class UsersPassword
