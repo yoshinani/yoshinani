@@ -50,7 +50,7 @@ class SocialController extends Controller
 
         $userEntity = $this->authDomainService->socialRegisterUser($socialUser);
         
-        $result = $this->authDomainService->socialLogin($socialServiceName, $socialUser);
+        $result = $this->authDomainService->socialLogin($socialServiceName, $socialUser, $userEntity->getUserId());
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }

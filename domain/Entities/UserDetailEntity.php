@@ -15,10 +15,13 @@ use stdClass;
  */
 class UserDetailEntity implements Arrayable
 {
+    CONST ON = 1;
+
     private $id;
     private $name;
     private $email;
     private $password;
+    private $activeStatus;
 
     /**
      * UserDetailEntity constructor.
@@ -33,6 +36,7 @@ class UserDetailEntity implements Arrayable
         $this->email = $userValueObject->getUserEmail();
         $passwordValueObject = new PasswordValueObject($userDetail);
         $this->password = $passwordValueObject->getDecryptionPassword();
+        $this->activeStatus = $userDetail->active;
     }
 
     /**
@@ -47,6 +51,7 @@ class UserDetailEntity implements Arrayable
             'userName' => $this->name,
             'userEmail' => $this->email,
             'userPassword' => $this->password,
+            'activeStatus' => $this->activeStatus
         ];
     }
 
@@ -80,5 +85,17 @@ class UserDetailEntity implements Arrayable
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getActiveStatus(): bool
+    {
+        if ($this->activeStatus === self::ON) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
