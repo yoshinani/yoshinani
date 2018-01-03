@@ -43,7 +43,7 @@ class Users extends Bass
     {
         $result = $this->db->table('users')
             ->join('users_status', 'users_status.user_id', '=', 'users.id')
-            ->join('users_password', 'users_password.user_id', '=', 'users.id')
+            ->leftjoin('users_password', 'users_password.user_id', '=', 'users.id')
             ->where('users.id', $userId)
             ->select('users.id', 'users.name', 'users.email', 'users_password.password', 'users_status.active')
             ->first();
