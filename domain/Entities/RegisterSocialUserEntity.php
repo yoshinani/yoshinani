@@ -15,8 +15,7 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 class RegisterSocialUserEntity implements Arrayable
 {
     private $id;
-    private $socialServiceName;
-    private $socialUserId;
+    private $social;
     private $timeStamp;
 
     /**
@@ -31,9 +30,7 @@ class RegisterSocialUserEntity implements Arrayable
         SocialUser $socialUser
     ) {
         $this->id = $userId;
-        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
-        $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
-        $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
+        $this->social = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -46,8 +43,8 @@ class RegisterSocialUserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'socialServiceName' => $this->socialServiceName,
-            'socialUserId' => $this->socialUserId,
+            'socialServiceName' => $this->social->getSocialServiceName(),
+            'socialUserId' => $this->social->getSocialUserId(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -66,7 +63,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getSocialServiceName(): string
     {
-        return $this->socialServiceName;
+        return $this->social->getSocialServiceName();
     }
 
     /**
@@ -74,7 +71,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getSocialUserId(): string
     {
-        return $this->socialUserId;
+        return $this->social->getSocialUserId();
     }
 
     /**
