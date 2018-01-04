@@ -25,8 +25,7 @@ class UserPasswordEntity implements Arrayable
         stdClass $userPasswordRecord
     ) {
         $this->id = $userId;
-        $passwordValueObject = new PasswordValueObject($userPasswordRecord);
-        $this->password = $passwordValueObject->getDecryptionPassword();
+        $this->password = new PasswordValueObject($userPasswordRecord);
     }
 
     /**
@@ -38,7 +37,7 @@ class UserPasswordEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'password' => $this->password,
+            'password' => $this->password->getDecryptionPassword(),
         ];
     }
 
@@ -47,6 +46,6 @@ class UserPasswordEntity implements Arrayable
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->password->getDecryptionPassword();
     }
 }
