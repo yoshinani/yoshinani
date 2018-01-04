@@ -27,8 +27,7 @@ class RegisterUserPasswordEntity implements Arrayable
         stdClass $userRecord
     ) {
         $this->id = $userId;
-        $passwordValueObject = new PasswordValueObject($userRecord);
-        $this->password = $passwordValueObject->getEncryptionPassword();
+        $this->password = new PasswordValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -41,7 +40,7 @@ class RegisterUserPasswordEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'password' => $this->password,
+            'password' => $this->password->getEncryptionPassword(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -52,7 +51,7 @@ class RegisterUserPasswordEntity implements Arrayable
      */
     public function getPassword(): ?string
     {
-        return $this->password;
+        return $this->password->getEncryptionPassword();
     }
 
     /**
