@@ -15,8 +15,7 @@ class RegisterUserPasswordEntity implements Arrayable
 {
     private $id;
     private $password;
-    private $createdAt;
-    private $updatedAt;
+    private $timeStamp;
 
     /**
      * RegisterUserPasswordEntity constructor.
@@ -30,9 +29,7 @@ class RegisterUserPasswordEntity implements Arrayable
         $this->id = $userId;
         $passwordValueObject = new PasswordValueObject($userRecord);
         $this->password = $passwordValueObject->getEncryptionPassword();
-        $timeStampValueObject = new TimeStampValueObject();
-        $this->createdAt = $timeStampValueObject->getNow();
-        $this->updatedAt = $timeStampValueObject->getNow();
+        $this->timeStamp = new TimeStampValueObject();
     }
 
     /**
@@ -45,8 +42,8 @@ class RegisterUserPasswordEntity implements Arrayable
         return [
             'id' => $this->id,
             'password' => $this->password,
-            'created_at' => $this->createdAt,
-            'updated_at' => $this->updatedAt,
+            'created_at' => $this->timeStamp->getNow(),
+            'updated_at' => $this->timeStamp->getNow(),
         ];
     }
 
@@ -63,7 +60,7 @@ class RegisterUserPasswordEntity implements Arrayable
      */
     public function getCreatedAt(): string
     {
-        return $this->createdAt;
+        return $this->timeStamp->getNow();
     }
 
     /**
@@ -71,6 +68,6 @@ class RegisterUserPasswordEntity implements Arrayable
      */
     public function getUpdatedAt(): string
     {
-        return$this->updatedAt;
+        return $this->timeStamp->getNow();
     }
 }

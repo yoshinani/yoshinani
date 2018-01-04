@@ -17,8 +17,7 @@ class RegisterUserEntity implements Arrayable
 {
     private $email;
     private $name;
-    private $createdAt;
-    private $updatedAt;
+    private $timeStamp;
 
     /**
      * RegisterUserEntity constructor.
@@ -29,9 +28,7 @@ class RegisterUserEntity implements Arrayable
         $userValueObject = new UserValueObject($userRecord);
         $this->email = $userValueObject->getUserEmail();
         $this->name = $userValueObject->getUserName();
-        $timeStampValueObject = new TimeStampValueObject();
-        $this->createdAt = $timeStampValueObject->getNow();
-        $this->updatedAt = $timeStampValueObject->getNow();
+        $this->timeStamp = new TimeStampValueObject();
     }
 
     /**
@@ -44,8 +41,8 @@ class RegisterUserEntity implements Arrayable
         return [
             'email' => $this->email,
             'name' => $this->name,
-            'created_at' => $this->createdAt,
-            'updated_at' => $this->updatedAt,
+            'created_at' => $this->timeStamp->getNow(),
+            'updated_at' => $this->timeStamp->getNow(),
         ];
     }
 
@@ -78,7 +75,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getCreatedAt(): string
     {
-        return $this->createdAt;
+        return $this->timeStamp->getNow();
     }
 
     /**
@@ -86,6 +83,6 @@ class RegisterUserEntity implements Arrayable
      */
     public function getUpdatedAt(): string
     {
-        return$this->updatedAt;
+        return $this->timeStamp->getNow();
     }
 }
