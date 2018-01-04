@@ -18,8 +18,7 @@ class UserDetailEntity implements Arrayable
     CONST ON = 1;
 
     private $id;
-    private $name;
-    private $email;
+    private $user;
     private $password;
     private $activeStatus;
 
@@ -31,11 +30,8 @@ class UserDetailEntity implements Arrayable
         stdClass $userDetail
     ) {
         $this->id = $userDetail->id;
-        $userValueObject = new UserValueObject($userDetail);
-        $this->name = $userValueObject->getUserName();
-        $this->email = $userValueObject->getUserEmail();
-        $passwordValueObject = new PasswordValueObject($userDetail);
-        $this->password = $passwordValueObject->getDecryptionPassword();
+        $this->user = new UserValueObject($userDetail);
+        $this->password = new PasswordValueObject($userDetail);
         $this->activeStatus = $userDetail->active;
     }
 
@@ -48,9 +44,9 @@ class UserDetailEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'userName' => $this->name,
-            'userEmail' => $this->email,
-            'userPassword' => $this->password,
+            'userName' => $this->user->getUserName(),
+            'userEmail' => $this->user->getUserEmail(),
+            'userPassword' => $this->password->getDecryptionPassword(),
             'activeStatus' => $this->activeStatus
         ];
     }
@@ -68,7 +64,7 @@ class UserDetailEntity implements Arrayable
      */
     public function getUserName(): string
     {
-        return $this->name;
+        return $this->user->getUserName();
     }
 
     /**
@@ -76,7 +72,7 @@ class UserDetailEntity implements Arrayable
      */
     public function getUserEmail(): string
     {
-        return $this->email;
+        return $this->user->getUserEmail();
     }
 
     /**
@@ -84,7 +80,7 @@ class UserDetailEntity implements Arrayable
      */
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->password->getDecryptionPassword();
     }
 
     /**
