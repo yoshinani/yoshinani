@@ -34,7 +34,7 @@ class SocialAccountValueObject
      */
     public function getSocialServiceName(): string
     {
-        return $this->socialAccount->social_service_name;
+        return $this->socialAccount->driver_name;
     }
 
     /**

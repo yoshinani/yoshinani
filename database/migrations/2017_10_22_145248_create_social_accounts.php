@@ -16,7 +16,7 @@ class CreateSocialAccounts extends Migration
         Schema::create('social_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id');
-            $table->string('social_service_name');
+            $table->string('driver_name');
             $table->string('social_user_id');
             $table->timestamps();
         });
