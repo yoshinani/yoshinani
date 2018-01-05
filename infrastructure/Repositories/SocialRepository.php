@@ -66,9 +66,9 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser): ?SocialUserAccountEntity
+    public function findSocialAccount(int $userId, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity
     {
-        $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $socialServiceName);
+        $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $driverName);
         if (is_null($result)) {
             return null;
         }
@@ -79,9 +79,9 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function synchronizeSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser)
+    public function synchronizeSocialAccount(int $userId, string $driverName, SocialUser $socialUser)
     {
-        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $socialServiceName, $socialUser);
+        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $driverName, $socialUser);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }

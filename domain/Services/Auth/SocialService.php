@@ -55,20 +55,20 @@ class SocialService
     }
 
     /**
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      * @param int $userId
      * @return bool
      */
-    public function socialLogin(string $socialServiceName, SocialUser $socialUser, int $userId): bool
+    public function socialLogin(string $driverName, SocialUser $socialUser, int $userId): bool
     {
-        $socialUserAccountEntity = $this->synchronizeSocialAccount($socialServiceName, $socialUser);
+        $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
         $userDetailEntity = $this->authRepository->getUserDetail($userId);
 
-        if ($socialUserAccountEntity->getSocialServiceName() != $socialServiceName) {
+        if ($socialUserAccountEntity->getSocialServiceName() != $driverName) {
             \Log::info("\n【ERROR】Authentication drivers do not match\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$socialServiceName.':'.$socialUser->getId()
+                .'Request:'.$driverName.':'.$socialUser->getId()
             );
             return false;
         }
@@ -76,7 +76,7 @@ class SocialService
         if ($socialUserAccountEntity->getSocialUserId() != $socialUser->getId()) {
             \Log::info("\n【ERROR】It does not match the ID of SNS Account\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$socialServiceName.':'.$socialUser->getId()
+                .'Request:'.$driverName.':'.$socialUser->getId()
             );
             return false;
         }
@@ -84,7 +84,7 @@ class SocialService
         if (!$userDetailEntity->getActiveStatus()) {
             \Log::info("\n【ERROR】Not a living user\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$socialServiceName.':'.$socialUser->getId()
+                .'Request:'.$driverName.':'.$socialUser->getId()
             );
             return false;
         }
@@ -92,7 +92,7 @@ class SocialService
         if (!Auth::loginUsingId($socialUserAccountEntity->getId())) {
             \Log::info("\n【ERROR】It is a User that does not exist\n"
                 .'Entity:'.$socialUserAccountEntity->getSocialServiceName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$socialServiceName.':'.$socialUser->getId()
+                .'Request:'.$driverName.':'.$socialUser->getId()
             );
             return false;
         }
@@ -117,18 +117,18 @@ class SocialService
     }
 
     /**
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      * @return SocialUserAccountEntity
      */
-    protected function synchronizeSocialAccount(string $socialServiceName, SocialUser $socialUser): SocialUserAccountEntity
+    protected function synchronizeSocialAccount(string $driverName, SocialUser $socialUser): SocialUserAccountEntity
     {
         $userId = $this->socialRepository->getUserId($socialUser);
-        $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
+        $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $driverName, $socialUser);
         if (is_null($socialUserAccountEntity)) {
             $userId = $this->socialRepository->getUserId($socialUser);
-            $this->socialRepository->synchronizeSocialAccount($userId, $socialServiceName, $socialUser);
-            $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $socialServiceName, $socialUser);
+            $this->socialRepository->synchronizeSocialAccount($userId, $driverName, $socialUser);
+            $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $driverName, $socialUser);
         }
         return $socialUserAccountEntity;
     }

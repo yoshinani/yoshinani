@@ -21,16 +21,16 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * RegisterSocialUserEntity constructor.
      * @param int $userId
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      */
     public function __construct(
         int $userId,
-        string $socialServiceName,
+        string $driverName,
         SocialUser $socialUser
     ) {
         $this->id = $userId;
-        $this->social = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
+        $this->social = new RegisterSocialUserValueObject($driverName, $socialUser);
         $this->timeStamp = new TimeStampValueObject();
     }
 

@@ -25,16 +25,16 @@ interface SocialRepositoryInterface
 
     /**
      * @param int $userId
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      * @return SocialUserAccountEntity|null
      */
-    public function findSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser): ?SocialUserAccountEntity;
+    public function findSocialAccount(int $userId, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity;
 
     /**
      * @param int $userId
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      */
-    public function synchronizeSocialAccount(int $userId, string $socialServiceName, SocialUser $socialUser);
+    public function synchronizeSocialAccount(int $userId, string $driverName, SocialUser $socialUser);
 }

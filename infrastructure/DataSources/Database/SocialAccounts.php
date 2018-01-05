@@ -13,13 +13,13 @@ class SocialAccounts extends Bass
 {
     /**
      * @param int $socialUserId
-     * @param string $socialServiceName
+     * @param string $driverName
      * @return null|stdClass
      */
-    public function getSocialAccount(int $socialUserId, string $socialServiceName): ?stdClass
+    public function getSocialAccount(int $socialUserId, string $driverName): ?stdClass
     {
         $result = $this->db->table('social_accounts')
-            ->where('driver_name', $socialServiceName)
+            ->where('driver_name', $driverName)
             ->where('social_user_id', $socialUserId)
             ->first();
 
