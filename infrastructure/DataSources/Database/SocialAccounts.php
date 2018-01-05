@@ -35,7 +35,7 @@ class SocialAccounts extends Bass
             ->insert(
                 [
                     'user_id' => $registerSocialUserEntity->getId(),
-                    'driver_name' => $registerSocialUserEntity->getSocialServiceName(),
+                    'driver_name' => $registerSocialUserEntity->getDriverName(),
                     'social_user_id' => $registerSocialUserEntity->getSocialUserId(),
                     'created_at' => $registerSocialUserEntity->getCreatedAt(),
                     'updated_at' => $registerSocialUserEntity->getUpdatedAt(),

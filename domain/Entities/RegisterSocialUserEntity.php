@@ -43,7 +43,7 @@ class RegisterSocialUserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'socialServiceName' => $this->social->getSocialServiceName(),
+            'driverName' => $this->social->getDriverName(),
             'socialUserId' => $this->social->getSocialUserId(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
@@ -61,9 +61,9 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getSocialServiceName(): string
+    public function getDriverName(): string
     {
-        return $this->social->getSocialServiceName();
+        return $this->social->getDriverName();
     }
 
     /**
