@@ -15,10 +15,8 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 class RegisterSocialUserEntity implements Arrayable
 {
     private $id;
-    private $socialServiceName;
-    private $socialUserId;
-    private $createdAt;
-    private $updatedAt;
+    private $social;
+    private $timeStamp;
 
     /**
      * RegisterSocialUserEntity constructor.
@@ -32,12 +30,8 @@ class RegisterSocialUserEntity implements Arrayable
         SocialUser $socialUser
     ) {
         $this->id = $userId;
-        $registerSocialUserValueObject = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
-        $this->socialServiceName = $registerSocialUserValueObject->getSocialServiceName();
-        $this->socialUserId = $registerSocialUserValueObject->getSocialUserId();
-        $timeStampValueObject = new TimeStampValueObject();
-        $this->createdAt = $timeStampValueObject->getNow();
-        $this->updatedAt = $timeStampValueObject->getNow();
+        $this->social = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
+        $this->timeStamp = new TimeStampValueObject();
     }
 
     /**
@@ -49,10 +43,10 @@ class RegisterSocialUserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'socialServiceName' => $this->socialServiceName,
-            'socialUserId' => $this->socialUserId,
-            'created_at' => $this->createdAt,
-            'updated_at' => $this->updatedAt,
+            'socialServiceName' => $this->social->getSocialServiceName(),
+            'socialUserId' => $this->social->getSocialUserId(),
+            'created_at' => $this->timeStamp->getNow(),
+            'updated_at' => $this->timeStamp->getNow(),
         ];
     }
 
@@ -69,7 +63,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getSocialServiceName(): string
     {
-        return $this->socialServiceName;
+        return $this->social->getSocialServiceName();
     }
 
     /**
@@ -77,7 +71,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getSocialUserId(): string
     {
-        return $this->socialUserId;
+        return $this->social->getSocialUserId();
     }
 
     /**
@@ -85,7 +79,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getCreatedAt(): string
     {
-        return $this->createdAt;
+        return $this->timeStamp->getNow();
     }
 
     /**
@@ -93,6 +87,6 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getUpdatedAt(): string
     {
-        return$this->updatedAt;
+        return $this->timeStamp->getNow();
     }
 }

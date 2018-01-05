@@ -13,8 +13,7 @@ use stdClass;
 class UserEntity implements Arrayable
 {
     private $id;
-    private $name;
-    private $email;
+    private $user;
 
     /**
      * UserEntity constructor.
@@ -25,9 +24,7 @@ class UserEntity implements Arrayable
         stdClass $userRecord
     ) {
         $this->id = $userRecord->id;
-        $userValueObject = new UserValueObject($userRecord);
-        $this->name = $userValueObject->getUserName();
-        $this->email = $userValueObject->getUserEmail();
+        $this->user = new UserValueObject($userRecord);
     }
 
     /**
@@ -39,8 +36,8 @@ class UserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'userName' => $this->name,
-            'userEmail' => $this->email,
+            'userName' => $this->user->getUserName(),
+            'userEmail' => $this->user->getUserEmail(),
         ];
     }
 
@@ -57,7 +54,7 @@ class UserEntity implements Arrayable
      */
     public function getUserName(): string
     {
-        return $this->name;
+        return $this->user->getUserName();
     }
 
     /**
@@ -65,6 +62,6 @@ class UserEntity implements Arrayable
      */
     public function getUserEmail(): string
     {
-        return $this->email;
+        return $this->user->getUserEmail();
     }
 }

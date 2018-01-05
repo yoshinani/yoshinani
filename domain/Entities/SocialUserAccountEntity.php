@@ -13,8 +13,7 @@ use stdClass;
 class SocialUserAccountEntity implements Arrayable
 {
     private $id;
-    private $socialServiceName;
-    private $socialUserId;
+    private $social;
 
     /**
      * SocialUserAccountEntity constructor.
@@ -26,9 +25,7 @@ class SocialUserAccountEntity implements Arrayable
         stdClass $socialAccountRecord
     ) {
         $this->id = $userId;
-        $socialAccountValueObject = new SocialAccountValueObject($socialAccountRecord);
-        $this->socialServiceName = $socialAccountValueObject->getSocialServiceName();
-        $this->socialUserId = $socialAccountValueObject->getSocialUserId();
+        $this->social = new SocialAccountValueObject($socialAccountRecord);
     }
 
     /**
@@ -40,8 +37,8 @@ class SocialUserAccountEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'socialServiceName' => $this->socialServiceName,
-            'socialUserId' => $this->socialUserId,
+            'socialServiceName' => $this->social->getSocialServiceName(),
+            'socialUserId' => $this->social->getSocialUserId(),
         ];
     }
 
@@ -58,7 +55,7 @@ class SocialUserAccountEntity implements Arrayable
      */
     public function getSocialServiceName(): string
     {
-        return $this->socialServiceName;
+        return $this->social->getSocialServiceName();
     }
 
     /**
@@ -66,6 +63,6 @@ class SocialUserAccountEntity implements Arrayable
      */
     public function getSocialUserId(): string
     {
-        return $this->socialUserId;
+        return $this->social->getSocialUserId();
     }
 }

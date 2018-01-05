@@ -15,10 +15,8 @@ use stdClass;
  */
 class RegisterUserEntity implements Arrayable
 {
-    private $email;
-    private $name;
-    private $createdAt;
-    private $updatedAt;
+    private $user;
+    private $timeStamp;
 
     /**
      * RegisterUserEntity constructor.
@@ -26,12 +24,8 @@ class RegisterUserEntity implements Arrayable
      */
     public function __construct(stdClass $userRecord)
     {
-        $userValueObject = new UserValueObject($userRecord);
-        $this->email = $userValueObject->getUserEmail();
-        $this->name = $userValueObject->getUserName();
-        $timeStampValueObject = new TimeStampValueObject();
-        $this->createdAt = $timeStampValueObject->getNow();
-        $this->updatedAt = $timeStampValueObject->getNow();
+        $this->user = new UserValueObject($userRecord);
+        $this->timeStamp = new TimeStampValueObject();
     }
 
     /**
@@ -42,10 +36,10 @@ class RegisterUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'email' => $this->email,
-            'name' => $this->name,
-            'created_at' => $this->createdAt,
-            'updated_at' => $this->updatedAt,
+            'email' => $this->user->getUserEmail(),
+            'name' => $this->user->getUserName(),
+            'created_at' => $this->timeStamp->getNow(),
+            'updated_at' => $this->timeStamp->getNow(),
         ];
     }
 
@@ -54,7 +48,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->user->getUserEmail();
     }
 
     /**
@@ -62,7 +56,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getName(): string
     {
-        return $this->name;
+        return $this->user->getUserName();
     }
 
     /**
@@ -78,7 +72,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getCreatedAt(): string
     {
-        return $this->createdAt;
+        return $this->timeStamp->getNow();
     }
 
     /**
@@ -86,6 +80,6 @@ class RegisterUserEntity implements Arrayable
      */
     public function getUpdatedAt(): string
     {
-        return$this->updatedAt;
+        return $this->timeStamp->getNow();
     }
 }
