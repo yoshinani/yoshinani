@@ -15,19 +15,19 @@ class RegisterSocialUserValueObject
 
     /**
      * RegisterSocialUserValueObject constructor.
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      */
-    public function __construct(string $socialServiceName, SocialUser $socialUser)
+    public function __construct(string $driverName, SocialUser $socialUser)
     {
-        $this->driver = $socialServiceName;
+        $this->driver = $driverName;
         $this->socialUser = $socialUser;
     }
 
     /**
      * @return string
      */
-    public function getSocialServiceName(): string
+    public function getDriverName(): string
     {
         return $this->driver;
     }

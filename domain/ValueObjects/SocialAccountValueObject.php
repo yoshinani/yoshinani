@@ -32,9 +32,9 @@ class SocialAccountValueObject
     /**
      * @return string
      */
-    public function getSocialServiceName(): string
+    public function getDriverName(): string
     {
-        return $this->socialAccount->social_service_name;
+        return $this->socialAccount->driver_name;
     }
 
     /**

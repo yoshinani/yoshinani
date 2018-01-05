@@ -21,16 +21,16 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * RegisterSocialUserEntity constructor.
      * @param int $userId
-     * @param string $socialServiceName
+     * @param string $driverName
      * @param SocialUser $socialUser
      */
     public function __construct(
         int $userId,
-        string $socialServiceName,
+        string $driverName,
         SocialUser $socialUser
     ) {
         $this->id = $userId;
-        $this->social = new RegisterSocialUserValueObject($socialServiceName, $socialUser);
+        $this->social = new RegisterSocialUserValueObject($driverName, $socialUser);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -43,7 +43,7 @@ class RegisterSocialUserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'socialServiceName' => $this->social->getSocialServiceName(),
+            'driverName' => $this->social->getDriverName(),
             'socialUserId' => $this->social->getSocialUserId(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
@@ -61,9 +61,9 @@ class RegisterSocialUserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getSocialServiceName(): string
+    public function getDriverName(): string
     {
-        return $this->social->getSocialServiceName();
+        return $this->social->getDriverName();
     }
 
     /**

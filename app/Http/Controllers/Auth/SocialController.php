@@ -27,30 +27,30 @@ class SocialController extends Controller
     }
 
     /**
-     * @param $socialServiceName
+     * @param $driverName
      * @return RedirectResponse
      */
-    public function redirectToSocialService($socialServiceName): RedirectResponse
+    public function redirectToSocialService($driverName): RedirectResponse
     {
-        return Socialite::driver($socialServiceName)->redirect();
+        return Socialite::driver($driverName)->redirect();
     }
 
     /**
-     * @param $socialServiceName
+     * @param $driverName
      * @return RedirectResponse
      * @throws Exception
      */
-    public function handleSocialServiceCallback($socialServiceName): RedirectResponse
+    public function handleSocialServiceCallback($driverName): RedirectResponse
     {
         try {
-            $socialUser = Socialite::driver($socialServiceName)->user();
+            $socialUser = Socialite::driver($driverName)->user();
         } catch (Exception $e) {
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
         $userEntity = $this->authDomainService->socialRegisterUser($socialUser);
         
-        $result = $this->authDomainService->socialLogin($socialServiceName, $socialUser, $userEntity->getUserId());
+        $result = $this->authDomainService->socialLogin($driverName, $socialUser, $userEntity->getUserId());
         if (!$result) {
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
