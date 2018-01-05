@@ -45,14 +45,14 @@ class SocialController extends Controller
         try {
             $socialUser = Socialite::driver($socialServiceName)->user();
         } catch (Exception $e) {
-            return redirect('/login');
+            return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
         $userEntity = $this->authDomainService->socialRegisterUser($socialUser);
         
         $result = $this->authDomainService->socialLogin($socialServiceName, $socialUser, $userEntity->getUserId());
         if (!$result) {
-            return back()->with('message', 'ログインに失敗しました');
+            return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
         return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
