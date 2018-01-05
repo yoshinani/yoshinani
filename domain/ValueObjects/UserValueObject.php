@@ -10,8 +10,7 @@ use stdClass;
  */
 class UserValueObject
 {
-    private $userName;
-    private $userEmail;
+    private $user;
 
     /**
      * UserValueObject constructor.
@@ -19,8 +18,7 @@ class UserValueObject
      */
     public function __construct(stdClass $userRecord)
     {
-        $this->userName = $userRecord->name;
-        $this->userEmail = $userRecord->email;
+        $this->user = $userRecord;
     }
 
     /**
@@ -28,7 +26,7 @@ class UserValueObject
      */
     public function getUserName(): string
     {
-        return $this->userName;
+        return $this->user->name;
     }
 
     /**
@@ -36,6 +34,6 @@ class UserValueObject
      */
     public function getUserEmail(): string
     {
-        return $this->userEmail;
+        return $this->user->email;
     }
 }

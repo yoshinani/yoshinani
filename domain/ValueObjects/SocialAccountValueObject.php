@@ -10,9 +10,7 @@ use stdClass;
  */
 class SocialAccountValueObject
 {
-    protected $userId;
-    protected $socialServiceName;
-    protected $socialUserId;
+    private $socialAccount;
 
     /**
      * SocialAccountValueObject constructor.
@@ -20,9 +18,7 @@ class SocialAccountValueObject
      */
     public function __construct(stdClass $socialAccountRecord)
     {
-        $this->userId = $socialAccountRecord->user_id;
-        $this->socialServiceName = $socialAccountRecord->social_service_name;
-        $this->socialUserId = $socialAccountRecord->social_user_id;
+        $this->socialAccount = $socialAccountRecord;
     }
 
     /**
@@ -30,7 +26,7 @@ class SocialAccountValueObject
      */
     public function getUserId(): int
     {
-        return $this->userId;
+        return $this->socialAccount->user_id;
     }
 
     /**
@@ -38,7 +34,7 @@ class SocialAccountValueObject
      */
     public function getSocialServiceName(): string
     {
-        return $this->socialServiceName;
+        return $this->socialAccount->social_service_name;
     }
 
     /**
@@ -46,6 +42,6 @@ class SocialAccountValueObject
      */
     public function getSocialUserId(): string
     {
-        return $this->socialUserId;
+        return $this->socialAccount->social_user_id;
     }
 }

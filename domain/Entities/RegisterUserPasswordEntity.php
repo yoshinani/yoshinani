@@ -40,7 +40,7 @@ class RegisterUserPasswordEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'password' => $this->password->getEncryptionPassword(),
+            'password' => $this->password->getEncryption(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -51,7 +51,7 @@ class RegisterUserPasswordEntity implements Arrayable
      */
     public function getPassword(): ?string
     {
-        return $this->password->getEncryptionPassword();
+        return $this->password->getEncryption();
     }
 
     /**

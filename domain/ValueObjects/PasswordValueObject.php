@@ -26,7 +26,7 @@ class PasswordValueObject
     /**
      * @return null|string
      */
-    public function getEncryptionPassword(): ?string
+    public function getEncryption(): ?string
     {
         return encrypt($this->userPassword);
     }
@@ -34,7 +34,7 @@ class PasswordValueObject
     /**
      * @return string
      */
-    public function getDecryptionPassword(): string
+    public function getDecryption(): string
     {
         if (is_null($this->userPassword)) {
             return self::NO_EXIST;

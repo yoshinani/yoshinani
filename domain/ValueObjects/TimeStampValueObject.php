@@ -10,14 +10,14 @@ use Carbon\Carbon;
  */
 class TimeStampValueObject
 {
-    private $getNow;
+    private $carbon;
 
     /**
      * TimeStampValueObject constructor.
      */
     public function __construct()
     {
-        $this->getNow = $this->getNow();
+        $this->carbon = Carbon::now();
     }
 
     /**
@@ -25,8 +25,7 @@ class TimeStampValueObject
      */
     public function getNow(): string 
     {
-        $carbon = Carbon::now();
-        return $carbon->toDateTimeString();
+        return $this->carbon->toDateTimeString();
     }
 
 }

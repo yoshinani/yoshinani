@@ -46,7 +46,7 @@ class UserDetailEntity implements Arrayable
             'id' => $this->id,
             'userName' => $this->user->getUserName(),
             'userEmail' => $this->user->getUserEmail(),
-            'userPassword' => $this->password->getDecryptionPassword(),
+            'userPassword' => $this->password->getDecryption(),
             'activeStatus' => $this->activeStatus
         ];
     }
@@ -80,7 +80,7 @@ class UserDetailEntity implements Arrayable
      */
     public function getPassword(): string
     {
-        return $this->password->getDecryptionPassword();
+        return $this->password->getDecryption();
     }
 
     /**
