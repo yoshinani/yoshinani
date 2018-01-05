@@ -10,8 +10,8 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  */
 class RegisterSocialUserValueObject
 {
-    private $socialServiceName;
-    private $socialUserId;
+    private $driver;
+    private $socialUser;
 
     /**
      * RegisterSocialUserValueObject constructor.
@@ -20,8 +20,8 @@ class RegisterSocialUserValueObject
      */
     public function __construct(string $socialServiceName, SocialUser $socialUser)
     {
-        $this->socialServiceName = $socialServiceName;
-        $this->socialUserId = $socialUser->getId();
+        $this->driver = $socialServiceName;
+        $this->socialUser = $socialUser;
     }
 
     /**
@@ -29,7 +29,7 @@ class RegisterSocialUserValueObject
      */
     public function getSocialServiceName(): string
     {
-        return $this->socialServiceName;
+        return $this->driver;
     }
 
     /**
@@ -37,6 +37,6 @@ class RegisterSocialUserValueObject
      */
     public function getSocialUserId(): string
     {
-        return $this->socialUserId;
+        return $this->socialUser->getId();
     }
 }
