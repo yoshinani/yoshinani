@@ -13,13 +13,13 @@ class UserValueObjectTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->user = (object)[
+        $userRecord = (object)[
             'name' => 'testName',
             'email' => 'test@test.test',
             'password' => 'password',
             'password_confirmation' => 'password'
         ];
-        $this->userVo = new UserValueObject($this->user);
+        $this->userVo = new UserValueObject($userRecord);
     }
 
     public function tearDown()
