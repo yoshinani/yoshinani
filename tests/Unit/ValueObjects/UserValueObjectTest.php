@@ -7,7 +7,6 @@ use Tests\TestCase;
 
 class UserValueObjectTest extends TestCase
 {
-    private $user;
     private $userVo;
 
     public function setUp()
