@@ -47,8 +47,8 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit --coverage-clover build/logs/clover.xml",
-        "send": "./vendor/bin/coveralls -v",
+        "test": "phpunit --coverage-clover build/logs/clover.xml",
+        "send": "coveralls -v",
         "fixer": "php-cs-fixer fix",
         "fixer-dry-run": "php-cs-fixer fix --dry-run",
         "post-root-package-install": [
