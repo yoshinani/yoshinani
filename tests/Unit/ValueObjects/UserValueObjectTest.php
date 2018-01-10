@@ -21,12 +21,6 @@ class UserValueObjectTest extends TestCase
         $this->userVo = new UserValueObject($userRecord);
     }
 
-    public function tearDown()
-    {
-        \Mockery::close();
-        parent::tearDown();
-    }
-
     public function testGetUserName()
     {
         $this->assertEquals($this->userVo->getName(), 'testName');
