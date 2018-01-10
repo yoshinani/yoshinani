@@ -21,12 +21,23 @@ class UserValueObjectTest extends TestCase
         $this->userVo = new UserValueObject($userRecord);
     }
 
-    public function testGetUserName()
+    /**
+     * Matches the acquired name.
+     * 取得した名前と一致します。
+     * @test
+     */
+    public function getNameMatch()
     {
         $this->assertEquals($this->userVo->getName(), 'testName');
     }
 
-    public function testGetUserEmail()
+    /**
+     * Matches the acquired email.
+     * 取得した電子メールに一致します。
+     *
+     * @test
+     */
+    public function getEmailMatch()
     {
         $this->assertEquals($this->userVo->getEmail(), 'test@test.test');
     }
