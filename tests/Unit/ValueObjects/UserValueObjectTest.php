@@ -29,11 +29,11 @@ class UserValueObjectTest extends TestCase
 
     public function testGetUserName()
     {
-        $this->assertEquals($this->userVo->getUserName(), 'testName');
+        $this->assertEquals($this->userVo->getName(), 'testName');
     }
 
     public function testGetUserEmail()
     {
-        $this->assertEquals($this->userVo->getUserEmail(), 'test@test.test');
+        $this->assertEquals($this->userVo->getEmail(), 'test@test.test');
     }
 }
