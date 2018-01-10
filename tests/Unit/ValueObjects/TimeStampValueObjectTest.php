@@ -22,7 +22,6 @@ class TimeStampValueObjectTest extends TestCase
      */
     public function getNowFormat()
     {
-        $this->assertInternalType('string', $this->timeStamp->getNow());
         $this->assertEquals($this->timeStamp->getNow(), date('Y-m-d H:i:s'));
     }
 
