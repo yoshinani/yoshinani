@@ -34,7 +34,6 @@ class UserValueObjectTest extends TestCase
     /**
      * Matches the acquired email.
      * 取得した電子メールに一致します。
-     *
      * @test
      */
     public function getEmailMatch()
