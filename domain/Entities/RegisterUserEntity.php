@@ -36,8 +36,8 @@ class RegisterUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'email' => $this->user->getUserEmail(),
-            'name' => $this->user->getUserName(),
+            'email' => $this->user->getEmail(),
+            'name' => $this->user->getName(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -48,7 +48,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getEmail(): string
     {
-        return $this->user->getUserEmail();
+        return $this->user->getEmail();
     }
 
     /**
@@ -56,7 +56,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getName(): string
     {
-        return $this->user->getUserName();
+        return $this->user->getName();
     }
 
     /**

@@ -24,7 +24,7 @@ class UserValueObject
     /**
      * @return string
      */
-    public function getUserName(): string
+    public function getName(): string
     {
         return $this->user->name;
     }
@@ -32,7 +32,7 @@ class UserValueObject
     /**
      * @return string
      */
-    public function getUserEmail(): string
+    public function getEmail(): string
     {
         return $this->user->email;
     }

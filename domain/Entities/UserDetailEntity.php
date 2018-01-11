@@ -44,8 +44,8 @@ class UserDetailEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'userName' => $this->user->getUserName(),
-            'userEmail' => $this->user->getUserEmail(),
+            'userName' => $this->user->getName(),
+            'userEmail' => $this->user->getEmail(),
             'userPassword' => $this->password->getDecryption(),
             'activeStatus' => $this->activeStatus
         ];
@@ -64,7 +64,7 @@ class UserDetailEntity implements Arrayable
      */
     public function getUserName(): string
     {
-        return $this->user->getUserName();
+        return $this->user->getName();
     }
 
     /**
@@ -72,7 +72,7 @@ class UserDetailEntity implements Arrayable
      */
     public function getUserEmail(): string
     {
-        return $this->user->getUserEmail();
+        return $this->user->getEmail();
     }
 
     /**
