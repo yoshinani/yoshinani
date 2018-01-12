@@ -16,7 +16,8 @@ class CreateUsersNameTable extends Migration
         Schema::create('users_name', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('user_id');
-            $table->string('name');
+            $table->string('nickname')->nullable();
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
