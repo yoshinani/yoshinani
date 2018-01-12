@@ -38,6 +38,7 @@ class RegisterUserEntity implements Arrayable
         return [
             'email' => $this->user->getEmail(),
             'name' => $this->user->getName(),
+            'nickName' => $this->user->getNickName(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -52,11 +53,19 @@ class RegisterUserEntity implements Arrayable
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->user->getName();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getNickName(): ?string
+    {
+        return $this->user->getNickName();
     }
 
     /**
