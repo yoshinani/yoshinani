@@ -8,9 +8,7 @@ use Domain\Entities\{
     RegisterSocialUserEntity
 };
 use Infrastructure\DataSources\Database\{
-    Users,
-    UsersStatus,
-    SocialAccounts
+    Users, UsersName, UsersStatus, SocialAccounts
 };
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -24,21 +22,25 @@ class SocialRepository implements SocialRepositoryInterface
 {
     private $socialAccounts;
     private $users;
+    private $usersName;
     private $usersStatus;
 
     /**
      * SocialRepository constructor.
      * @param SocialAccounts $socialAccounts
      * @param Users $users
+     * @param UsersName $usersName
      * @param UsersStatus $usersStatus
      */
     public function __construct(
         SocialAccounts $socialAccounts,
         Users          $users,
+        UsersName      $usersName,
         UsersStatus    $usersStatus
     ) {
         $this->socialAccounts = $socialAccounts;
         $this->users = $users;
+        $this->usersName = $usersName;
         $this->usersStatus = $usersStatus;
     }
 
@@ -56,10 +58,12 @@ class SocialRepository implements SocialRepositoryInterface
     public function registerUser(SocialUser $socialUser)
     {
         $userInfo = new stdClass();
+        $userInfo->nickName = $socialUser->getNickname();
         $userInfo->name = $socialUser->getName();
         $userInfo->email = $socialUser->getEmail();
         $registerUserEntity = new RegisterUserEntity($userInfo);
         $userId = $this->users->registerUser($registerUserEntity);
+        $this->usersName->registerUserName($userId, $registerUserEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
     }
 
