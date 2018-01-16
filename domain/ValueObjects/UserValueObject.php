@@ -22,22 +22,6 @@ class UserValueObject
     }
 
     /**
-     * @return null|string
-     */
-    public function getNickName(): ?string
-    {
-        return $this->user->nickName;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->user->name;
-    }
-
-    /**
      * @return string
      */
     public function getEmail(): string
