@@ -3,8 +3,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\{
-    UserValueObject,
-    PasswordValueObject
+    NameValueObject, UserValueObject, PasswordValueObject
 };
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
@@ -19,6 +18,7 @@ class UserDetailEntity implements Arrayable
 
     private $id;
     private $user;
+    private $name;
     private $password;
     private $activeStatus;
 
@@ -31,6 +31,7 @@ class UserDetailEntity implements Arrayable
     ) {
         $this->id = $userDetail->id;
         $this->user = new UserValueObject($userDetail);
+        $this->name = new NameValueObject($userDetail);
         $this->password = new PasswordValueObject($userDetail);
         $this->activeStatus = $userDetail->active;
     }
@@ -44,8 +45,9 @@ class UserDetailEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'userName' => $this->user->getName(),
             'userEmail' => $this->user->getEmail(),
+            'userNickName' => $this->name->getNickName(),
+            'userName' => $this->name->getName(),
             'userPassword' => $this->password->getDecryption(),
             'activeStatus' => $this->activeStatus
         ];
@@ -62,17 +64,25 @@ class UserDetailEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUserName(): string
+    public function getUserEmail(): string
     {
-        return $this->user->getName();
+        return $this->user->getEmail();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUserNickName(): ?string
+    {
+        return $this->name->getNickName();
     }
 
     /**
      * @return string
      */
-    public function getUserEmail(): string
+    public function getUserName(): ?string
     {
-        return $this->user->getEmail();
+        return $this->name->getName();
     }
 
     /**

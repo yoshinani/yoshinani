@@ -3,8 +3,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\{
-    UserValueObject,
-    TimeStampValueObject
+    NameValueObject, UserValueObject, TimeStampValueObject
 };
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
@@ -16,6 +15,7 @@ use stdClass;
 class RegisterUserEntity implements Arrayable
 {
     private $user;
+    private $name;
     private $timeStamp;
 
     /**
@@ -25,6 +25,7 @@ class RegisterUserEntity implements Arrayable
     public function __construct(stdClass $userRecord)
     {
         $this->user = new UserValueObject($userRecord);
+        $this->name = new NameValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -37,8 +38,8 @@ class RegisterUserEntity implements Arrayable
     {
         return [
             'email' => $this->user->getEmail(),
-            'name' => $this->user->getName(),
-            'nickName' => $this->user->getNickName(),
+            'name' => $this->name->getName(),
+            'nickName' => $this->name->getNickName(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -57,7 +58,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getName(): ?string
     {
-        return $this->user->getName();
+        return $this->name->getName();
     }
 
     /**
@@ -65,7 +66,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function getNickName(): ?string
     {
-        return $this->user->getNickName();
+        return $this->name->getNickName();
     }
 
     /**
