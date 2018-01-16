@@ -34,7 +34,6 @@ class NameValueObject
      */
     public function getName(): ?string
     {
-        dd($this->user);
         return $this->user->name;
     }
 
