@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Domain\ValueObjects\UserValueObject;
+use Domain\ValueObjects\EmailValueObject;
 use Tests\TestCase;
 
-class UserValueObjectTest extends TestCase
+class EmailValueObjectTest extends TestCase
 {
-    private $userVo;
+    private $emailVo;
 
     public function setUp()
     {
@@ -15,7 +15,7 @@ class UserValueObjectTest extends TestCase
         $userRecord = (object)[
             'email' => 'test@test.test',
         ];
-        $this->userVo = new UserValueObject($userRecord);
+        $this->emailVo = new EmailValueObject($userRecord);
     }
 
     /**
@@ -25,6 +25,6 @@ class UserValueObjectTest extends TestCase
      */
     public function getEmailMatch()
     {
-        $this->assertEquals($this->userVo->getEmail(), 'test@test.test');
+        $this->assertEquals($this->emailVo->getEmail(), 'test@test.test');
     }
 }

@@ -3,7 +3,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\NameValueObject;
-use Domain\ValueObjects\UserValueObject;
+use Domain\ValueObjects\EmailValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
@@ -14,7 +14,7 @@ use stdClass;
 class UserEntity implements Arrayable
 {
     private $id;
-    private $user;
+    private $email;
     private $name;
 
     /**
@@ -26,7 +26,7 @@ class UserEntity implements Arrayable
         stdClass $userRecord
     ) {
         $this->id = $userRecord->id;
-        $this->user = new UserValueObject($userRecord);
+        $this->email = new EmailValueObject($userRecord);
         $this->name = new NameValueObject($userRecord);
     }
 
@@ -41,7 +41,7 @@ class UserEntity implements Arrayable
             'id' => $this->id,
             'userName' => $this->name->getName(),
             'userNickName' => $this->name->getNickName(),
-            'userEmail' => $this->user->getEmail(),
+            'userEmail' => $this->email->getEmail(),
         ];
     }
 
@@ -66,6 +66,6 @@ class UserEntity implements Arrayable
      */
     public function getUserEmail(): string
     {
-        return $this->user->getEmail();
+        return $this->email->getEmail();
     }
 }
