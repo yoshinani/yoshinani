@@ -17,8 +17,11 @@ class Users extends Bass
      */
     public function findUser(string $email)
     {
+        $userId = $this->getUserId($email);
         $result = $this->db->table('users')
-            ->where('email', $email)
+            ->join('users_name', 'users_name.user_id', '=', 'users.id')
+            ->where('users.id', $userId)
+            ->select('users.id', 'users.email', 'users_name.name', 'users_name.nickname', 'users.created_at', 'users.updated_at')
             ->first();
         return $result;
     }
