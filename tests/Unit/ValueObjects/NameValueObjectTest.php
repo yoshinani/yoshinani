@@ -30,8 +30,8 @@ class NameValueObjectTest extends TestCase
     }
 
     /**
-     * Matches the acquired name.
-     * 取得した名前と一致します。
+     * Matches the acquired nickname.
+     * 取得したニックネームと一致します。
      * @test
      */
     public function getNickNameMatch()
