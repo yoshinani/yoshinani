@@ -13,22 +13,9 @@ class UserValueObjectTest extends TestCase
     {
         parent::setUp();
         $userRecord = (object)[
-            'name' => 'testName',
             'email' => 'test@test.test',
-            'password' => 'password',
-            'password_confirmation' => 'password'
         ];
         $this->userVo = new UserValueObject($userRecord);
-    }
-
-    /**
-     * Matches the acquired name.
-     * 取得した名前と一致します。
-     * @test
-     */
-    public function getNameMatch()
-    {
-        $this->assertEquals($this->userVo->getName(), 'testName');
     }
 
     /**
