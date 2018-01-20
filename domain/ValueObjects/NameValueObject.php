@@ -26,7 +26,7 @@ class NameValueObject
      */
     public function getNickName(): ?string
     {
-        return $this->user->nickName;
+        return $this->user->nickname;
     }
 
     /**
