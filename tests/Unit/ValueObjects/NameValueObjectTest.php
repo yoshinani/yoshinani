@@ -14,7 +14,7 @@ class NameValueObjectTest extends TestCase
         parent::setUp();
         $userRecord = (object)[
             'name' => 'testName',
-            'nickName' => 'testNickName'
+            'nickname' => 'testNickName'
         ];
         $this->nameVo = new NameValueObject($userRecord);
     }
