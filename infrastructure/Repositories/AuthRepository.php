@@ -10,9 +10,7 @@ use Domain\Entities\{
     UserPasswordEntity
 };
 use Infrastructure\DataSources\Database\{
-    Users,
-    UsersStatus,
-    UsersPassword
+    Users, UsersName, UsersStatus, UsersPassword
 };
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 
@@ -25,6 +23,7 @@ class AuthRepository implements AuthRepositoryInterface
     private $users;
     private $usersStatus;
     private $usersPassword;
+    private $usersName;
 
     /**
      * {@inheritdoc}
@@ -32,12 +31,14 @@ class AuthRepository implements AuthRepositoryInterface
     public function __construct(
         Users $users,
         UsersStatus $usersStatus,
-        UsersPassword $usersPassword
+        UsersPassword $usersPassword,
+        UsersName $usersName
     )
     {
         $this->users = $users;
         $this->usersStatus = $usersStatus;
         $this->usersPassword = $usersPassword;
+        $this->usersName = $usersName;
     }
 
     /**
@@ -99,6 +100,7 @@ class AuthRepository implements AuthRepositoryInterface
         $userRecord = (object)$oldRequest;
         $registerUserEntity = new RegisterUserEntity($userRecord);
         $userId = $this->users->registerUser($registerUserEntity);
+        $this->usersName->registerUserName($userId, $registerUserEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
         $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $userRecord);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);

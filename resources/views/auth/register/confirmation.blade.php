@@ -21,6 +21,14 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6">
+                                <label for="nickname" class="col-md-4 control-label">NickName</label>
+                                <div class="col-md-6">
+                                    {{ old('nickname') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
                                 <label for="email" class="col-md-4 control-label">E-Mail Address</label>
                                 <div class="col-md-6">
                                     {{ old('email') }}

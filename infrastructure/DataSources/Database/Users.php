@@ -17,8 +17,11 @@ class Users extends Bass
      */
     public function findUser(string $email)
     {
+        $userId = $this->getUserId($email);
         $result = $this->db->table('users')
-            ->where('email', $email)
+            ->join('users_name', 'users_name.user_id', '=', 'users.id')
+            ->where('users.id', $userId)
+            ->select('users.id', 'users.email', 'users_name.name', 'users_name.nickname', 'users.created_at', 'users.updated_at')
             ->first();
         return $result;
     }
@@ -43,9 +46,10 @@ class Users extends Bass
     {
         $result = $this->db->table('users')
             ->join('users_status', 'users_status.user_id', '=', 'users.id')
+            ->leftJoin('users_name', 'users_name.user_id', '=', 'users.id')
             ->leftjoin('users_password', 'users_password.user_id', '=', 'users.id')
             ->where('users.id', $userId)
-            ->select('users.id', 'users.name', 'users.email', 'users_password.password', 'users_status.active')
+            ->select('users.id', 'users_name.name', 'users_name.nickname', 'users.email', 'users_password.password', 'users_status.active')
             ->first();
         return $result;
     }
@@ -60,7 +64,6 @@ class Users extends Bass
             ->insertGetId(
                 [
                     'email' => $registerUserEntity->getEmail(),
-                    'name' => $registerUserEntity->getName(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),
                 ]

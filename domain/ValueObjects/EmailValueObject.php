@@ -5,28 +5,20 @@ namespace Domain\ValueObjects;
 use stdClass;
 
 /**
- * Class UserValueObject
+ * Class EmailValueObject
  * @package Domain\ValueObjects
  */
-class UserValueObject
+class EmailValueObject
 {
     private $user;
 
     /**
-     * UserValueObject constructor.
+     * EmailValueObject constructor.
      * @param stdClass $userRecord
      */
     public function __construct(stdClass $userRecord)
     {
         $this->user = $userRecord;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->user->name;
     }
 
     /**

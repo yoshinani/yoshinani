@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'nickname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ];
@@ -34,6 +35,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'ユーザ名',
+            'nickname' => 'ニックネーム',
             'email' => 'メールアドレス',
             'password' => 'パスワード',
         ];
@@ -45,6 +47,9 @@ class RegisterRequest extends FormRequest
             'name.required' => ':attributeが入力されていません',
             'name.string' => ':attributeが文字列ではありません',
             'name.max' => ':attributeは255文字以下にして下さい',
+            'nickname.required' => ':attributeが入力されていません',
+            'nickname.string' => ':attributeが文字列ではありません',
+            'nickname.max' => ':attributeは255文字以下にして下さい',
             'email.required' => ':attributeが入力されていません',
             'email.string' => ':attributeが文字列ではありません',
             'email.email' => ':attributeの形式が正しくありません',
