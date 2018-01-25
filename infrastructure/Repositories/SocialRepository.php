@@ -3,14 +3,10 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\{
-    RegisterUserEntity,
-    SocialUserAccountEntity,
-    RegisterSocialUserEntity
+    RegisterUserEntity, RegisterUserNickNameEntity, SocialUserAccountEntity, RegisterSocialUserEntity
 };
 use Infrastructure\DataSources\Database\{
-    Users,
-    UsersStatus,
-    SocialAccounts
+    Users, UsersNickName, UsersStatus, SocialAccounts
 };
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -24,21 +20,25 @@ class SocialRepository implements SocialRepositoryInterface
 {
     private $socialAccounts;
     private $users;
+    private $usersNickName;
     private $usersStatus;
 
     /**
      * SocialRepository constructor.
      * @param SocialAccounts $socialAccounts
      * @param Users $users
+     * @param UsersNickName $usersNickName
      * @param UsersStatus $usersStatus
      */
     public function __construct(
         SocialAccounts $socialAccounts,
         Users          $users,
+        UsersNickName  $usersNickName,
         UsersStatus    $usersStatus
     ) {
         $this->socialAccounts = $socialAccounts;
         $this->users = $users;
+        $this->usersNickName = $usersNickName;
         $this->usersStatus = $usersStatus;
     }
 
@@ -55,11 +55,14 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function registerUser(SocialUser $socialUser)
     {
-        $userInfo = new stdClass();
-        $userInfo->name = $socialUser->getName();
-        $userInfo->email = $socialUser->getEmail();
-        $registerUserEntity = new RegisterUserEntity($userInfo);
+        $userRecord = new stdClass();
+        $userRecord->name = $socialUser->getName();
+        $userRecord->nickname = $socialUser->getNickname();
+        $userRecord->email = $socialUser->getEmail();
+        $registerUserEntity = new RegisterUserEntity($userRecord);
         $userId = $this->users->registerUser($registerUserEntity);
+        $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
+        $this->usersNickName->registerNickName($userId, $registerUserNickNameEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
     }
 
