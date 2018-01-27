@@ -3,16 +3,10 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\{
-    RegisterUserEntity,
-    RegisterUserPasswordEntity,
-    UserDetailEntity,
-    UserEntity,
-    UserPasswordEntity
+    RegisterUserEntity, RegisterUserNickNameEntity, RegisterUserPasswordEntity, UserDetailEntity, UserEntity, UserPasswordEntity
 };
 use Infrastructure\DataSources\Database\{
-    Users,
-    UsersStatus,
-    UsersPassword
+    Users, UsersNickName, UsersStatus, UsersPassword
 };
 use Infrastructure\Interfaces\AuthRepositoryInterface;
 
@@ -24,19 +18,26 @@ class AuthRepository implements AuthRepositoryInterface
 {
     private $users;
     private $usersStatus;
+    private $userNickName;
     private $usersPassword;
 
     /**
-     * {@inheritdoc}
+     * AuthRepository constructor.
+     * @param Users $users
+     * @param UsersStatus $usersStatus
+     * @param UsersNickName $userNickName
+     * @param UsersPassword $usersPassword
      */
     public function __construct(
         Users $users,
         UsersStatus $usersStatus,
+        UsersNickName $userNickName,
         UsersPassword $usersPassword
     )
     {
         $this->users = $users;
         $this->usersStatus = $usersStatus;
+        $this->userNickName = $userNickName;
         $this->usersPassword = $usersPassword;
     }
 
@@ -102,6 +103,8 @@ class AuthRepository implements AuthRepositoryInterface
         $this->usersStatus->registerActive($userId, $registerUserEntity);
         $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $userRecord);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
+        $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
+        $this->userNickName->registerNickName($userId, $registerUserNickNameEntity);
         return $userId;
     }
 }
