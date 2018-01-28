@@ -7,8 +7,7 @@ use Tests\TestCase;
 
 class PasswordValueObjectTest extends TestCase
 {
-    private $passwordEncryption;
-    private $passwordDecryption;
+    private $password;
 
     /**
      * When there is a character string to be encrypted
@@ -20,9 +19,9 @@ class PasswordValueObjectTest extends TestCase
         $userRequest = (object)[
             'password' => 'password'
         ];
-        $this->passwordEncryption = new PasswordValueObject($userRequest);
+        $this->password = new PasswordValueObject($userRequest);
 
-        $this->assertInternalType('string', $this->passwordEncryption->getEncryption());
+        $this->assertInternalType('string', $this->password->getEncryption());
     }
 
     /**
@@ -35,9 +34,9 @@ class PasswordValueObjectTest extends TestCase
         $userRequest = (object)[
             'password' => null
         ];
-        $this->passwordEncryption = new PasswordValueObject($userRequest);
+        $this->password = new PasswordValueObject($userRequest);
 
-        $this->assertInternalType('string', $this->passwordEncryption->getEncryption());
+        $this->assertInternalType('string', $this->password->getEncryption());
     }
 
     /**
@@ -50,10 +49,10 @@ class PasswordValueObjectTest extends TestCase
         $userRecord = (object)[
             'password' => encrypt('password')
         ];
-        $this->passwordDecryption = new PasswordValueObject($userRecord);
+        $this->password = new PasswordValueObject($userRecord);
 
-        $this->assertInternalType('string', $this->passwordDecryption->getDecryption());
-        $this->assertEquals($this->passwordDecryption->getDecryption(), 'password');
+        $this->assertInternalType('string', $this->password->getDecryption());
+        $this->assertEquals($this->password->getDecryption(), 'password');
     }
 
     /**
@@ -66,10 +65,10 @@ class PasswordValueObjectTest extends TestCase
         $userRecord = (object)[
             'password' => null
         ];
-        $this->passwordDecryption = new PasswordValueObject($userRecord);
+        $this->password = new PasswordValueObject($userRecord);
 
-        $this->assertInternalType('string', $this->passwordDecryption->getDecryption());
-        $this->assertEquals($this->passwordDecryption->getDecryption(), 'Unregistered');
+        $this->assertInternalType('string', $this->password->getDecryption());
+        $this->assertEquals($this->password->getDecryption(), 'Unregistered');
     }
 
 
