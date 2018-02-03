@@ -7,13 +7,13 @@ keys:
     - ~/.ssh/id_rsa
 folders:
     -
-        map: ~/yoshinani
+        map: ApplicationPath
         to: /home/vagrant/code
 sites:
     -
-        map: yoshinani.dev
+        map: yoshinani.homestead
         to: /home/vagrant/code/public
 databases:
     - homestead
 name: yoshinani
-hostname: yoshinani
+hostname: homestead
