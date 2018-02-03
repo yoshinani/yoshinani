@@ -37,7 +37,7 @@ class UserPasswordEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'password' => $this->password->getDecryptionPassword(),
+            'password' => $this->password->getDecryption(),
         ];
     }
 
@@ -46,6 +46,6 @@ class UserPasswordEntity implements Arrayable
      */
     public function getPassword(): string
     {
-        return $this->password->getDecryptionPassword();
+        return $this->password->getDecryption();
     }
 }

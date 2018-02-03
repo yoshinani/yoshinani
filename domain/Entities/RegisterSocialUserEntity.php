@@ -2,7 +2,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\{
-    RegisterSocialUserValueObject,
+    SocialUserValueObject,
     TimeStampValueObject
 };
 use Illuminate\Contracts\Support\Arrayable;
@@ -15,7 +15,7 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 class RegisterSocialUserEntity implements Arrayable
 {
     private $id;
-    private $social;
+    private $socialUser;
     private $timeStamp;
 
     /**
@@ -30,7 +30,7 @@ class RegisterSocialUserEntity implements Arrayable
         SocialUser $socialUser
     ) {
         $this->id = $userId;
-        $this->social = new RegisterSocialUserValueObject($driverName, $socialUser);
+        $this->socialUser = new SocialUserValueObject($driverName, $socialUser);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -43,8 +43,8 @@ class RegisterSocialUserEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'driverName' => $this->social->getDriverName(),
-            'socialUserId' => $this->social->getSocialUserId(),
+            'driverName' => $this->socialUser->getDriverName(),
+            'socialUserId' => $this->socialUser->getSocialUserId(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];
@@ -63,7 +63,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getDriverName(): string
     {
-        return $this->social->getDriverName();
+        return $this->socialUser->getDriverName();
     }
 
     /**
@@ -71,7 +71,7 @@ class RegisterSocialUserEntity implements Arrayable
      */
     public function getSocialUserId(): string
     {
-        return $this->social->getSocialUserId();
+        return $this->socialUser->getSocialUserId();
     }
 
     /**

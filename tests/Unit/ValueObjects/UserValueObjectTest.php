@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class UserValueObjectTest extends TestCase
 {
-    private $userVo;
+    private $user;
 
     public function setUp()
     {
@@ -15,10 +15,8 @@ class UserValueObjectTest extends TestCase
         $userRecord = (object)[
             'name' => 'testName',
             'email' => 'test@test.test',
-            'password' => 'password',
-            'password_confirmation' => 'password'
         ];
-        $this->userVo = new UserValueObject($userRecord);
+        $this->user = new UserValueObject($userRecord);
     }
 
     /**
@@ -28,7 +26,7 @@ class UserValueObjectTest extends TestCase
      */
     public function getNameMatch()
     {
-        $this->assertEquals($this->userVo->getName(), 'testName');
+        $this->assertEquals($this->user->getName(), 'testName');
     }
 
     /**
@@ -38,6 +36,6 @@ class UserValueObjectTest extends TestCase
      */
     public function getEmailMatch()
     {
-        $this->assertEquals($this->userVo->getEmail(), 'test@test.test');
+        $this->assertEquals($this->user->getEmail(), 'test@test.test');
     }
 }

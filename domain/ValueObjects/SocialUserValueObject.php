@@ -8,13 +8,13 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  * Class SocialUserValueObject
  * @package Domain\ValueObjects
  */
-class RegisterSocialUserValueObject
+class SocialUserValueObject
 {
     private $driver;
     private $socialUser;
 
     /**
-     * RegisterSocialUserValueObject constructor.
+     * SocialUserValueObject constructor.
      * @param string $driverName
      * @param SocialUser $socialUser
      */

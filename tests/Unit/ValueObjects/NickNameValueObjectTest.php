@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class NickNameValueObjectTest extends TestCase
 {
-    private $user;
+    private $nickname;
 
     /**
      * Matches the acquired nickname.
@@ -19,8 +19,8 @@ class NickNameValueObjectTest extends TestCase
         $userRecord = (object)[
             'nickname' => 'testName',
         ];
-        $this->user = new NickNameValueObject($userRecord);
-        $this->assertEquals($this->user->getNickName(), 'testName');
+        $this->nickname = new NickNameValueObject($userRecord);
+        $this->assertEquals($this->nickname->getNickName(), 'testName');
     }
 
     /**
@@ -33,8 +33,8 @@ class NickNameValueObjectTest extends TestCase
         $userRecord = (object)[
             'nickname' => null,
         ];
-        $this->user = new NickNameValueObject($userRecord);
-        $this->assertNull(null, $this->user->getNickName());
+        $this->nickname = new NickNameValueObject($userRecord);
+        $this->assertNull(null, $this->nickname->getNickName());
     }
 
 }
