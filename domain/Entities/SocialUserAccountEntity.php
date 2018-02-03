@@ -13,7 +13,7 @@ use stdClass;
 class SocialUserAccountEntity implements Arrayable
 {
     private $id;
-    private $social;
+    private $socialAccount;
 
     /**
      * SocialUserAccountEntity constructor.
@@ -25,7 +25,7 @@ class SocialUserAccountEntity implements Arrayable
         stdClass $socialAccountRecord
     ) {
         $this->id = $userId;
-        $this->social = new SocialAccountValueObject($socialAccountRecord);
+        $this->socialAccount = new SocialAccountValueObject($socialAccountRecord);
     }
 
     /**
@@ -37,8 +37,8 @@ class SocialUserAccountEntity implements Arrayable
     {
         return [
             'id' => $this->id,
-            'driverName' => $this->social->getDriverName(),
-            'socialUserId' => $this->social->getSocialUserId(),
+            'driverName' => $this->socialAccount->getDriverName(),
+            'socialUserId' => $this->socialAccount->getSocialUserId(),
         ];
     }
 
@@ -55,7 +55,7 @@ class SocialUserAccountEntity implements Arrayable
      */
     public function getDriverName(): string
     {
-        return $this->social->getDriverName();
+        return $this->socialAccount->getDriverName();
     }
 
     /**
@@ -63,6 +63,6 @@ class SocialUserAccountEntity implements Arrayable
      */
     public function getSocialUserId(): string
     {
-        return $this->social->getSocialUserId();
+        return $this->socialAccount->getSocialUserId();
     }
 }
