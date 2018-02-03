@@ -12,7 +12,7 @@ class PasswordValueObject
 {
     const NO_EXIST = 'Unregistered';
 
-    private $userPassword;
+    private $password;
 
     /**
      * PasswordValueObject constructor.
@@ -20,7 +20,7 @@ class PasswordValueObject
      */
     public function __construct(stdClass $userRecord)
     {
-        $this->userPassword = $userRecord->password;
+        $this->password = $userRecord->password;
     }
 
     /**
@@ -28,7 +28,7 @@ class PasswordValueObject
      */
     public function getEncryption(): ?string
     {
-        return encrypt($this->userPassword);
+        return encrypt($this->password);
     }
 
     /**
@@ -36,9 +36,9 @@ class PasswordValueObject
      */
     public function getDecryption(): string
     {
-        if (is_null($this->userPassword)) {
+        if (is_null($this->password)) {
             return self::NO_EXIST;
         }
-        return decrypt($this->userPassword);
+        return decrypt($this->password);
     }
 }
