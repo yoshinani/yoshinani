@@ -11,7 +11,7 @@ folders:
         to: /home/vagrant/code
 sites:
     -
-        map: yoshinani.dev
+        map: yoshinani.homestead
         to: /home/vagrant/code/public
 databases:
     - homestead
