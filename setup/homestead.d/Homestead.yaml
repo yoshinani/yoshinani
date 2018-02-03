@@ -16,4 +16,4 @@ sites:
 databases:
     - homestead
 name: yoshinani
-hostname: yoshinani
+hostname: homestead
