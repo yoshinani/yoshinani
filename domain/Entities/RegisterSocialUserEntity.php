@@ -2,7 +2,7 @@
 namespace Domain\Entities;
 
 use Domain\ValueObjects\{
-    RegisterSocialUserValueObject,
+    SocialUserValueObject,
     TimeStampValueObject
 };
 use Illuminate\Contracts\Support\Arrayable;
@@ -30,7 +30,7 @@ class RegisterSocialUserEntity implements Arrayable
         SocialUser $socialUser
     ) {
         $this->id = $userId;
-        $this->social = new RegisterSocialUserValueObject($driverName, $socialUser);
+        $this->social = new SocialUserValueObject($driverName, $socialUser);
         $this->timeStamp = new TimeStampValueObject();
     }
 
