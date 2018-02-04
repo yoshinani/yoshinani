@@ -28,8 +28,11 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('register/confirmation', 'Auth\ManualController@confirmationRegister')->name('confirmationRegister');
     Route::post('register/complete', 'Auth\ManualController@completeRegister')->name('completeRegister');
 
-    Route::get('auth/{driverName}', 'Auth\SocialController@redirectToSocialService');
-    Route::get('auth/{driverName}/callback', 'Auth\SocialController@handleSocialServiceCallback');
+    if (env('USE_SOCIAL')) {
+        Route::get('auth/{driverName}', 'Auth\SocialController@redirectToSocialService');
+        Route::get('auth/{driverName}/callback', 'Auth\SocialController@handleSocialServiceCallback');
+    }
+
 });
 
 Route::group(['middleware' => 'auth'], function () {
