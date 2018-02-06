@@ -16,9 +16,6 @@ class SocialUserValueObjectTest extends TestCase
         $driverName = 'driverName';
         $socialUser = new User();
         $socialUser->id = 1;
-        $socialUser->nickname = "testName";
-        $socialUser->name = "testName";
-        $socialUser->email = "test@test.test";
         $this->user = new SocialUserValueObject($driverName, $socialUser);
     }
 
