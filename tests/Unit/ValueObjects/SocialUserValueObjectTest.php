@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Domain\ValueObjects\SocialUserValueObject;
-use Laravel\Socialite\One\User;
+use Mockery;
 use Tests\TestCase;
 
 class SocialUserValueObjectTest extends TestCase
@@ -14,9 +14,16 @@ class SocialUserValueObjectTest extends TestCase
     {
         parent::setUp();
         $driverName = 'driverName';
-        $socialUser = new User();
-        $socialUser->id = 1;
-        $this->user = new SocialUserValueObject($driverName, $socialUser);
+        $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');
+        $abstractUser->shouldReceive('getId')
+            ->andReturn(1);
+        $this->user = new SocialUserValueObject($driverName, $abstractUser);
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     /**
