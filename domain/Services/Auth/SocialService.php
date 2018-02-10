@@ -13,6 +13,7 @@ use Infrastructure\Interfaces\{
     SocialRepositoryInterface
 };
 use Laravel\Socialite\Contracts\User as SocialUser;
+use stdClass;
 
 /**
  * Class SocialService
@@ -47,7 +48,8 @@ class SocialService
         $userEntity = $this->authRepository->findUser($email);
         if (is_null($userEntity)) {
             $this->hasSocialRequiredInformation($socialUser);
-            $this->socialRepository->registerUser($socialUser);
+            $userRecord = $this->getUserInfo($socialUser);
+            $this->socialRepository->registerUser($userRecord);
             $userEntity = $this->authRepository->findUser($email);
         }
 
@@ -114,6 +116,19 @@ class SocialService
             throw new Exception('Name is missing');
         }
 
+    }
+
+    /**
+     * @param SocialUser $socialUser
+     * @return stdClass
+     */
+    protected function getUserInfo(SocialUser $socialUser): stdClass
+    {
+        $userRecord = new stdClass();
+        $userRecord->name = $socialUser->getName();
+        $userRecord->nickname = $socialUser->getNickname();
+        $userRecord->email = $socialUser->getEmail();
+        return $userRecord;
     }
 
     /**
