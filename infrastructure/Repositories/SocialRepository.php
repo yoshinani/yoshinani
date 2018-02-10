@@ -53,12 +53,8 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(SocialUser $socialUser)
+    public function registerUser(stdClass $userRecord)
     {
-        $userRecord = new stdClass();
-        $userRecord->name = $socialUser->getName();
-        $userRecord->nickname = $socialUser->getNickname();
-        $userRecord->email = $socialUser->getEmail();
         $registerUserEntity = new RegisterUserEntity($userRecord);
         $userId = $this->users->registerUser($registerUserEntity);
         $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
