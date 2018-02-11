@@ -53,7 +53,7 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(SocialUser $socialUser)
+    public function registerUser(string $driverName, SocialUser $socialUser)
     {
         $userRecord = new stdClass();
         $userRecord->name = $socialUser->getName();

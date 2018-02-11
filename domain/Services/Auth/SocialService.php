@@ -37,17 +37,18 @@ class SocialService
     }
 
     /**
+     * @param string $driverName
      * @param SocialUser $socialUser
      * @return UserEntity
      * @throws Exception
      */
-    public function socialRegisterUser(SocialUser $socialUser): UserEntity
+    protected function socialRegisterUser(string $driverName, SocialUser $socialUser): UserEntity
     {
         $email = $socialUser->getEmail();
         $userEntity = $this->authRepository->findUser($email);
         if (is_null($userEntity)) {
             $this->hasSocialRequiredInformation($socialUser);
-            $this->socialRepository->registerUser($socialUser);
+            $this->socialRepository->registerUser($driverName, $socialUser);
             $userEntity = $this->authRepository->findUser($email);
         }
 
@@ -57,13 +58,14 @@ class SocialService
     /**
      * @param string $driverName
      * @param SocialUser $socialUser
-     * @param int $userId
      * @return bool
+     * @throws Exception
      */
-    public function socialLogin(string $driverName, SocialUser $socialUser, int $userId): bool
+    public function socialLogin(string $driverName, SocialUser $socialUser): bool
     {
+        $userEntity = $this->socialRegisterUser($driverName, $socialUser);
         $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
-        $userDetailEntity = $this->authRepository->getUserDetail($userId);
+        $userDetailEntity = $this->authRepository->getUserDetail($userEntity->getUserId());
 
         if ($socialUserAccountEntity->getDriverName() != $driverName) {
             \Log::info("\n【ERROR】Authentication drivers do not match\n"
