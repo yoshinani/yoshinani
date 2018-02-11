@@ -2,7 +2,7 @@
 
 namespace Domain\Services\Auth;
 
-use Auth;
+use Domain\Specification\ManualLoginSpecification;
 use Exception;
 use Domain\Entities\{
     UserEntity,
@@ -16,15 +16,19 @@ use Infrastructure\Interfaces\AuthRepositoryInterface;
  */
 class ManualService
 {
+    private $manualLoginSpecification;
     private $authRepository;
 
     /**
      * ManualService constructor.
+     * @param ManualLoginSpecification $manualLoginSpecification
      * @param AuthRepositoryInterface $authRepository
      */
     public function __construct(
+        ManualLoginSpecification $manualLoginSpecification,
         AuthRepositoryInterface $authRepository
     ) {
+        $this->manualLoginSpecification = $manualLoginSpecification;
         $this->authRepository = $authRepository;
     }
 
@@ -65,40 +69,7 @@ class ManualService
     public function login(array $oldRequest, int $userId): bool
     {
         $userDetailEntity = $this->authRepository->getUserDetail($userId);
-
-        if ($oldRequest['email'] !== $userDetailEntity->getUserEmail()) {
-            \Log::info("\n【ERROR】Email does not match\n"
-                .'Email:'.$oldRequest['email']."\n"
-                .'Password:'.encrypt($oldRequest['password'])
-            );
-            return false;
-        }
-
-        if ($oldRequest['password'] !== $userDetailEntity->getPassword()) {
-            \Log::info("\n【ERROR】Password does not match\n"
-                .'Email:'.$oldRequest['email']."\n"
-                .'Password:'.encrypt($oldRequest['password'])
-            );
-            return false;
-        }
-
-        if (!$userDetailEntity->getActiveStatus()) {
-            \Log::info("\n【ERROR】Not a living user\n"
-                .'Email:'.$oldRequest['email']."\n"
-                .'Password:'.encrypt($oldRequest['password'])
-            );
-            return false;
-        }
-
-        if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
-            \Log::info("\n【ERROR】It is a User that does not exist\n"
-                .'Email:'.$oldRequest['email']."\n"
-                .'Password:'.encrypt($oldRequest['password'])
-            );
-            return false;
-        }
-
-        return true;
+        return $this->manualLoginSpecification->isCondition($oldRequest, $userDetailEntity);
     }
 
 }
