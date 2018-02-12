@@ -19,9 +19,10 @@ interface SocialRepositoryInterface
     public function getUserId(SocialUser $socialUser): ?int;
 
     /**
+     * @param string $driverName
      * @param SocialUser $socialUser
      */
-    public function registerUser(SocialUser $socialUser);
+    public function registerUser(string $driverName, SocialUser $socialUser);
 
     /**
      * @param int $userId

@@ -2,8 +2,8 @@
 
 namespace Domain\Services\Auth;
 
-use Auth;
 use Exception;
+use Domain\Specification\SocialLoginSpecification;
 use Domain\Entities\{
     UserEntity,
     SocialUserAccountEntity
@@ -20,100 +20,57 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  */
 class SocialService
 {
+    private $socialLoginSpecification;
     private $authRepository;
     private $socialRepository;
 
     /**
-     * AuthService constructor.
+     * SocialService constructor.
+     * @param SocialLoginSpecification $socialLoginSpecification
      * @param AuthRepositoryInterface $authRepository
      * @param SocialRepositoryInterface $socialRepository
      */
     public function __construct(
+        SocialLoginSpecification $socialLoginSpecification,
         AuthRepositoryInterface $authRepository,
         SocialRepositoryInterface $socialRepository
     ) {
+        $this->socialLoginSpecification = $socialLoginSpecification;
         $this->authRepository = $authRepository;
         $this->socialRepository = $socialRepository;
     }
 
     /**
+     * @param string $driverName
      * @param SocialUser $socialUser
-     * @return UserEntity
+     * @return bool
      * @throws Exception
      */
-    public function socialRegisterUser(SocialUser $socialUser): UserEntity
+    public function socialLogin(string $driverName, SocialUser $socialUser): bool
     {
-        $email = $socialUser->getEmail();
-        $userEntity = $this->authRepository->findUser($email);
-        if (is_null($userEntity)) {
-            $this->hasSocialRequiredInformation($socialUser);
-            $this->socialRepository->registerUser($socialUser);
-            $userEntity = $this->authRepository->findUser($email);
-        }
-
-        return $userEntity;
+        $userEntity = $this->socialRegisterUser($driverName, $socialUser);
+        $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
+        $userDetailEntity = $this->authRepository->getUserDetail($userEntity->getUserId());
+        return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userDetailEntity);
     }
 
     /**
      * @param string $driverName
      * @param SocialUser $socialUser
-     * @param int $userId
-     * @return bool
-     */
-    public function socialLogin(string $driverName, SocialUser $socialUser, int $userId): bool
-    {
-        $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
-        $userDetailEntity = $this->authRepository->getUserDetail($userId);
-
-        if ($socialUserAccountEntity->getDriverName() != $driverName) {
-            \Log::info("\n【ERROR】Authentication drivers do not match\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
-            );
-            return false;
-        }
-
-        if ($socialUserAccountEntity->getSocialUserId() != $socialUser->getId()) {
-            \Log::info("\n【ERROR】It does not match the ID of SNS Account\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
-            );
-            return false;
-        }
-
-        if (!$userDetailEntity->getActiveStatus()) {
-            \Log::info("\n【ERROR】Not a living user\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
-            );
-            return false;
-        }
-
-        if (!Auth::loginUsingId($socialUserAccountEntity->getId())) {
-            \Log::info("\n【ERROR】It is a User that does not exist\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
-            );
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param SocialUser $socialUser
+     * @return UserEntity
      * @throws Exception
      */
-    protected function hasSocialRequiredInformation(SocialUser $socialUser)
+    protected function socialRegisterUser(string $driverName, SocialUser $socialUser): UserEntity
     {
-        if (is_null($socialUser->getEmail())) {
-            throw new Exception('Email is missing');
+        $email = $socialUser->getEmail();
+        $userEntity = $this->authRepository->findUser($email);
+        if (is_null($userEntity)) {
+            $this->socialLoginSpecification->isRequiredInfo($socialUser);
+            $this->socialRepository->registerUser($driverName, $socialUser);
+            $userEntity = $this->authRepository->findUser($email);
         }
 
-        if (is_null($socialUser->getName())) {
-            throw new Exception('Name is missing');
-        }
-
+        return $userEntity;
     }
 
     /**
