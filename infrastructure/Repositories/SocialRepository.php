@@ -55,10 +55,7 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function registerUser(string $driverName, SocialUser $socialUser)
     {
-        $userRecord = new stdClass();
-        $userRecord->name = $socialUser->getName();
-        $userRecord->nickname = $socialUser->getNickname();
-        $userRecord->email = $socialUser->getEmail();
+        $userRecord = json_decode(json_encode($socialUser));
         $registerUserEntity = new RegisterUserEntity($userRecord);
         $userId = $this->users->registerUser($registerUserEntity);
         $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
