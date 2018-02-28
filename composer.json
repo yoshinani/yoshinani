@@ -6,8 +6,6 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "barryvdh/laravel-debugbar": "^3.1",
-        "barryvdh/laravel-ide-helper": "^2.4",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "friendsofphp/php-cs-fixer": "^2.7",
@@ -17,6 +15,8 @@
         "laravelcollective/html": "^5.5"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.1",
+        "barryvdh/laravel-ide-helper": "^2.4",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "laravel/homestead": "^6.5",
