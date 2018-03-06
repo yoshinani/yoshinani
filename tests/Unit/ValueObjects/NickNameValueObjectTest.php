@@ -37,4 +37,17 @@ class NickNameValueObjectTest extends TestCase
         $this->assertNull(null, $this->nickname->getNickName());
     }
 
+    /**
+     * If there is no nickname, return the string "registration"
+     * nicknameがない場合は、文字列 "registration" を返します
+     * @test
+     */
+    public function getNameNUllUnregistered()
+    {
+        $userRecord = (object)[
+            'nickname' => null,
+        ];
+        $this->nickname = new NickNameValueObject($userRecord);
+        $this->assertEquals($this->nickname->getNickName(), 'Unregistered');
+    }
 }
