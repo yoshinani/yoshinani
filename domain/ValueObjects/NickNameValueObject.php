@@ -10,6 +10,8 @@ use stdClass;
  */
 class NickNameValueObject
 {
+    const NO_EXIST = 'Unregistered';
+
     private $user;
 
     /**
@@ -22,10 +24,13 @@ class NickNameValueObject
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getNickName(): ?string
+    public function getNickName(): string
     {
+        if (is_null($this->user->nickname)) {
+            return self::NO_EXIST;
+        }
         return $this->user->nickname;
     }
 }
