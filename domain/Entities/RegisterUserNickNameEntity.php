@@ -47,9 +47,9 @@ class RegisterUserNickNameEntity implements Arrayable
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getNickName(): ?string
+    public function getNickName(): string
     {
         return $this->nickname->getNickName();
     }
