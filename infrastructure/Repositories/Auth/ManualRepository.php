@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Repositories;
+namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\{
     RegisterUserEntity, RegisterUserNickNameEntity, RegisterUserPasswordEntity, UserDetailEntity, UserEntity, UserPasswordEntity

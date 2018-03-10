@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Infrastructure\Repositories\ManualRepository;
+use Infrastructure\Repositories\Auth\ManualRepository;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
