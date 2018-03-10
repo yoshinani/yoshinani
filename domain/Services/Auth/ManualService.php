@@ -8,7 +8,7 @@ use Domain\Entities\{
     UserEntity,
     UserDetailEntity
 };
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
  * Class ManualService

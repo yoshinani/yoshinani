@@ -8,7 +8,7 @@ use Domain\Entities\{
 use Infrastructure\DataSources\Database\{
     Users, UsersNickName, UsersStatus, UsersPassword
 };
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
  * Class AuthRepository

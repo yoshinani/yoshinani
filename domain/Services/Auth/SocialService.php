@@ -8,7 +8,7 @@ use Domain\Entities\{
     UserEntity,
     SocialUserAccountEntity
 };
-use Infrastructure\Interfaces\{
+use Infrastructure\Interfaces\Auth\{
     ManualRepositoryInterface,
     SocialRepositoryInterface
 };

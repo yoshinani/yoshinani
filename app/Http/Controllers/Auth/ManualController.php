@@ -12,7 +12,7 @@ use App\Http\Requests\Auth\{
 };
 use App\Http\Controllers\Controller;
 use Domain\Services\Auth\ManualService as AuthDomainService;
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
  * Class ManualController
