@@ -8,7 +8,7 @@ use Domain\Entities\{
     UserEntity,
     UserDetailEntity
 };
-use Infrastructure\Interfaces\AuthRepositoryInterface;
+use Infrastructure\Interfaces\ManualRepositoryInterface;
 
 /**
  * Class ManualService
@@ -22,11 +22,11 @@ class ManualService
     /**
      * ManualService constructor.
      * @param ManualLoginSpecification $manualLoginSpecification
-     * @param AuthRepositoryInterface $authRepository
+     * @param ManualRepositoryInterface $authRepository
      */
     public function __construct(
         ManualLoginSpecification $manualLoginSpecification,
-        AuthRepositoryInterface $authRepository
+        ManualRepositoryInterface $authRepository
     ) {
         $this->manualLoginSpecification = $manualLoginSpecification;
         $this->authRepository = $authRepository;

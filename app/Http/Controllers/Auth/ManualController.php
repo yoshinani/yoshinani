@@ -12,7 +12,7 @@ use App\Http\Requests\Auth\{
 };
 use App\Http\Controllers\Controller;
 use Domain\Services\Auth\ManualService as AuthDomainService;
-use Infrastructure\Interfaces\AuthRepositoryInterface;
+use Infrastructure\Interfaces\ManualRepositoryInterface;
 
 /**
  * Class ManualController
@@ -25,7 +25,7 @@ class ManualController extends Controller
 
 
     public function __construct(
-        AuthRepositoryInterface $authRepository,
+        ManualRepositoryInterface $authRepository,
         AuthDomainService $authService
     ) {
         $this->authRepository = $authRepository;

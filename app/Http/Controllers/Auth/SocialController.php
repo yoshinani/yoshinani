@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Infrastructure\Repositories\AuthRepository;
+use Infrastructure\Repositories\ManualRepository;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
@@ -21,11 +21,11 @@ class SocialController extends Controller
     /**
      * SocialController constructor.
      * @param AuthDomainService $authDomainService
-     * @param AuthRepository $authRepository
+     * @param ManualRepository $authRepository
      */
     public function __construct(
         AuthDomainService $authDomainService,
-        AuthRepository $authRepository
+        ManualRepository $authRepository
     ) {
         $this->authDomainService = $authDomainService;
         $this->authRepository = $authRepository;

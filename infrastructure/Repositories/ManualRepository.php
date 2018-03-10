@@ -8,13 +8,13 @@ use Domain\Entities\{
 use Infrastructure\DataSources\Database\{
     Users, UsersNickName, UsersStatus, UsersPassword
 };
-use Infrastructure\Interfaces\AuthRepositoryInterface;
+use Infrastructure\Interfaces\ManualRepositoryInterface;
 
 /**
  * Class AuthRepository
  * @package Infrastructure\Repositories
  */
-class AuthRepository implements AuthRepositoryInterface
+class ManualRepository implements ManualRepositoryInterface
 {
     private $users;
     private $usersStatus;

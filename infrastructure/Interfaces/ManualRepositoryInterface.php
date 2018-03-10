@@ -10,7 +10,7 @@ use Domain\Entities\UserPasswordEntity;
  * Interface AuthRepositoryInterface
  * @package Infrastructure\Interfaces
  */
-interface AuthRepositoryInterface
+interface ManualRepositoryInterface
 {
     /**
      * @param string $email

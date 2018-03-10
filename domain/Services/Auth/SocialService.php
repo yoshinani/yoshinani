@@ -9,7 +9,7 @@ use Domain\Entities\{
     SocialUserAccountEntity
 };
 use Infrastructure\Interfaces\{
-    AuthRepositoryInterface,
+    ManualRepositoryInterface,
     SocialRepositoryInterface
 };
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -27,12 +27,12 @@ class SocialService
     /**
      * SocialService constructor.
      * @param SocialLoginSpecification $socialLoginSpecification
-     * @param AuthRepositoryInterface $authRepository
+     * @param ManualRepositoryInterface $authRepository
      * @param SocialRepositoryInterface $socialRepository
      */
     public function __construct(
         SocialLoginSpecification $socialLoginSpecification,
-        AuthRepositoryInterface $authRepository,
+        ManualRepositoryInterface $authRepository,
         SocialRepositoryInterface $socialRepository
     ) {
         $this->socialLoginSpecification = $socialLoginSpecification;
