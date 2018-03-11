@@ -11,7 +11,7 @@ use Infrastructure\DataSources\Database\{
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
- * Class AuthRepository
+ * Class ManualRepository
  * @package Infrastructure\Repositories
  */
 class ManualRepository implements ManualRepositoryInterface
@@ -22,7 +22,7 @@ class ManualRepository implements ManualRepositoryInterface
     private $usersPassword;
 
     /**
-     * AuthRepository constructor.
+     * ManualRepository constructor.
      * @param Users $users
      * @param UsersStatus $usersStatus
      * @param UsersNickName $userNickName

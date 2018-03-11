@@ -17,19 +17,19 @@ use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 class ManualService
 {
     private $manualLoginSpecification;
-    private $authRepository;
+    private $manualRepository;
 
     /**
      * ManualService constructor.
      * @param ManualLoginSpecification $manualLoginSpecification
-     * @param ManualRepositoryInterface $authRepository
+     * @param ManualRepositoryInterface $manualRepository
      */
     public function __construct(
         ManualLoginSpecification $manualLoginSpecification,
-        ManualRepositoryInterface $authRepository
+        ManualRepositoryInterface $manualRepository
     ) {
         $this->manualLoginSpecification = $manualLoginSpecification;
-        $this->authRepository = $authRepository;
+        $this->manualRepository = $manualRepository;
     }
 
     /**
@@ -38,10 +38,10 @@ class ManualService
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity = $this->authRepository->findUser($oldRequest['email']);
+        $userEntity = $this->manualRepository->findUser($oldRequest['email']);
         if (is_null($userEntity)) {
-            $this->authRepository->registerUser($oldRequest);
-            $userEntity = $this->authRepository->findUser($oldRequest['email']);
+            $this->manualRepository->registerUser($oldRequest);
+            $userEntity = $this->manualRepository->findUser($oldRequest['email']);
         }
 
         return $userEntity;
@@ -54,11 +54,11 @@ class ManualService
      */
     public function getUserDetail(array $oldRequest): UserDetailEntity
     {
-        $userId = $this->authRepository->getUserId($oldRequest);
+        $userId = $this->manualRepository->getUserId($oldRequest);
         if (is_null($userId)) {
             throw new Exception('User does not exist');
         }
-        return $this->authRepository->getUserDetail($userId);
+        return $this->manualRepository->getUserDetail($userId);
     }
 
     /**
@@ -68,7 +68,7 @@ class ManualService
      */
     public function login(array $oldRequest, int $userId): bool
     {
-        $userDetailEntity = $this->authRepository->getUserDetail($userId);
+        $userDetailEntity = $this->manualRepository->getUserDetail($userId);
         return $this->manualLoginSpecification->isCondition($oldRequest, $userDetailEntity);
     }
 

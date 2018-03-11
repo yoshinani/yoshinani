@@ -8,7 +8,7 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**
  * Interface SocialRepositoryInterface
- * @package Infrastructure\Interfaces
+ * @package Infrastructure\Interfaces\Auth
  */
 interface SocialRepositoryInterface
 {

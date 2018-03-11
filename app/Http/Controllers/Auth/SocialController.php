@@ -16,19 +16,19 @@ use Exception;
 class SocialController extends Controller
 {
     private $authDomainService;
-    private $authRepository;
+    private $manualRepository;
 
     /**
      * SocialController constructor.
      * @param AuthDomainService $authDomainService
-     * @param ManualRepositoryInterface $authRepository
+     * @param ManualRepositoryInterface $manualRepository
      */
     public function __construct(
         AuthDomainService $authDomainService,
-        ManualRepositoryInterface $authRepository
+        ManualRepositoryInterface $manualRepository
     ) {
         $this->authDomainService = $authDomainService;
-        $this->authRepository = $authRepository;
+        $this->manualRepository = $manualRepository;
     }
 
     /**
@@ -58,7 +58,7 @@ class SocialController extends Controller
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $userEntity = $this->authRepository->findUser($socialUser->getEmail());
+        $userEntity = $this->manualRepository->findUser($socialUser->getEmail());
 
         return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
     }

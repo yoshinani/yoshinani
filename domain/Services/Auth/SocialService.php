@@ -21,22 +21,22 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 class SocialService
 {
     private $socialLoginSpecification;
-    private $authRepository;
+    private $manualRepository;
     private $socialRepository;
 
     /**
      * SocialService constructor.
      * @param SocialLoginSpecification $socialLoginSpecification
-     * @param ManualRepositoryInterface $authRepository
+     * @param ManualRepositoryInterface $manualRepository
      * @param SocialRepositoryInterface $socialRepository
      */
     public function __construct(
         SocialLoginSpecification $socialLoginSpecification,
-        ManualRepositoryInterface $authRepository,
+        ManualRepositoryInterface $manualRepository,
         SocialRepositoryInterface $socialRepository
     ) {
         $this->socialLoginSpecification = $socialLoginSpecification;
-        $this->authRepository = $authRepository;
+        $this->manualRepository = $manualRepository;
         $this->socialRepository = $socialRepository;
     }
 
@@ -50,7 +50,7 @@ class SocialService
     {
         $userEntity = $this->socialRegisterUser($driverName, $socialUser);
         $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
-        $userDetailEntity = $this->authRepository->getUserDetail($userEntity->getUserId());
+        $userDetailEntity = $this->manualRepository->getUserDetail($userEntity->getUserId());
         return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userDetailEntity);
     }
 
@@ -63,11 +63,11 @@ class SocialService
     protected function socialRegisterUser(string $driverName, SocialUser $socialUser): UserEntity
     {
         $email = $socialUser->getEmail();
-        $userEntity = $this->authRepository->findUser($email);
+        $userEntity = $this->manualRepository->findUser($email);
         if (is_null($userEntity)) {
             $this->socialLoginSpecification->isRequiredInfo($socialUser);
             $this->socialRepository->registerUser($driverName, $socialUser);
-            $userEntity = $this->authRepository->findUser($email);
+            $userEntity = $this->manualRepository->findUser($email);
         }
 
         return $userEntity;

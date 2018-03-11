@@ -7,8 +7,8 @@ use Domain\Entities\UserEntity;
 use Domain\Entities\UserPasswordEntity;
 
 /**
- * Interface AuthRepositoryInterface
- * @package Infrastructure\Interfaces
+ * Interface ManualRepositoryInterface
+ * @package Infrastructure\Interfaces\Auth
  */
 interface ManualRepositoryInterface
 {
