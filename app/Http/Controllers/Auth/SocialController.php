@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Infrastructure\Repositories\AuthRepository;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
@@ -16,19 +16,19 @@ use Exception;
 class SocialController extends Controller
 {
     private $authDomainService;
-    private $authRepository;
+    private $manualRepository;
 
     /**
      * SocialController constructor.
      * @param AuthDomainService $authDomainService
-     * @param AuthRepository $authRepository
+     * @param ManualRepositoryInterface $manualRepository
      */
     public function __construct(
         AuthDomainService $authDomainService,
-        AuthRepository $authRepository
+        ManualRepositoryInterface $manualRepository
     ) {
         $this->authDomainService = $authDomainService;
-        $this->authRepository = $authRepository;
+        $this->manualRepository = $manualRepository;
     }
 
     /**
@@ -58,7 +58,7 @@ class SocialController extends Controller
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $userEntity = $this->authRepository->findUser($socialUser->getEmail());
+        $userEntity = $this->manualRepository->findUser($socialUser->getEmail());
 
         return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
     }

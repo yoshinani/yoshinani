@@ -1,16 +1,16 @@
 <?php
 
-namespace Infrastructure\Interfaces;
+namespace Infrastructure\Interfaces\Auth;
 
 use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
 use Domain\Entities\UserPasswordEntity;
 
 /**
- * Interface AuthRepositoryInterface
- * @package Infrastructure\Interfaces
+ * Interface ManualRepositoryInterface
+ * @package Infrastructure\Interfaces\Auth
  */
-interface AuthRepositoryInterface
+interface ManualRepositoryInterface
 {
     /**
      * @param string $email

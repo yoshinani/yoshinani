@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Repositories;
+namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\{
     RegisterUserEntity, RegisterUserNickNameEntity, SocialUserAccountEntity, RegisterSocialUserEntity
@@ -8,7 +8,7 @@ use Domain\Entities\{
 use Infrastructure\DataSources\Database\{
     Users, UsersNickName, UsersStatus, SocialAccounts
 };
-use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
 

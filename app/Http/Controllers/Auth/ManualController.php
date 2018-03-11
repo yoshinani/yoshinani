@@ -12,7 +12,7 @@ use App\Http\Requests\Auth\{
 };
 use App\Http\Controllers\Controller;
 use Domain\Services\Auth\ManualService as AuthDomainService;
-use Infrastructure\Interfaces\AuthRepositoryInterface;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
  * Class ManualController
@@ -20,15 +20,15 @@ use Infrastructure\Interfaces\AuthRepositoryInterface;
  */
 class ManualController extends Controller
 {
-    private $authRepository;
+    private $manualRepository;
     private $authDomainService;
 
 
     public function __construct(
-        AuthRepositoryInterface $authRepository,
+        ManualRepositoryInterface $manualRepository,
         AuthDomainService $authService
     ) {
-        $this->authRepository = $authRepository;
+        $this->manualRepository = $manualRepository;
         $this->authDomainService = $authService;
     }
 
@@ -83,7 +83,7 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userEntity = $this->authRepository->findUser($oldRequest['email']);
+        $userEntity = $this->manualRepository->findUser($oldRequest['email']);
         $result = $this->authDomainService->login($oldRequest, $userEntity->getUserId());
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');

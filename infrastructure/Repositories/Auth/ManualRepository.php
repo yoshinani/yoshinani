@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Repositories;
+namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\{
     RegisterUserEntity, RegisterUserNickNameEntity, RegisterUserPasswordEntity, UserDetailEntity, UserEntity, UserPasswordEntity
@@ -8,13 +8,13 @@ use Domain\Entities\{
 use Infrastructure\DataSources\Database\{
     Users, UsersNickName, UsersStatus, UsersPassword
 };
-use Infrastructure\Interfaces\AuthRepositoryInterface;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
- * Class AuthRepository
+ * Class ManualRepository
  * @package Infrastructure\Repositories
  */
-class AuthRepository implements AuthRepositoryInterface
+class ManualRepository implements ManualRepositoryInterface
 {
     private $users;
     private $usersStatus;
@@ -22,7 +22,7 @@ class AuthRepository implements AuthRepositoryInterface
     private $usersPassword;
 
     /**
-     * AuthRepository constructor.
+     * ManualRepository constructor.
      * @param Users $users
      * @param UsersStatus $usersStatus
      * @param UsersNickName $userNickName
