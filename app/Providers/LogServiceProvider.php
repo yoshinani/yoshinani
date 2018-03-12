@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -13,17 +12,18 @@ use Monolog\Logger as Monolog;
  */
 class LogServiceProvider extends ServiceProvider
 {
-
     /**
      * Register the service provider.
      *
      */
     public function register()
     {
-        $this->app->singleton('log', function () {
+        $this->app->singleton('log', function ()
+        {
             return $this->createAppLogger();
         });
-        $this->app->singleton('sql-log', function () {
+        $this->app->singleton('sql-log', function ()
+        {
             return $this->createSqlLogger();
         });
     }
@@ -40,6 +40,7 @@ class LogServiceProvider extends ServiceProvider
             $this->app['events']
         );
         $this->configureHandler($log, 'app');
+
         return $log;
     }
 
@@ -55,6 +56,7 @@ class LogServiceProvider extends ServiceProvider
             $this->app['events']
         );
         $this->configureHandler($log, 'sql');
+
         return $log;
     }
 
@@ -77,7 +79,7 @@ class LogServiceProvider extends ServiceProvider
      */
     protected function configureHandler(Writer $log, $base_name)
     {
-        $this->{'configure'.ucfirst($this->handler()).'Handler'}($log, $base_name);
+        $this->{'configure' . ucfirst($this->handler()) . 'Handler'}($log, $base_name);
     }
 
     /**

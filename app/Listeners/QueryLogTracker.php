@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Listeners;
 
 use Illuminate\Database\Events\QueryExecuted;
@@ -24,7 +23,7 @@ class QueryLogTracker
     public function handle(QueryExecuted $event)
     {
         // Formatting Query
-        $time = $event->time;
+        $time     = $event->time;
         $bindings = $event->bindings;
         foreach ($bindings as $i => $binding) {
             if ($binding instanceof DateTime) {

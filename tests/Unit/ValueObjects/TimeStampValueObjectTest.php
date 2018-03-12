@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\ValueObjects\TimeStampValueObject;
@@ -24,5 +23,4 @@ class TimeStampValueObjectTest extends TestCase
     {
         $this->assertEquals($this->timeStamp->getNow(), date('Y-m-d H:i:s'));
     }
-
 }

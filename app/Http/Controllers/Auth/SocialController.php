@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
@@ -28,7 +27,7 @@ class SocialController extends Controller
         ManualRepositoryInterface $manualRepository
     ) {
         $this->authDomainService = $authDomainService;
-        $this->manualRepository = $manualRepository;
+        $this->manualRepository  = $manualRepository;
     }
 
     /**
@@ -60,6 +59,6 @@ class SocialController extends Controller
 
         $userEntity = $this->manualRepository->findUser($socialUser->getEmail());
 
-        return redirect('/home')->with('message', 'ようこそ '.$userEntity->getUserName().' さん');
+        return redirect('/home')->with('message', 'ようこそ ' . $userEntity->getUserName() . ' さん');
     }
 }

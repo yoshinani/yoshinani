@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\ValueObjects;
 
 use Carbon\Carbon;
@@ -23,9 +22,8 @@ class TimeStampValueObject
     /**
      * @return string
      */
-    public function getNow(): string 
+    public function getNow(): string
     {
         return $this->carbon->toDateTimeString();
     }
-
 }

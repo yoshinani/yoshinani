@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\ValueObjects\NickNameValueObject;
@@ -16,7 +15,7 @@ class NickNameValueObjectTest extends TestCase
      */
     public function getNameMatch()
     {
-        $userRecord = (object)[
+        $userRecord = (object) [
             'nickname' => 'testName',
         ];
         $this->nickname = new NickNameValueObject($userRecord);
@@ -30,7 +29,7 @@ class NickNameValueObjectTest extends TestCase
      */
     public function getNameNUll()
     {
-        $userRecord = (object)[
+        $userRecord = (object) [
             'nickname' => null,
         ];
         $this->nickname = new NickNameValueObject($userRecord);
@@ -44,7 +43,7 @@ class NickNameValueObjectTest extends TestCase
      */
     public function getNameNUllUnregistered()
     {
-        $userRecord = (object)[
+        $userRecord = (object) [
             'nickname' => null,
         ];
         $this->nickname = new NickNameValueObject($userRecord);

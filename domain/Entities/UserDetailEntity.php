@@ -1,11 +1,8 @@
 <?php
-
 namespace Domain\Entities;
 
-use Domain\ValueObjects\{
-    UserValueObject,
-    PasswordValueObject
-};
+use Domain\ValueObjects\UserValueObject;
+use Domain\ValueObjects\PasswordValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
@@ -15,7 +12,7 @@ use stdClass;
  */
 class UserDetailEntity implements Arrayable
 {
-    CONST ON = 1;
+    public const ON = 1;
 
     private $id;
     private $user;
@@ -29,9 +26,9 @@ class UserDetailEntity implements Arrayable
     public function __construct(
         stdClass $userDetail
     ) {
-        $this->id = $userDetail->id;
-        $this->user = new UserValueObject($userDetail);
-        $this->password = new PasswordValueObject($userDetail);
+        $this->id           = $userDetail->id;
+        $this->user         = new UserValueObject($userDetail);
+        $this->password     = new PasswordValueObject($userDetail);
         $this->activeStatus = $userDetail->active;
     }
 
@@ -43,9 +40,9 @@ class UserDetailEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'userName' => $this->user->getName(),
-            'userEmail' => $this->user->getEmail(),
+            'id'           => $this->id,
+            'userName'     => $this->user->getName(),
+            'userEmail'    => $this->user->getEmail(),
             'userPassword' => $this->password->getDecryption(),
             'activeStatus' => $this->activeStatus
         ];
@@ -90,8 +87,8 @@ class UserDetailEntity implements Arrayable
     {
         if ($this->activeStatus === self::ON) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 }

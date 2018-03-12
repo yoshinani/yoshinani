@@ -1,5 +1,4 @@
 <?php
-
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterSocialUserEntity;
@@ -34,11 +33,11 @@ class SocialAccounts extends Bass
         $this->db->table('social_accounts')
             ->insert(
                 [
-                    'user_id' => $registerSocialUserEntity->getId(),
-                    'driver_name' => $registerSocialUserEntity->getDriverName(),
+                    'user_id'        => $registerSocialUserEntity->getId(),
+                    'driver_name'    => $registerSocialUserEntity->getDriverName(),
                     'social_user_id' => $registerSocialUserEntity->getSocialUserId(),
-                    'created_at' => $registerSocialUserEntity->getCreatedAt(),
-                    'updated_at' => $registerSocialUserEntity->getUpdatedAt(),
+                    'created_at'     => $registerSocialUserEntity->getCreatedAt(),
+                    'updated_at'     => $registerSocialUserEntity->getUpdatedAt(),
                 ]
             );
     }

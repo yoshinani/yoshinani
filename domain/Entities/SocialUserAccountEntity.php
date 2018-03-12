@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\Entities;
 
 use Domain\ValueObjects\SocialAccountValueObject;
@@ -24,7 +23,7 @@ class SocialUserAccountEntity implements Arrayable
         int $userId,
         stdClass $socialAccountRecord
     ) {
-        $this->id = $userId;
+        $this->id            = $userId;
         $this->socialAccount = new SocialAccountValueObject($socialAccountRecord);
     }
 
@@ -36,8 +35,8 @@ class SocialUserAccountEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'driverName' => $this->socialAccount->getDriverName(),
+            'id'           => $this->id,
+            'driverName'   => $this->socialAccount->getDriverName(),
             'socialUserId' => $this->socialAccount->getSocialUserId(),
         ];
     }

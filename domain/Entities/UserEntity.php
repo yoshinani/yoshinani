@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\Entities;
 
 use Domain\ValueObjects\UserValueObject;
@@ -23,7 +22,7 @@ class UserEntity implements Arrayable
     public function __construct(
         stdClass $userRecord
     ) {
-        $this->id = $userRecord->id;
+        $this->id   = $userRecord->id;
         $this->user = new UserValueObject($userRecord);
     }
 
@@ -35,8 +34,8 @@ class UserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'userName' => $this->user->getName(),
+            'id'        => $this->id,
+            'userName'  => $this->user->getName(),
             'userEmail' => $this->user->getEmail(),
         ];
     }

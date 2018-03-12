@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\ValueObjects;
 
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -20,7 +19,7 @@ class SocialUserValueObject
      */
     public function __construct(string $driverName, SocialUser $socialUser)
     {
-        $this->driver = $driverName;
+        $this->driver     = $driverName;
         $this->socialUser = $socialUser;
     }
 

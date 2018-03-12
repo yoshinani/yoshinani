@@ -1,13 +1,16 @@
 <?php
-
 namespace Infrastructure\Repositories\Auth;
 
-use Domain\Entities\{
-    RegisterUserEntity, RegisterUserNickNameEntity, RegisterUserPasswordEntity, UserDetailEntity, UserEntity, UserPasswordEntity
-};
-use Infrastructure\DataSources\Database\{
-    Users, UsersNickName, UsersStatus, UsersPassword
-};
+use Domain\Entities\RegisterUserEntity;
+use Domain\Entities\RegisterUserNickNameEntity;
+use Domain\Entities\RegisterUserPasswordEntity;
+use Domain\Entities\UserDetailEntity;
+use Domain\Entities\UserEntity;
+use Domain\Entities\UserPasswordEntity;
+use Infrastructure\DataSources\Database\Users;
+use Infrastructure\DataSources\Database\UsersNickName;
+use Infrastructure\DataSources\Database\UsersStatus;
+use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
@@ -33,11 +36,10 @@ class ManualRepository implements ManualRepositoryInterface
         UsersStatus $usersStatus,
         UsersNickName $userNickName,
         UsersPassword $usersPassword
-    )
-    {
-        $this->users = $users;
-        $this->usersStatus = $usersStatus;
-        $this->userNickName = $userNickName;
+    ) {
+        $this->users         = $users;
+        $this->usersStatus   = $usersStatus;
+        $this->userNickName  = $userNickName;
         $this->usersPassword = $usersPassword;
     }
 
@@ -50,7 +52,8 @@ class ManualRepository implements ManualRepositoryInterface
         if (is_null($result)) {
             return null;
         }
-        $userRecord = (object)$result;
+        $userRecord = (object) $result;
+
         return new UserEntity($userRecord);
     }
 
@@ -63,7 +66,8 @@ class ManualRepository implements ManualRepositoryInterface
         if (is_null($result)) {
             return null;
         }
-        $userPasswordRecord = (object)$result;
+        $userPasswordRecord = (object) $result;
+
         return new UserPasswordEntity($userId, $userPasswordRecord);
     }
 
@@ -76,6 +80,7 @@ class ManualRepository implements ManualRepositoryInterface
         if (is_null($result)) {
             return null;
         }
+
         return $result;
     }
 
@@ -88,7 +93,8 @@ class ManualRepository implements ManualRepositoryInterface
         if (is_null($result)) {
             return null;
         }
-        $userDetail = (object)$result;
+        $userDetail = (object) $result;
+
         return new UserDetailEntity($userDetail);
     }
 
@@ -97,14 +103,15 @@ class ManualRepository implements ManualRepositoryInterface
      */
     public function registerUser(array $oldRequest): int
     {
-        $userRecord = (object)$oldRequest;
+        $userRecord         = (object) $oldRequest;
         $registerUserEntity = new RegisterUserEntity($userRecord);
-        $userId = $this->users->registerUser($registerUserEntity);
+        $userId             = $this->users->registerUser($registerUserEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
         $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $userRecord);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
         $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
         $this->userNickName->registerNickName($userId, $registerUserNickNameEntity);
+
         return $userId;
     }
 }

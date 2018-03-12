@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\Specification;
 
 use Auth;
@@ -37,39 +36,43 @@ class SocialLoginSpecification
         SocialUser $socialUser,
         SocialUserAccountEntity $socialUserAccountEntity,
         UserDetailEntity $userDetailEntity
-    ): bool
-    {
+    ): bool {
         if ($socialUserAccountEntity->getDriverName() != $driverName) {
             \Log::info("\n【ERROR】Authentication drivers do not match\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
+                . 'Entity:' . $socialUserAccountEntity->getDriverName() . ':' . $socialUserAccountEntity->getSocialUserId() . "\n"
+                . 'Request:' . $driverName . ':' . $socialUser->getId()
             );
+
             return false;
         }
 
         if ($socialUserAccountEntity->getSocialUserId() != $socialUser->getId()) {
             \Log::info("\n【ERROR】It does not match the ID of SNS Account\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
+                . 'Entity:' . $socialUserAccountEntity->getDriverName() . ':' . $socialUserAccountEntity->getSocialUserId() . "\n"
+                . 'Request:' . $driverName . ':' . $socialUser->getId()
             );
+
             return false;
         }
 
         if (!$userDetailEntity->getActiveStatus()) {
             \Log::info("\n【ERROR】Not a living user\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
+                . 'Entity:' . $socialUserAccountEntity->getDriverName() . ':' . $socialUserAccountEntity->getSocialUserId() . "\n"
+                . 'Request:' . $driverName . ':' . $socialUser->getId()
             );
+
             return false;
         }
 
         if (!Auth::loginUsingId($socialUserAccountEntity->getId())) {
             \Log::info("\n【ERROR】It is a User that does not exist\n"
-                .'Entity:'.$socialUserAccountEntity->getDriverName().':'.$socialUserAccountEntity->getSocialUserId()."\n"
-                .'Request:'.$driverName.':'.$socialUser->getId()
+                . 'Entity:' . $socialUserAccountEntity->getDriverName() . ':' . $socialUserAccountEntity->getSocialUserId() . "\n"
+                . 'Request:' . $driverName . ':' . $socialUser->getId()
             );
+
             return false;
         }
+
         return true;
     }
 }

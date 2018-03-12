@@ -1,16 +1,16 @@
 <?php
-
 namespace Infrastructure\Repositories\Auth;
 
-use Domain\Entities\{
-    RegisterUserEntity, RegisterUserNickNameEntity, SocialUserAccountEntity, RegisterSocialUserEntity
-};
-use Infrastructure\DataSources\Database\{
-    Users, UsersNickName, UsersStatus, SocialAccounts
-};
+use Domain\Entities\RegisterUserEntity;
+use Domain\Entities\RegisterUserNickNameEntity;
+use Domain\Entities\SocialUserAccountEntity;
+use Domain\Entities\RegisterSocialUserEntity;
+use Infrastructure\DataSources\Database\Users;
+use Infrastructure\DataSources\Database\UsersNickName;
+use Infrastructure\DataSources\Database\UsersStatus;
+use Infrastructure\DataSources\Database\SocialAccounts;
 use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
-use stdClass;
 
 /**
  * Class SocialRepository
@@ -37,9 +37,9 @@ class SocialRepository implements SocialRepositoryInterface
         UsersStatus    $usersStatus
     ) {
         $this->socialAccounts = $socialAccounts;
-        $this->users = $users;
-        $this->usersNickName = $usersNickName;
-        $this->usersStatus = $usersStatus;
+        $this->users          = $users;
+        $this->usersNickName  = $usersNickName;
+        $this->usersStatus    = $usersStatus;
     }
 
     /**
@@ -55,9 +55,9 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function registerUser(string $driverName, SocialUser $socialUser)
     {
-        $userRecord = json_decode(json_encode($socialUser));
-        $registerUserEntity = new RegisterUserEntity($userRecord);
-        $userId = $this->users->registerUser($registerUserEntity);
+        $userRecord                 = json_decode(json_encode($socialUser));
+        $registerUserEntity         = new RegisterUserEntity($userRecord);
+        $userId                     = $this->users->registerUser($registerUserEntity);
         $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
         $this->usersNickName->registerNickName($userId, $registerUserNickNameEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
@@ -72,7 +72,8 @@ class SocialRepository implements SocialRepositoryInterface
         if (is_null($result)) {
             return null;
         }
-        $socialAccountRecord = (object)$result;
+        $socialAccountRecord = (object) $result;
+
         return new SocialUserAccountEntity($userId, $socialAccountRecord);
     }
 

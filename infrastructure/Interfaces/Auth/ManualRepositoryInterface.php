@@ -1,5 +1,4 @@
 <?php
-
 namespace Infrastructure\Interfaces\Auth;
 
 use Domain\Entities\UserDetailEntity;
