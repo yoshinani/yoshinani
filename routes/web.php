@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('welcome');
 });
 
-Route::group(['middleware' => 'guest'], function () {
+Route::group(['middleware' => 'guest'], function ()
+{
     Route::get('login', 'Auth\ManualController@loginEdit')->name('login');
     Route::post('login', 'Auth\ManualController@login');
 
@@ -32,10 +34,10 @@ Route::group(['middleware' => 'guest'], function () {
         Route::get('auth/{driverName}', 'Auth\SocialController@redirectToSocialService');
         Route::get('auth/{driverName}/callback', 'Auth\SocialController@handleSocialServiceCallback');
     }
-
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function ()
+{
     Route::get('/home', 'HomeController@index')->name('home');
 });
 

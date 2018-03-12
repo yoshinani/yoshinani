@@ -1,10 +1,8 @@
 <?php
 namespace Domain\Entities;
 
-use Domain\ValueObjects\{
-    SocialUserValueObject,
-    TimeStampValueObject
-};
+use Domain\ValueObjects\SocialUserValueObject;
+use Domain\ValueObjects\TimeStampValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -29,9 +27,9 @@ class RegisterSocialUserEntity implements Arrayable
         string $driverName,
         SocialUser $socialUser
     ) {
-        $this->id = $userId;
+        $this->id         = $userId;
         $this->socialUser = new SocialUserValueObject($driverName, $socialUser);
-        $this->timeStamp = new TimeStampValueObject();
+        $this->timeStamp  = new TimeStampValueObject();
     }
 
     /**
@@ -42,11 +40,11 @@ class RegisterSocialUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'driverName' => $this->socialUser->getDriverName(),
+            'id'           => $this->id,
+            'driverName'   => $this->socialUser->getDriverName(),
             'socialUserId' => $this->socialUser->getSocialUserId(),
-            'created_at' => $this->timeStamp->getNow(),
-            'updated_at' => $this->timeStamp->getNow(),
+            'created_at'   => $this->timeStamp->getNow(),
+            'updated_at'   => $this->timeStamp->getNow(),
         ];
     }
 

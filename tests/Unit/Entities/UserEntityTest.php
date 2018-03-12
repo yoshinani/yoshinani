@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\Entities\UserEntity;
@@ -12,9 +11,9 @@ class UserEntityTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $userRecord = (object)[
-            'id' => 1,
-            'name' => 'testName',
+        $userRecord = (object) [
+            'id'    => 1,
+            'name'  => 'testName',
             'email' => 'test@test.test',
         ];
         $this->user = new UserEntity($userRecord);

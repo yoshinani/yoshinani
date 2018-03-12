@@ -1,11 +1,8 @@
 <?php
-
 namespace Domain\Entities;
 
-use Domain\ValueObjects\{
-    UserValueObject,
-    TimeStampValueObject
-};
+use Domain\ValueObjects\UserValueObject;
+use Domain\ValueObjects\TimeStampValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
@@ -24,7 +21,7 @@ class RegisterUserEntity implements Arrayable
      */
     public function __construct(stdClass $userRecord)
     {
-        $this->user = new UserValueObject($userRecord);
+        $this->user      = new UserValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -36,8 +33,8 @@ class RegisterUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'email' => $this->user->getEmail(),
-            'name' => $this->user->getName(),
+            'email'      => $this->user->getEmail(),
+            'name'       => $this->user->getName(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];

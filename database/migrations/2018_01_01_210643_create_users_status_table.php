@@ -13,7 +13,8 @@ class CreateUsersStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_status', function (Blueprint $table) {
+        Schema::create('users_status', function (Blueprint $table)
+        {
             $table->increments('id');
             $table->bigInteger('user_id');
             $table->boolean('active');

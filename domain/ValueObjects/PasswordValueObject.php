@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\ValueObjects;
 
 use stdClass;
@@ -10,7 +9,7 @@ use stdClass;
  */
 class PasswordValueObject
 {
-    const NO_EXIST = 'Unregistered';
+    public const NO_EXIST = 'Unregistered';
 
     private $password;
 
@@ -39,6 +38,7 @@ class PasswordValueObject
         if (is_null($this->password)) {
             return self::NO_EXIST;
         }
+
         return decrypt($this->password);
     }
 }

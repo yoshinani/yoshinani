@@ -13,7 +13,8 @@ class CreateUsersNicknameTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_nickname', function (Blueprint $table) {
+        Schema::create('users_nickname', function (Blueprint $table)
+        {
             $table->increments('id');
             $table->bigInteger('user_id');
             $table->string('nickname')->nullable();

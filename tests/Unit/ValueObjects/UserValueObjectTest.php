@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\ValueObjects\UserValueObject;
@@ -12,8 +11,8 @@ class UserValueObjectTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $userRecord = (object)[
-            'name' => 'testName',
+        $userRecord = (object) [
+            'name'  => 'testName',
             'email' => 'test@test.test',
         ];
         $this->user = new UserValueObject($userRecord);

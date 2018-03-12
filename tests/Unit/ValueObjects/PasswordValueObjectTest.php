@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\ValueObjects\PasswordValueObject;
@@ -16,7 +15,7 @@ class PasswordValueObjectTest extends TestCase
      */
     public function getEncryptionString()
     {
-        $userRequest = (object)[
+        $userRequest = (object) [
             'password' => 'password'
         ];
         $this->password = new PasswordValueObject($userRequest);
@@ -31,7 +30,7 @@ class PasswordValueObjectTest extends TestCase
      */
     public function getEncryptionNull()
     {
-        $userRequest = (object)[
+        $userRequest = (object) [
             'password' => null
         ];
         $this->password = new PasswordValueObject($userRequest);
@@ -46,7 +45,7 @@ class PasswordValueObjectTest extends TestCase
      */
     public function getDecryptionString()
     {
-        $userRecord = (object)[
+        $userRecord = (object) [
             'password' => encrypt('password')
         ];
         $this->password = new PasswordValueObject($userRecord);
@@ -62,7 +61,7 @@ class PasswordValueObjectTest extends TestCase
      */
     public function getDecryptionNull()
     {
-        $userRecord = (object)[
+        $userRecord = (object) [
             'password' => null
         ];
         $this->password = new PasswordValueObject($userRecord);
@@ -70,6 +69,4 @@ class PasswordValueObjectTest extends TestCase
         $this->assertInternalType('string', $this->password->getDecryption());
         $this->assertEquals($this->password->getDecryption(), 'Unregistered');
     }
-
-
 }

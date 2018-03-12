@@ -1,9 +1,7 @@
 <?php
-
 namespace Infrastructure\Interfaces\Auth;
 
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\UserEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**

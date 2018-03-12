@@ -1,5 +1,4 @@
 <?php
-
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
@@ -20,6 +19,7 @@ class Users extends Bass
         $result = $this->db->table('users')
             ->where('email', $email)
             ->first();
+
         return $result;
     }
 
@@ -32,6 +32,7 @@ class Users extends Bass
         $result = $this->db->table('users')
             ->where('email', $email)
             ->value('id');
+
         return $result;
     }
 
@@ -48,6 +49,7 @@ class Users extends Bass
             ->where('users.id', $userId)
             ->select('users.id', 'users.email', 'users.name', 'users_nickname.nickname', 'users_password.password', 'users_status.active')
             ->first();
+
         return $result;
     }
 
@@ -60,12 +62,13 @@ class Users extends Bass
         $result = $this->db->table('users')
             ->insertGetId(
                 [
-                    'email' => $registerUserEntity->getEmail(),
-                    'name' => $registerUserEntity->getName(),
+                    'email'      => $registerUserEntity->getEmail(),
+                    'name'       => $registerUserEntity->getName(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),
                 ]
             );
+
         return $result;
     }
 }

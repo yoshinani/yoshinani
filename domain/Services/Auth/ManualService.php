@@ -1,13 +1,10 @@
 <?php
-
 namespace Domain\Services\Auth;
 
 use Domain\Specification\ManualLoginSpecification;
 use Exception;
-use Domain\Entities\{
-    UserEntity,
-    UserDetailEntity
-};
+use Domain\Entities\UserEntity;
+use Domain\Entities\UserDetailEntity;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
@@ -29,7 +26,7 @@ class ManualService
         ManualRepositoryInterface $manualRepository
     ) {
         $this->manualLoginSpecification = $manualLoginSpecification;
-        $this->manualRepository = $manualRepository;
+        $this->manualRepository         = $manualRepository;
     }
 
     /**
@@ -58,6 +55,7 @@ class ManualService
         if (is_null($userId)) {
             throw new Exception('User does not exist');
         }
+
         return $this->manualRepository->getUserDetail($userId);
     }
 
@@ -69,7 +67,7 @@ class ManualService
     public function login(array $oldRequest, int $userId): bool
     {
         $userDetailEntity = $this->manualRepository->getUserDetail($userId);
+
         return $this->manualLoginSpecification->isCondition($oldRequest, $userDetailEntity);
     }
-
 }

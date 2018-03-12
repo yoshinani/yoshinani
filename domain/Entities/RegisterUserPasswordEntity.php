@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\Entities;
 
 use Domain\ValueObjects\PasswordValueObject;
@@ -26,8 +25,8 @@ class RegisterUserPasswordEntity implements Arrayable
         int $userId,
         stdClass $userRecord
     ) {
-        $this->id = $userId;
-        $this->password = new PasswordValueObject($userRecord);
+        $this->id        = $userId;
+        $this->password  = new PasswordValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -39,8 +38,8 @@ class RegisterUserPasswordEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'password' => $this->password->getEncryption(),
+            'id'         => $this->id,
+            'password'   => $this->password->getEncryption(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];

@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\ValueObjects\SocialAccountValueObject;
@@ -12,9 +11,9 @@ class SocialAccountValueObjectTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $socialAccountRecord = (object)[
-            'user_id' => 1,
-            'driver_name' => 'socialDriver',
+        $socialAccountRecord = (object) [
+            'user_id'        => 1,
+            'driver_name'    => 'socialDriver',
             'social_user_id' => 10
         ];
         $this->socialAccount = new SocialAccountValueObject($socialAccountRecord);

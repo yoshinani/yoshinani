@@ -1,5 +1,4 @@
 <?php
-
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserNickNameEntity;
@@ -20,6 +19,7 @@ class UsersNickName extends Bass
         $result = $this->db->table('users_nickname')
             ->where('user_id', $userId)
             ->first();
+
         return $result;
     }
 
@@ -32,8 +32,8 @@ class UsersNickName extends Bass
         $this->db->table('users_nickname')
             ->insert(
                 [
-                    'user_id' => $userId,
-                    'nickname' => $registerUserNickNameEntity->getNickName(),
+                    'user_id'    => $userId,
+                    'nickname'   => $registerUserNickNameEntity->getNickName(),
                     'created_at' => $registerUserNickNameEntity->getCreatedAt(),
                     'updated_at' => $registerUserNickNameEntity->getUpdatedAt(),
                 ]

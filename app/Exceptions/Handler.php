@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Exceptions;
 
 use Exception;
@@ -13,7 +12,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+
     ];
 
     /**

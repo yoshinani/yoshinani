@@ -1,5 +1,4 @@
 <?php
-
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserPasswordEntity;
@@ -20,6 +19,7 @@ class UsersPassword extends Bass
         $result = $this->db->table('users_password')
             ->where('user_id', $userId)
             ->first();
+
         return $result;
     }
 
@@ -32,8 +32,8 @@ class UsersPassword extends Bass
         $this->db->table('users_password')
             ->insert(
                 [
-                    'user_id' => $userId,
-                    'password' => $registerUserPasswordEntity->getPassword(),
+                    'user_id'    => $userId,
+                    'password'   => $registerUserPasswordEntity->getPassword(),
                     'created_at' => $registerUserPasswordEntity->getCreatedAt(),
                     'updated_at' => $registerUserPasswordEntity->getUpdatedAt(),
                 ]

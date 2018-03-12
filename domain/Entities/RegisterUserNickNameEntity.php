@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\Entities;
 
 use Domain\ValueObjects\NickNameValueObject;
@@ -26,8 +25,8 @@ class RegisterUserNickNameEntity implements Arrayable
         int $userId,
         stdClass $userRecord
     ) {
-        $this->id = $userId;
-        $this->nickname = new NickNameValueObject($userRecord);
+        $this->id        = $userId;
+        $this->nickname  = new NickNameValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -39,8 +38,8 @@ class RegisterUserNickNameEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'nickname' => $this->nickname->getNickName(),
+            'id'         => $this->id,
+            'nickname'   => $this->nickname->getNickName(),
             'created_at' => $this->timeStamp->getNow(),
             'updated_at' => $this->timeStamp->getNow(),
         ];

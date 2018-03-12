@@ -1,5 +1,4 @@
 <?php
-
 namespace Domain\ValueObjects;
 
 use stdClass;
@@ -10,7 +9,7 @@ use stdClass;
  */
 class NickNameValueObject
 {
-    const NO_EXIST = 'Unregistered';
+    public const NO_EXIST = 'Unregistered';
 
     private $user;
 
@@ -31,6 +30,7 @@ class NickNameValueObject
         if (is_null($this->user->nickname)) {
             return self::NO_EXIST;
         }
+
         return $this->user->nickname;
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Unit;
 
 use Domain\ValueObjects\SocialUserValueObject;
@@ -13,7 +12,7 @@ class SocialUserValueObjectTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $driverName = 'driverName';
+        $driverName   = 'driverName';
         $abstractUser = Mockery::mock('Laravel\Socialite\Two\User');
         $abstractUser->shouldReceive('getId')
             ->andReturn(1);
@@ -33,7 +32,7 @@ class SocialUserValueObjectTest extends TestCase
      */
     public function getDriverNameMatch()
     {
-        $this->assertEquals($this->user->getDriverName() , 'driverName');
+        $this->assertEquals($this->user->getDriverName(), 'driverName');
     }
 
     /**

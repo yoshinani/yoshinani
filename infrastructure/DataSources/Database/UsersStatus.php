@@ -1,5 +1,4 @@
 <?php
-
 namespace Infrastructure\DataSources\Database;
 
 use Domain\Entities\RegisterUserEntity;
@@ -15,8 +14,8 @@ class UsersStatus extends Bass
         $this->db->table('users_status')
             ->insert(
                 [
-                    'user_id' => $userId,
-                    'active' => $registerUserEntity->getActive(),
+                    'user_id'    => $userId,
+                    'active'     => $registerUserEntity->getActive(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),
                 ]
