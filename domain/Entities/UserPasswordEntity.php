@@ -35,9 +35,17 @@ class UserPasswordEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'       => $this->id,
-            'password' => $this->password->getDecryption(),
+            'id'       => $this->getId(),
+            'password' => $this->getPassword(),
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

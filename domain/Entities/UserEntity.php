@@ -34,9 +34,9 @@ class UserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'        => $this->id,
-            'userName'  => $this->user->getName(),
-            'userEmail' => $this->user->getEmail(),
+            'id'        => $this->getUserId(),
+            'userName'  => $this->getUserName(),
+            'userEmail' => $this->getUserEmail(),
         ];
     }
 

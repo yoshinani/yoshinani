@@ -48,7 +48,7 @@ class RegisterUserPasswordEntity implements Arrayable
     /**
      * @return int
      */
-    public function getId(): int 
+    public function getId(): int
     {
         return $this->id;
     }
