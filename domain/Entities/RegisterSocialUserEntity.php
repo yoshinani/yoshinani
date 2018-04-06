@@ -40,11 +40,11 @@ class RegisterSocialUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'           => $this->id,
-            'driverName'   => $this->socialUser->getDriverName(),
-            'socialUserId' => $this->socialUser->getSocialUserId(),
-            'created_at'   => $this->timeStamp->getNow(),
-            'updated_at'   => $this->timeStamp->getNow(),
+            'id'           => $this->getId(),
+            'driverName'   => $this->getDriverName(),
+            'socialUserId' => $this->getSocialUserId(),
+            'created_at'   => $this->getCreatedAt(),
+            'updated_at'   => $this->getUpdatedAt(),
         ];
     }
 
