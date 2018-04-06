@@ -34,16 +34,16 @@ class UserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'        => $this->getUserId(),
-            'userName'  => $this->getUserName(),
-            'userEmail' => $this->getUserEmail(),
+            'id'    => $this->getId(),
+            'name'  => $this->getName(),
+            'email' => $this->getEmail(),
         ];
     }
 
     /**
      * @return int
      */
-    public function getUserId(): int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -51,7 +51,7 @@ class UserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUserName(): string
+    public function getName(): string
     {
         return $this->user->getName();
     }
@@ -59,7 +59,7 @@ class UserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getUserEmail(): string
+    public function getEmail(): string
     {
         return $this->user->getEmail();
     }

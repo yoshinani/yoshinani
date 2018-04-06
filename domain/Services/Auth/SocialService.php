@@ -45,7 +45,7 @@ class SocialService
     {
         $userEntity              = $this->socialRegisterUser($driverName, $socialUser);
         $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
-        $userDetailEntity        = $this->manualRepository->getUserDetail($userEntity->getUserId());
+        $userDetailEntity        = $this->manualRepository->getUserDetail($userEntity->getId());
 
         return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userDetailEntity);
     }

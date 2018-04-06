@@ -27,8 +27,8 @@ class UserEntityTest extends TestCase
     public function toArrayMatch()
     {
         $this->assertArrayHasKey('id', $this->user->toArray());
-        $this->assertArrayHasKey('userName', $this->user->toArray());
-        $this->assertArrayHasKey('userEmail', $this->user->toArray());
+        $this->assertArrayHasKey('name', $this->user->toArray());
+        $this->assertArrayHasKey('email', $this->user->toArray());
         $this->assertCount(3, $this->user->toArray());
     }
 
@@ -39,7 +39,7 @@ class UserEntityTest extends TestCase
      */
     public function getUserIdMatch()
     {
-        $this->assertEquals($this->user->getUserId(), 1);
+        $this->assertEquals($this->user->getId(), 1);
     }
 
     /**
@@ -49,7 +49,7 @@ class UserEntityTest extends TestCase
      */
     public function getNameMatch()
     {
-        $this->assertEquals($this->user->getUserName(), 'testName');
+        $this->assertEquals($this->user->getName(), 'testName');
     }
 
     /**
@@ -59,6 +59,6 @@ class UserEntityTest extends TestCase
      */
     public function getEmailMatch()
     {
-        $this->assertEquals($this->user->getuserEmail(), 'test@test.test');
+        $this->assertEquals($this->user->getEmail(), 'test@test.test');
     }
 }
