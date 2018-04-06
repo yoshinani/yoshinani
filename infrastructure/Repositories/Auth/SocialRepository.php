@@ -1,10 +1,8 @@
 <?php
 namespace Infrastructure\Repositories\Auth;
 
-use Domain\Entities\RegisterUserEntity;
-use Domain\Entities\RegisterUserNickNameEntity;
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\RegisterSocialUserEntity;
+use Infrastructure\Factories\UserFactory;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
@@ -22,6 +20,7 @@ class SocialRepository implements SocialRepositoryInterface
     private $users;
     private $usersNickName;
     private $usersStatus;
+    private $userFactory;
 
     /**
      * SocialRepository constructor.
@@ -29,17 +28,20 @@ class SocialRepository implements SocialRepositoryInterface
      * @param Users $users
      * @param UsersNickName $usersNickName
      * @param UsersStatus $usersStatus
+     * @param UserFactory $userFactory
      */
     public function __construct(
         SocialAccounts $socialAccounts,
         Users          $users,
         UsersNickName  $usersNickName,
-        UsersStatus    $usersStatus
+        UsersStatus    $usersStatus,
+        UserFactory    $userFactory
     ) {
         $this->socialAccounts = $socialAccounts;
         $this->users          = $users;
         $this->usersNickName  = $usersNickName;
         $this->usersStatus    = $usersStatus;
+        $this->userFactory    = $userFactory;
     }
 
     /**
@@ -53,12 +55,12 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(string $driverName, SocialUser $socialUser)
+    public function registerUser(SocialUser $socialUser)
     {
         $userRecord                 = json_decode(json_encode($socialUser));
-        $registerUserEntity         = new RegisterUserEntity($userRecord);
+        $registerUserEntity         = $this->userFactory->createRegisterUser($userRecord);
         $userId                     = $this->users->registerUser($registerUserEntity);
-        $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
+        $registerUserNickNameEntity = $this->userFactory->createRegisterUserNickName($userId, $userRecord);
         $this->usersNickName->registerNickName($userId, $registerUserNickNameEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
     }
@@ -74,7 +76,7 @@ class SocialRepository implements SocialRepositoryInterface
         }
         $socialAccountRecord = (object) $result;
 
-        return new SocialUserAccountEntity($userId, $socialAccountRecord);
+        return $this->userFactory->createSocialUserAccount($userId, $socialAccountRecord);
     }
 
     /**
@@ -82,7 +84,7 @@ class SocialRepository implements SocialRepositoryInterface
      */
     public function synchronizeSocialAccount(int $userId, string $driverName, SocialUser $socialUser)
     {
-        $registerSocialUserEntity = new RegisterSocialUserEntity($userId, $driverName, $socialUser);
+        $registerSocialUserEntity = $this->userFactory->createRegisterSocialUser($userId, $driverName, $socialUser);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }
