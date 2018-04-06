@@ -35,9 +35,9 @@ class SocialUserAccountEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'           => $this->id,
-            'driverName'   => $this->socialAccount->getDriverName(),
-            'socialUserId' => $this->socialAccount->getSocialUserId(),
+            'id'           => $this->getId(),
+            'driverName'   => $this->getDriverName(),
+            'socialUserId' => $this->getSocialUserId(),
         ];
     }
 

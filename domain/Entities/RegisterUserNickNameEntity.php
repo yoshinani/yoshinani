@@ -38,11 +38,19 @@ class RegisterUserNickNameEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'         => $this->id,
-            'nickname'   => $this->nickname->getNickName(),
-            'created_at' => $this->timeStamp->getNow(),
-            'updated_at' => $this->timeStamp->getNow(),
+            'id'         => $this->getId(),
+            'nickname'   => $this->getNickName(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

@@ -33,10 +33,11 @@ class RegisterUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'email'      => $this->user->getEmail(),
-            'name'       => $this->user->getName(),
-            'created_at' => $this->timeStamp->getNow(),
-            'updated_at' => $this->timeStamp->getNow(),
+            'email'      => $this->getEmail(),
+            'name'       => $this->getName(),
+            'active'     => $this->getActive(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
         ];
     }
 

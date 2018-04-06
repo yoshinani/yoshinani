@@ -38,11 +38,19 @@ class RegisterUserPasswordEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'         => $this->id,
-            'password'   => $this->password->getEncryption(),
-            'created_at' => $this->timeStamp->getNow(),
-            'updated_at' => $this->timeStamp->getNow(),
+            'id'         => $this->getId(),
+            'password'   => $this->getPassword(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

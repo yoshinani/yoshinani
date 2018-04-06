@@ -15,7 +15,7 @@ class ManualLoginSpecification
         array $oldRequest,
         UserDetailEntity $userDetailEntity
     ): bool {
-        if ($oldRequest['email'] !== $userDetailEntity->getUserEmail()) {
+        if ($oldRequest['email'] !== $userDetailEntity->getEmail()) {
             \Log::info("\n【ERROR】Email does not match\n"
                 . 'Email:' . $oldRequest['email'] . "\n"
                 . 'Password:' . encrypt($oldRequest['password'])
@@ -42,7 +42,7 @@ class ManualLoginSpecification
             return false;
         }
 
-        if (!Auth::loginUsingId($userDetailEntity->getUserId(), true)) {
+        if (!Auth::loginUsingId($userDetailEntity->getId(), true)) {
             \Log::info("\n【ERROR】It is a User that does not exist\n"
                 . 'Email:' . $oldRequest['email'] . "\n"
                 . 'Password:' . encrypt($oldRequest['password'])
