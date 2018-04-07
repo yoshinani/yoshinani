@@ -46,5 +46,4 @@ class UserFactory
     {
         return new SocialUserAccountEntity($userId, $socialAccountRecord);
     }
-
 }
