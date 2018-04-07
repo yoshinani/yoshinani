@@ -1,16 +1,11 @@
 <?php
 namespace Infrastructure\Factories;
 
-use Domain\Entities\RegisterUserEntity;
-use Domain\Entities\RegisterUserNickNameEntity;
-use Domain\Entities\RegisterUserPasswordEntity;
-use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserEntity;
-use Domain\Entities\UserPasswordEntity;
-use Laravel\Socialite\Contracts\User as SocialUser;
-use Domain\Entities\RegisterSocialUserEntity;
 use stdClass;
+use Domain\Entities\UserEntity;
+use Domain\Entities\UserDetailEntity;
+use Domain\Entities\UserPasswordEntity;
+use Domain\Entities\SocialUserAccountEntity;
 
 class UserFactory
 {
@@ -24,16 +19,6 @@ class UserFactory
     }
 
     /**
-     * @param int $userId
-     * @param stdClass $userPasswordRecord
-     * @return UserPasswordEntity
-     */
-    public function createUserPassword(int $userId, stdClass $userPasswordRecord): UserPasswordEntity
-    {
-        return new UserPasswordEntity($userId, $userPasswordRecord);
-    }
-
-    /**
      * @param stdClass $userDetail
      * @return UserDetailEntity
      */
@@ -44,31 +29,12 @@ class UserFactory
 
     /**
      * @param int $userId
-     * @param stdClass $userRecord
-     * @return RegisterUserPasswordEntity
+     * @param stdClass $userPasswordRecord
+     * @return UserPasswordEntity
      */
-    public function createRegisterUserPassword(int $userId, stdClass $userRecord): RegisterUserPasswordEntity
+    public function createUserPassword(int $userId, stdClass $userPasswordRecord): UserPasswordEntity
     {
-        return new RegisterUserPasswordEntity($userId, $userRecord);
-    }
-
-    /**
-     * @param stdClass $userRecord
-     * @return RegisterUserEntity
-     */
-    public function createRegisterUser(stdClass $userRecord): RegisterUserEntity
-    {
-        return new RegisterUserEntity($userRecord);
-    }
-
-    /**
-     * @param int $userId
-     * @param stdClass $userRecord
-     * @return RegisterUserNickNameEntity
-     */
-    public function createRegisterUserNickName(int $userId, stdClass $userRecord): RegisterUserNickNameEntity
-    {
-        return new RegisterUserNickNameEntity($userId, $userRecord);
+        return new UserPasswordEntity($userId, $userPasswordRecord);
     }
 
     /**
@@ -81,14 +47,4 @@ class UserFactory
         return new SocialUserAccountEntity($userId, $socialAccountRecord);
     }
 
-    /**
-     * @param int $userId
-     * @param string $driverName
-     * @param SocialUser $socialUser
-     * @return RegisterSocialUserEntity
-     */
-    public function createRegisterSocialUser(int $userId, string $driverName, SocialUser $socialUser): RegisterSocialUserEntity
-    {
-        return new RegisterSocialUserEntity($userId, $driverName, $socialUser);
-    }
 }
