@@ -14,7 +14,7 @@ class RegisterUserFactory
      * @param stdClass $userRecord
      * @return RegisterUserEntity
      */
-    public function createRegisterUser(stdClass $userRecord): RegisterUserEntity
+    public function createUser(stdClass $userRecord): RegisterUserEntity
     {
         return new RegisterUserEntity($userRecord);
     }
@@ -24,7 +24,7 @@ class RegisterUserFactory
      * @param stdClass $userRecord
      * @return RegisterUserNickNameEntity
      */
-    public function createRegisterUserNickName(int $userId, stdClass $userRecord): RegisterUserNickNameEntity
+    public function createNickName(int $userId, stdClass $userRecord): RegisterUserNickNameEntity
     {
         return new RegisterUserNickNameEntity($userId, $userRecord);
     }
@@ -34,7 +34,7 @@ class RegisterUserFactory
      * @param stdClass $userRecord
      * @return RegisterUserPasswordEntity
      */
-    public function createRegisterUserPassword(int $userId, stdClass $userRecord): RegisterUserPasswordEntity
+    public function createPassword(int $userId, stdClass $userRecord): RegisterUserPasswordEntity
     {
         return new RegisterUserPasswordEntity($userId, $userRecord);
     }
@@ -45,7 +45,7 @@ class RegisterUserFactory
      * @param SocialUser $socialUser
      * @return RegisterSocialUserEntity
      */
-    public function createRegisterSocialUser(int $userId, string $driverName, SocialUser $socialUser): RegisterSocialUserEntity
+    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): RegisterSocialUserEntity
     {
         return new RegisterSocialUserEntity($userId, $driverName, $socialUser);
     }
