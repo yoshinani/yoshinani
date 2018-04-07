@@ -5,6 +5,7 @@ use Domain\Entities\UserEntity;
 use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserPasswordEntity;
 use Infrastructure\Factories\UserFactory;
+use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
@@ -22,6 +23,7 @@ class ManualRepository implements ManualRepositoryInterface
     private $userNickName;
     private $usersPassword;
     private $userFactory;
+    private $registerUserFactory;
 
     /**
      * ManualRepository constructor.
@@ -30,19 +32,22 @@ class ManualRepository implements ManualRepositoryInterface
      * @param UsersNickName $userNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
+     * @param RegisterUserFactory $registerUserFactory
      */
     public function __construct(
         Users $users,
         UsersStatus $usersStatus,
         UsersNickName $userNickName,
         UsersPassword $usersPassword,
-        UserFactory  $userFactory
+        UserFactory  $userFactory,
+        RegisterUserFactory $registerUserFactory
     ) {
-        $this->users         = $users;
-        $this->usersStatus   = $usersStatus;
-        $this->userNickName  = $userNickName;
-        $this->usersPassword = $usersPassword;
-        $this->userFactory   = $userFactory;
+        $this->users               = $users;
+        $this->usersStatus         = $usersStatus;
+        $this->userNickName        = $userNickName;
+        $this->usersPassword       = $usersPassword;
+        $this->userFactory         = $userFactory;
+        $this->registerUserFactory = $registerUserFactory;
     }
 
     /**
@@ -106,12 +111,12 @@ class ManualRepository implements ManualRepositoryInterface
     public function registerUser(array $oldRequest): int
     {
         $userRecord         = (object) $oldRequest;
-        $registerUserEntity = $this->userFactory->createRegisterUser($userRecord);
+        $registerUserEntity = $this->registerUserFactory->createRegisterUser($userRecord);
         $userId             = $this->users->registerUser($registerUserEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
-        $registerUserPasswordEntity = $this->userFactory->createRegisterUserPassword($userId, $userRecord);
+        $registerUserPasswordEntity = $this->registerUserFactory->createRegisterUserPassword($userId, $userRecord);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
-        $registerUserNickNameEntity = $this->userFactory->createRegisterUserNickName($userId, $userRecord);
+        $registerUserNickNameEntity = $this->registerUserFactory->createRegisterUserNickName($userId, $userRecord);
         $this->userNickName->registerNickName($userId, $registerUserNickNameEntity);
 
         return $userId;
