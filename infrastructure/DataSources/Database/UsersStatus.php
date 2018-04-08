@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\RegisterUserEntity;
+use Domain\Entities\Registers\UserEntity;
 
 /**
  * Class UsersPassword
@@ -9,7 +9,7 @@ use Domain\Entities\RegisterUserEntity;
  */
 class UsersStatus extends Bass
 {
-    public function registerActive(int $userId, RegisterUserEntity $registerUserEntity)
+    public function registerActive(int $userId, UserEntity $registerUserEntity)
     {
         $this->db->table('users_status')
             ->insert(

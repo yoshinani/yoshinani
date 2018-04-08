@@ -62,7 +62,7 @@ class SocialService
         $userEntity = $this->manualRepository->findUser($email);
         if (is_null($userEntity)) {
             $this->socialLoginSpecification->isRequiredInfo($socialUser);
-            $this->socialRepository->registerUser($driverName, $socialUser);
+            $this->socialRepository->registerUser($socialUser);
             $userEntity = $this->manualRepository->findUser($email);
         }
 

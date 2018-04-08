@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\RegisterSocialUserEntity;
+use Domain\Entities\Registers\SocialUserEntity;
 use stdClass;
 
 /**
@@ -26,9 +26,9 @@ class SocialAccounts extends Bass
     }
 
     /**
-     * @param RegisterSocialUserEntity $registerSocialUserEntity
+     * @param SocialUserEntity $registerSocialUserEntity
      */
-    public function registerSocialAccount(RegisterSocialUserEntity $registerSocialUserEntity)
+    public function registerSocialAccount(SocialUserEntity $registerSocialUserEntity)
     {
         $this->db->table('social_accounts')
             ->insert(

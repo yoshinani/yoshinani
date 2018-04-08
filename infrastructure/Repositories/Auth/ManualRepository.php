@@ -1,12 +1,11 @@
 <?php
 namespace Infrastructure\Repositories\Auth;
 
-use Domain\Entities\RegisterUserEntity;
-use Domain\Entities\RegisterUserNickNameEntity;
-use Domain\Entities\RegisterUserPasswordEntity;
-use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
+use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserPasswordEntity;
+use Infrastructure\Factories\UserFactory;
+use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
@@ -23,6 +22,8 @@ class ManualRepository implements ManualRepositoryInterface
     private $usersStatus;
     private $userNickName;
     private $usersPassword;
+    private $userFactory;
+    private $registerUserFactory;
 
     /**
      * ManualRepository constructor.
@@ -30,17 +31,23 @@ class ManualRepository implements ManualRepositoryInterface
      * @param UsersStatus $usersStatus
      * @param UsersNickName $userNickName
      * @param UsersPassword $usersPassword
+     * @param UserFactory $userFactory
+     * @param RegisterUserFactory $registerUserFactory
      */
     public function __construct(
-        Users $users,
-        UsersStatus $usersStatus,
-        UsersNickName $userNickName,
-        UsersPassword $usersPassword
+        Users               $users,
+        UsersStatus         $usersStatus,
+        UsersNickName       $userNickName,
+        UsersPassword       $usersPassword,
+        UserFactory         $userFactory,
+        RegisterUserFactory $registerUserFactory
     ) {
-        $this->users         = $users;
-        $this->usersStatus   = $usersStatus;
-        $this->userNickName  = $userNickName;
-        $this->usersPassword = $usersPassword;
+        $this->users               = $users;
+        $this->usersStatus         = $usersStatus;
+        $this->userNickName        = $userNickName;
+        $this->usersPassword       = $usersPassword;
+        $this->userFactory         = $userFactory;
+        $this->registerUserFactory = $registerUserFactory;
     }
 
     /**
@@ -54,7 +61,7 @@ class ManualRepository implements ManualRepositoryInterface
         }
         $userRecord = (object) $result;
 
-        return new UserEntity($userRecord);
+        return $this->userFactory->createUser($userRecord);
     }
 
     /**
@@ -68,7 +75,7 @@ class ManualRepository implements ManualRepositoryInterface
         }
         $userPasswordRecord = (object) $result;
 
-        return new UserPasswordEntity($userId, $userPasswordRecord);
+        return $this->userFactory->createUserPassword($userId, $userPasswordRecord);
     }
 
     /**
@@ -95,7 +102,7 @@ class ManualRepository implements ManualRepositoryInterface
         }
         $userDetail = (object) $result;
 
-        return new UserDetailEntity($userDetail);
+        return $this->userFactory->createUserDetail($userDetail);
     }
 
     /**
@@ -104,12 +111,12 @@ class ManualRepository implements ManualRepositoryInterface
     public function registerUser(array $oldRequest): int
     {
         $userRecord         = (object) $oldRequest;
-        $registerUserEntity = new RegisterUserEntity($userRecord);
+        $registerUserEntity = $this->registerUserFactory->createUser($userRecord);
         $userId             = $this->users->registerUser($registerUserEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
-        $registerUserPasswordEntity = new RegisterUserPasswordEntity($userId, $userRecord);
+        $registerUserPasswordEntity = $this->registerUserFactory->createPassword($userId, $userRecord);
         $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
-        $registerUserNickNameEntity = new RegisterUserNickNameEntity($userId, $userRecord);
+        $registerUserNickNameEntity = $this->registerUserFactory->createNickName($userId, $userRecord);
         $this->userNickName->registerNickName($userId, $registerUserNickNameEntity);
 
         return $userId;

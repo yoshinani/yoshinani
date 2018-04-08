@@ -1,32 +1,27 @@
 <?php
-namespace Domain\Entities;
+namespace Domain\Entities\Registers;
 
-use Domain\ValueObjects\PasswordValueObject;
+use Domain\ValueObjects\UserValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
 /**
- * Class RegisterUserPasswordEntity
+ * Class RegisterUserEntity
  * @package Domain\Entities
  */
-class RegisterUserPasswordEntity implements Arrayable
+class UserEntity implements Arrayable
 {
-    private $id;
-    private $password;
+    private $user;
     private $timeStamp;
 
     /**
-     * RegisterUserPasswordEntity constructor.
-     * @param int $userId
+     * RegisterUserEntity constructor.
      * @param stdClass $userRecord
      */
-    public function __construct(
-        int $userId,
-        stdClass $userRecord
-    ) {
-        $this->id        = $userId;
-        $this->password  = new PasswordValueObject($userRecord);
+    public function __construct(stdClass $userRecord)
+    {
+        $this->user      = new UserValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -38,27 +33,36 @@ class RegisterUserPasswordEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'         => $this->getId(),
-            'password'   => $this->getPassword(),
+            'email'      => $this->getEmail(),
+            'name'       => $this->getName(),
+            'active'     => $this->getActive(),
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
         ];
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId(): int
+    public function getEmail(): string
     {
-        return $this->id;
+        return $this->user->getEmail();
     }
 
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getName(): string
     {
-        return $this->password->getEncryption();
+        return $this->user->getName();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getActive(): bool
+    {
+        return true;
     }
 
     /**
