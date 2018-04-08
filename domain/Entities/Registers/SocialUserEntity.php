@@ -1,5 +1,5 @@
 <?php
-namespace Domain\Entities;
+namespace Domain\Entities\Registers;
 
 use Domain\ValueObjects\SocialUserValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
@@ -10,7 +10,7 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  * Class SocialUserEntity
  * @package Domain\Entities
  */
-class RegisterSocialUserEntity implements Arrayable
+class SocialUserEntity implements Arrayable
 {
     private $id;
     private $socialUser;

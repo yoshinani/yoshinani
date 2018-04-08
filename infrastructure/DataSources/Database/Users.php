@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\RegisterUserEntity;
+use Domain\Entities\Registers\UserEntity;
 use stdClass;
 
 /**
@@ -54,10 +54,10 @@ class Users extends Bass
     }
 
     /**
-     * @param RegisterUserEntity $registerUserEntity
+     * @param UserEntity $registerUserEntity
      * @return int
      */
-    public function registerUser(RegisterUserEntity $registerUserEntity): int
+    public function registerUser(UserEntity $registerUserEntity): int
     {
         $result = $this->db->table('users')
             ->insertGetId(

@@ -2,51 +2,51 @@
 namespace Infrastructure\Factories;
 
 use stdClass;
-use Domain\Entities\RegisterUserEntity;
-use Domain\Entities\RegisterSocialUserEntity;
-use Domain\Entities\RegisterUserNickNameEntity;
-use Domain\Entities\RegisterUserPasswordEntity;
+use Domain\Entities\Registers\UserEntity;
+use Domain\Entities\Registers\SocialUserEntity;
+use Domain\Entities\Registers\UserNickNameEntity;
+use Domain\Entities\Registers\UserPasswordEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 class RegisterUserFactory
 {
     /**
      * @param stdClass $userRecord
-     * @return RegisterUserEntity
+     * @return UserEntity
      */
-    public function createUser(stdClass $userRecord): RegisterUserEntity
+    public function createUser(stdClass $userRecord): UserEntity
     {
-        return new RegisterUserEntity($userRecord);
+        return new UserEntity($userRecord);
     }
 
     /**
      * @param int $userId
      * @param stdClass $userRecord
-     * @return RegisterUserNickNameEntity
+     * @return UserNickNameEntity
      */
-    public function createNickName(int $userId, stdClass $userRecord): RegisterUserNickNameEntity
+    public function createNickName(int $userId, stdClass $userRecord): UserNickNameEntity
     {
-        return new RegisterUserNickNameEntity($userId, $userRecord);
+        return new UserNickNameEntity($userId, $userRecord);
     }
 
     /**
      * @param int $userId
      * @param stdClass $userRecord
-     * @return RegisterUserPasswordEntity
+     * @return UserPasswordEntity
      */
-    public function createPassword(int $userId, stdClass $userRecord): RegisterUserPasswordEntity
+    public function createPassword(int $userId, stdClass $userRecord): UserPasswordEntity
     {
-        return new RegisterUserPasswordEntity($userId, $userRecord);
+        return new UserPasswordEntity($userId, $userRecord);
     }
 
     /**
      * @param int $userId
      * @param string $driverName
      * @param SocialUser $socialUser
-     * @return RegisterSocialUserEntity
+     * @return SocialUserEntity
      */
-    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): RegisterSocialUserEntity
+    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): SocialUserEntity
     {
-        return new RegisterSocialUserEntity($userId, $driverName, $socialUser);
+        return new SocialUserEntity($userId, $driverName, $socialUser);
     }
 }

@@ -1,27 +1,32 @@
 <?php
-namespace Domain\Entities;
+namespace Domain\Entities\Registers;
 
-use Domain\ValueObjects\UserValueObject;
+use Domain\ValueObjects\NickNameValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
 /**
- * Class RegisterUserEntity
+ * Class RegisterUserNickNameEntity
  * @package Domain\Entities
  */
-class RegisterUserEntity implements Arrayable
+class UserNickNameEntity implements Arrayable
 {
-    private $user;
+    private $id;
+    private $nickname;
     private $timeStamp;
 
     /**
-     * RegisterUserEntity constructor.
+     * RegisterUserPasswordEntity constructor.
+     * @param int $userId
      * @param stdClass $userRecord
      */
-    public function __construct(stdClass $userRecord)
-    {
-        $this->user      = new UserValueObject($userRecord);
+    public function __construct(
+        int $userId,
+        stdClass $userRecord
+    ) {
+        $this->id        = $userId;
+        $this->nickname  = new NickNameValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -33,36 +38,27 @@ class RegisterUserEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'email'      => $this->getEmail(),
-            'name'       => $this->getName(),
-            'active'     => $this->getActive(),
+            'id'         => $this->getId(),
+            'nickname'   => $this->getNickName(),
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
         ];
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getEmail(): string
+    public function getId(): int
     {
-        return $this->user->getEmail();
+        return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getNickName(): string
     {
-        return $this->user->getName();
-    }
-
-    /**
-     * @return bool
-     */
-    public function getActive(): bool
-    {
-        return true;
+        return $this->nickname->getNickName();
     }
 
     /**

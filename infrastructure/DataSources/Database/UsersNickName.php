@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\RegisterUserNickNameEntity;
+use Domain\Entities\Registers\UserNickNameEntity;
 use stdClass;
 
 /**
@@ -25,9 +25,9 @@ class UsersNickName extends Bass
 
     /**
      * @param int $userId
-     * @param RegisterUserNickNameEntity $registerUserNickNameEntity
+     * @param UserNickNameEntity $registerUserNickNameEntity
      */
-    public function registerNickName(int $userId, RegisterUserNickNameEntity $registerUserNickNameEntity)
+    public function registerNickName(int $userId, UserNickNameEntity $registerUserNickNameEntity)
     {
         $this->db->table('users_nickname')
             ->insert(

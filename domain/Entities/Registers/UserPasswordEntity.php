@@ -1,19 +1,19 @@
 <?php
-namespace Domain\Entities;
+namespace Domain\Entities\Registers;
 
-use Domain\ValueObjects\NickNameValueObject;
+use Domain\ValueObjects\PasswordValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 
 /**
- * Class RegisterUserNickNameEntity
+ * Class RegisterUserPasswordEntity
  * @package Domain\Entities
  */
-class RegisterUserNickNameEntity implements Arrayable
+class UserPasswordEntity implements Arrayable
 {
     private $id;
-    private $nickname;
+    private $password;
     private $timeStamp;
 
     /**
@@ -26,7 +26,7 @@ class RegisterUserNickNameEntity implements Arrayable
         stdClass $userRecord
     ) {
         $this->id        = $userId;
-        $this->nickname  = new NickNameValueObject($userRecord);
+        $this->password  = new PasswordValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -39,7 +39,7 @@ class RegisterUserNickNameEntity implements Arrayable
     {
         return [
             'id'         => $this->getId(),
-            'nickname'   => $this->getNickName(),
+            'password'   => $this->getPassword(),
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
         ];
@@ -56,9 +56,9 @@ class RegisterUserNickNameEntity implements Arrayable
     /**
      * @return string
      */
-    public function getNickName(): string
+    public function getPassword(): string
     {
-        return $this->nickname->getNickName();
+        return $this->password->getEncryption();
     }
 
     /**
