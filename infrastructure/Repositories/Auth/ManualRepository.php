@@ -35,11 +35,11 @@ class ManualRepository implements ManualRepositoryInterface
      * @param RegisterUserFactory $registerUserFactory
      */
     public function __construct(
-        Users $users,
-        UsersStatus $usersStatus,
-        UsersNickName $userNickName,
-        UsersPassword $usersPassword,
-        UserFactory  $userFactory,
+        Users               $users,
+        UsersStatus         $usersStatus,
+        UsersNickName       $userNickName,
+        UsersPassword       $usersPassword,
+        UserFactory         $userFactory,
         RegisterUserFactory $registerUserFactory
     ) {
         $this->users               = $users;

@@ -34,11 +34,11 @@ class SocialRepository implements SocialRepositoryInterface
      * @param RegisterUserFactory $registerUserFactory
      */
     public function __construct(
-        SocialAccounts $socialAccounts,
-        Users          $users,
-        UsersNickName  $usersNickName,
-        UsersStatus    $usersStatus,
-        UserFactory    $userFactory,
+        SocialAccounts      $socialAccounts,
+        Users               $users,
+        UsersNickName       $usersNickName,
+        UsersStatus         $usersStatus,
+        UserFactory         $userFactory,
         RegisterUserFactory $registerUserFactory
     ) {
         $this->socialAccounts      = $socialAccounts;
