@@ -3,12 +3,22 @@ namespace Infrastructure\Factories;
 
 use stdClass;
 use Domain\Entities\UserEntity;
+use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserPasswordEntity;
 use Domain\Entities\SocialUserAccountEntity;
 
 class UserFactory
 {
+    /**
+     * @param stdClass $userRecord
+     * @return RegisterUserEntity
+     */
+    public function createRegisterUser(stdClass $userRecord): RegisterUserEntity
+    {
+        return new RegisterUserEntity($userRecord);
+    }
+
     /**
      * @param stdClass $userRecord
      * @return UserEntity

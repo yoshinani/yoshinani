@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\Registers\UserPasswordEntity;
+use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use stdClass;
 
 /**
@@ -25,17 +25,17 @@ class UsersPassword extends Bass
 
     /**
      * @param int $userId
-     * @param UserPasswordEntity $registerUserPasswordEntity
+     * @param RegisterUserEntity $registerUserEntity
      */
-    public function registerPassword(int $userId, UserPasswordEntity $registerUserPasswordEntity)
+    public function registerPassword(int $userId, RegisterUserEntity $registerUserEntity)
     {
         $this->db->table('users_password')
             ->insert(
                 [
                     'user_id'    => $userId,
-                    'password'   => $registerUserPasswordEntity->getPassword(),
-                    'created_at' => $registerUserPasswordEntity->getCreatedAt(),
-                    'updated_at' => $registerUserPasswordEntity->getUpdatedAt(),
+                    'password'   => $registerUserEntity->getPassword(),
+                    'created_at' => $registerUserEntity->getCreatedAt(),
+                    'updated_at' => $registerUserEntity->getUpdatedAt(),
                 ]
             );
     }

@@ -110,14 +110,11 @@ class ManualRepository implements ManualRepositoryInterface
      */
     public function registerUser(array $oldRequest): int
     {
-        $userRecord         = (object) $oldRequest;
-        $registerUserEntity = $this->registerUserFactory->createUser($userRecord);
+        $registerUserEntity = $this->userFactory->createRegisterUser((object) $oldRequest);
         $userId             = $this->users->registerUser($registerUserEntity);
         $this->usersStatus->registerActive($userId, $registerUserEntity);
-        $registerUserPasswordEntity = $this->registerUserFactory->createPassword($userId, $userRecord);
-        $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
-        $registerUserNickNameEntity = $this->registerUserFactory->createNickName($userId, $userRecord);
-        $this->userNickName->registerNickName($userId, $registerUserNickNameEntity);
+        $this->usersPassword->registerPassword($userId, $registerUserEntity);
+        $this->userNickName->registerNickName($userId, $registerUserEntity);
 
         return $userId;
     }
