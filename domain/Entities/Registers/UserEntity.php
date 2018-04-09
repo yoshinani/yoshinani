@@ -28,7 +28,6 @@ class UserEntity implements Arrayable
     {
         $this->user      = new UserValueObject($userRecord);
         $this->nickname  = new NickNameValueObject($userRecord);
-        $this->password  = new PasswordValueObject($userRecord);
         $this->timeStamp = new TimeStampValueObject();
     }
 
@@ -38,6 +37,14 @@ class UserEntity implements Arrayable
     public function setId($userId)
     {
         $this->id = $userId;
+    }
+
+    /**
+     * @param $userRecord
+     */
+    public function setPassword($userRecord)
+    {
+        $this->password = new PasswordValueObject($userRecord);
     }
 
     /**
