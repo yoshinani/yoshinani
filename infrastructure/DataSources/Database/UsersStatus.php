@@ -9,12 +9,12 @@ use Domain\Entities\Registers\UserEntity;
  */
 class UsersStatus extends Bass
 {
-    public function registerActive(int $userId, UserEntity $registerUserEntity)
+    public function registerActive(UserEntity $registerUserEntity)
     {
         $this->db->table('users_status')
             ->insert(
                 [
-                    'user_id'    => $userId,
+                    'user_id'    => $registerUserEntity->getId(),
                     'active'     => $registerUserEntity->getActive(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),

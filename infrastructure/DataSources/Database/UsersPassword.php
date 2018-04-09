@@ -24,15 +24,14 @@ class UsersPassword extends Bass
     }
 
     /**
-     * @param int $userId
      * @param RegisterUserEntity $registerUserEntity
      */
-    public function registerPassword(int $userId, RegisterUserEntity $registerUserEntity)
+    public function registerPassword(RegisterUserEntity $registerUserEntity)
     {
         $this->db->table('users_password')
             ->insert(
                 [
-                    'user_id'    => $userId,
+                    'user_id'    => $registerUserEntity->getId(),
                     'password'   => $registerUserEntity->getPassword(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),

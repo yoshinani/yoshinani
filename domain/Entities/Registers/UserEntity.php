@@ -14,6 +14,7 @@ use stdClass;
  */
 class UserEntity implements Arrayable
 {
+    private $id;
     private $user;
     private $nickname;
     private $password;
@@ -32,6 +33,14 @@ class UserEntity implements Arrayable
     }
 
     /**
+     * @param $userId
+     */
+    public function setId($userId)
+    {
+        $this->id = $userId;
+    }
+
+    /**
      * Get the instance as an array.
      *
      * @return array
@@ -39,6 +48,7 @@ class UserEntity implements Arrayable
     public function toArray(): array
     {
         return [
+            'id'         => $this->getId(),
             'email'      => $this->getEmail(),
             'name'       => $this->getName(),
             'nickname'   => $this->getNickName(),
@@ -47,6 +57,14 @@ class UserEntity implements Arrayable
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

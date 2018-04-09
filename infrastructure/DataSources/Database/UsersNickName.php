@@ -24,15 +24,14 @@ class UsersNickName extends Bass
     }
 
     /**
-     * @param int $userId
      * @param RegisterUserEntity $registerUserEntity
      */
-    public function registerNickName(int $userId, RegisterUserEntity $registerUserEntity)
+    public function registerNickName(RegisterUserEntity $registerUserEntity)
     {
         $this->db->table('users_nickname')
             ->insert(
                 [
-                    'user_id'    => $userId,
+                    'user_id'    => $registerUserEntity->getId(),
                     'nickname'   => $registerUserEntity->getNickName(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),
