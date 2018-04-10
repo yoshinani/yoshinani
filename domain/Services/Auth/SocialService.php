@@ -43,7 +43,7 @@ class SocialService
      */
     public function socialLogin(string $driverName, SocialUser $socialUser): bool
     {
-        $userEntity              = $this->socialRegisterUser($driverName, $socialUser);
+        $userEntity              = $this->socialRegisterUser($socialUser);
         $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
         $userDetailEntity        = $this->manualRepository->getUserDetail($userEntity->getId());
 
@@ -51,12 +51,11 @@ class SocialService
     }
 
     /**
-     * @param string $driverName
      * @param SocialUser $socialUser
      * @return UserEntity
      * @throws Exception
      */
-    protected function socialRegisterUser(string $driverName, SocialUser $socialUser): UserEntity
+    protected function socialRegisterUser(SocialUser $socialUser): UserEntity
     {
         $email      = $socialUser->getEmail();
         $userEntity = $this->manualRepository->findUser($email);
