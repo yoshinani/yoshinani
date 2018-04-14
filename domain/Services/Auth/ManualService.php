@@ -4,6 +4,7 @@ namespace Domain\Services\Auth;
 use Domain\Specification\ManualLoginSpecification;
 use Exception;
 use Domain\Entities\UserEntity;
+use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\UserDetailEntity;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
@@ -31,14 +32,13 @@ class ManualService
 
     /**
      * @param array $oldRequest
-     * @return UserEntity
+     * @return RegisterUserEntity
      */
-    public function registerUser(array $oldRequest): UserEntity
+    public function registerUser(array $oldRequest): RegisterUserEntity
     {
         $userEntity = $this->manualRepository->findUser($oldRequest['email']);
         if (is_null($userEntity)) {
-            $this->manualRepository->registerUser($oldRequest);
-            $userEntity = $this->manualRepository->findUser($oldRequest['email']);
+            $userEntity = $this->manualRepository->registerUser($oldRequest);
         }
 
         return $userEntity;

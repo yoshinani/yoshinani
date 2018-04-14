@@ -3,6 +3,7 @@ namespace Infrastructure\Interfaces\Auth;
 
 use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
+use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\UserPasswordEntity;
 
 /**
@@ -37,7 +38,7 @@ interface ManualRepositoryInterface
 
     /**
      * @param array $oldRequest
-     * @return int
+     * @return RegisterUserEntity
      */
-    public function registerUser(array $oldRequest): int;
+    public function registerUser(array $oldRequest): RegisterUserEntity;
 }

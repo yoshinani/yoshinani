@@ -2,6 +2,7 @@
 namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\UserEntity;
+use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserPasswordEntity;
 use Infrastructure\Factories\UserFactory;
@@ -108,7 +109,7 @@ class ManualRepository implements ManualRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(array $oldRequest): int
+    public function registerUser(array $oldRequest): RegisterUserEntity
     {
         $registerUserEntity = $this->userFactory->createRegisterUser((object) $oldRequest);
         $userId             = $this->users->registerUser($registerUserEntity);
@@ -118,6 +119,6 @@ class ManualRepository implements ManualRepositoryInterface
         $this->usersPassword->registerPassword($registerUserEntity);
         $this->userNickName->registerNickName($registerUserEntity);
 
-        return $userId;
+        return $registerUserEntity;
     }
 }
