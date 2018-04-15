@@ -5,6 +5,7 @@ use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
 use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\UserPasswordEntity;
+use stdClass;
 
 /**
  * Interface ManualRepositoryInterface
@@ -13,28 +14,16 @@ use Domain\Entities\UserPasswordEntity;
 interface ManualRepositoryInterface
 {
     /**
+     * @param int $userId
+     * @return stdClass|null
+     */
+    public function getUserPassword(int $userId): ?stdClass;
+
+    /**
      * @param string $email
-     * @return UserEntity|null
+     * @return RegisterUserEntity|null
      */
-    public function findUser(string $email): ?UserEntity;
-
-    /**
-     * @param int $userId
-     * @return UserPasswordEntity|null
-     */
-    public function getUserPassword(int $userId): ?UserPasswordEntity;
-
-    /**
-     * @param array $oldRequest
-     * @return int|null
-     */
-    public function getUserId(array $oldRequest): ?int;
-
-    /**
-     * @param int $userId
-     * @return UserDetailEntity|null
-     */
-    public function getUserDetail(int $userId): ?UserDetailEntity;
+    public function getUser(string $email): ?RegisterUserEntity;
 
     /**
      * @param array $oldRequest

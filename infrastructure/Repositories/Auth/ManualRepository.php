@@ -12,6 +12,7 @@ use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
+use stdClass;
 
 /**
  * Class ManualRepository
@@ -54,56 +55,28 @@ class ManualRepository implements ManualRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function findUser(string $email): ?UserEntity
-    {
-        $result = $this->users->findUser($email);
-        if (is_null($result)) {
-            return null;
-        }
-        $userRecord = (object) $result;
-
-        return $this->userFactory->createUser($userRecord);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserPassword(int $userId): ?UserPasswordEntity
+    public function getUserPassword(int $userId): ?stdClass
     {
         $result = $this->usersPassword->getUserPassword($userId);
         if (is_null($result)) {
             return null;
         }
-        $userPasswordRecord = (object) $result;
 
-        return $this->userFactory->createUserPassword($userId, $userPasswordRecord);
+        return (object) $result;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getUserId(array $oldRequest): ?int
+    public function getUser(string $email): ?RegisterUserEntity
     {
-        $result = $this->users->getUserId($oldRequest['email']);
-        if (is_null($result)) {
-            return null;
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserDetail(int $userId): ?UserDetailEntity
-    {
-        $result = $this->users->getUserDetail($userId);
+        $result = $this->users->getUser($email);
         if (is_null($result)) {
             return null;
         }
         $userDetail = (object) $result;
 
-        return $this->userFactory->createUserDetail($userDetail);
+        return $this->userFactory->createRegisterUser($userDetail);
     }
 
     /**
