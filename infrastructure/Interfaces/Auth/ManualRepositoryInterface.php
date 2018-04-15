@@ -1,10 +1,7 @@
 <?php
 namespace Infrastructure\Interfaces\Auth;
 
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserEntity;
 use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
-use Domain\Entities\UserPasswordEntity;
 use stdClass;
 
 /**

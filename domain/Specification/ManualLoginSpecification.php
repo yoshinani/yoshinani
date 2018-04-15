@@ -2,7 +2,6 @@
 namespace Domain\Specification;
 
 use Auth;
-use Domain\Entities\UserDetailEntity;
 use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 
 class ManualLoginSpecification

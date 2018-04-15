@@ -1,10 +1,7 @@
 <?php
 namespace Infrastructure\Repositories\Auth;
 
-use Domain\Entities\UserEntity;
 use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserPasswordEntity;
 use Infrastructure\Factories\UserFactory;
 use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;

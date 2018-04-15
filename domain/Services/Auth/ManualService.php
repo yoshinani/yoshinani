@@ -2,10 +2,7 @@
 namespace Domain\Services\Auth;
 
 use Domain\Specification\ManualLoginSpecification;
-use Exception;
-use Domain\Entities\UserEntity;
 use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
-use Domain\Entities\UserDetailEntity;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
@@ -39,7 +36,7 @@ class ManualService
         $userEntity = $this->manualRepository->getUser($oldRequest['email']);
         if (is_null($userEntity)) {
             $userEntity = $this->manualRepository->registerUser($oldRequest);
-            $password = $this->manualRepository->getUserPassword($userEntity->getId());
+            $password   = $this->manualRepository->getUserPassword($userEntity->getId());
             $userEntity->setPassword($password);
         }
 
