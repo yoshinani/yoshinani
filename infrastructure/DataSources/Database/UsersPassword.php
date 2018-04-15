@@ -32,7 +32,7 @@ class UsersPassword extends Bass
             ->insert(
                 [
                     'user_id'    => $registerUserEntity->getId(),
-                    'password'   => $registerUserEntity->getPassword(),
+                    'password'   => $registerUserEntity->createPassword(),
                     'created_at' => $registerUserEntity->getCreatedAt(),
                     'updated_at' => $registerUserEntity->getUpdatedAt(),
                 ]

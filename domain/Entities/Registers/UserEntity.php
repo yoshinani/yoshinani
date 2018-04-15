@@ -101,9 +101,17 @@ class UserEntity implements Arrayable
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function createPassword(): string
     {
         return $this->password->getEncryption();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password->getDecryption();
     }
 
     /**
