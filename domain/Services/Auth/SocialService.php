@@ -4,6 +4,7 @@ namespace Domain\Services\Auth;
 use Exception;
 use Domain\Specification\SocialLoginSpecification;
 use Domain\Entities\UserEntity;
+use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\SocialUserAccountEntity;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
@@ -44,25 +45,23 @@ class SocialService
     public function socialLogin(string $driverName, SocialUser $socialUser): bool
     {
         $userEntity              = $this->socialRegisterUser($socialUser);
-        $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser);
-        $userDetailEntity        = $this->manualRepository->getUserDetail($userEntity->getId());
+        $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser, $userEntity);
 
-        return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userDetailEntity);
+        return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userEntity);
     }
 
     /**
      * @param SocialUser $socialUser
-     * @return UserEntity
+     * @return RegisterUserEntity
      * @throws Exception
      */
-    protected function socialRegisterUser(SocialUser $socialUser): UserEntity
+    protected function socialRegisterUser(SocialUser $socialUser): RegisterUserEntity
     {
         $email      = $socialUser->getEmail();
-        $userEntity = $this->manualRepository->findUser($email);
+        $userEntity = $this->manualRepository->getUser($email);
         if (is_null($userEntity)) {
             $this->socialLoginSpecification->isRequiredInfo($socialUser);
-            $this->socialRepository->registerUser($socialUser);
-            $userEntity = $this->manualRepository->findUser($email);
+            $userEntity = $this->socialRepository->registerUser($socialUser);
         }
 
         return $userEntity;
@@ -71,16 +70,15 @@ class SocialService
     /**
      * @param string $driverName
      * @param SocialUser $socialUser
+     * @param RegisterUserEntity $userEntity
      * @return SocialUserAccountEntity
      */
-    protected function synchronizeSocialAccount(string $driverName, SocialUser $socialUser): SocialUserAccountEntity
+    protected function synchronizeSocialAccount(string $driverName, SocialUser $socialUser, RegisterUserEntity $userEntity): SocialUserAccountEntity
     {
-        $userId                  = $this->socialRepository->getUserId($socialUser);
-        $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $driverName, $socialUser);
+        $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
         if (is_null($socialUserAccountEntity)) {
-            $userId = $this->socialRepository->getUserId($socialUser);
-            $this->socialRepository->synchronizeSocialAccount($userId, $driverName, $socialUser);
-            $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userId, $driverName, $socialUser);
+            $this->socialRepository->synchronizeSocialAccount($userEntity->getId(), $driverName, $socialUser);
+            $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
         }
 
         return $socialUserAccountEntity;
