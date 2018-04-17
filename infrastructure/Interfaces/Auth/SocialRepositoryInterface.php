@@ -13,12 +13,6 @@ interface SocialRepositoryInterface
 {
     /**
      * @param SocialUser $socialUser
-     * @return int|null
-     */
-    public function getUserId(SocialUser $socialUser): ?int;
-
-    /**
-     * @param SocialUser $socialUser
      * @return RegisterUserEntity
      */
     public function registerUser(SocialUser $socialUser): RegisterUserEntity;

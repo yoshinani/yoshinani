@@ -49,15 +49,7 @@ class SocialRepository implements SocialRepositoryInterface
         $this->userFactory         = $userFactory;
         $this->registerUserFactory = $registerUserFactory;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserId(SocialUser $socialUser): ?int
-    {
-        return $this->users->getUserId($socialUser->getEmail());
-    }
-
+    
     /**
      * {@inheritdoc}
      */
