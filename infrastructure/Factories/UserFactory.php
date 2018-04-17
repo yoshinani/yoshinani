@@ -16,7 +16,16 @@ class UserFactory
      */
     public function createRegisterUser(stdClass $userRecord): RegisterUserEntity
     {
-        return new RegisterUserEntity($userRecord);
+        $userEntity = new RegisterUserEntity($userRecord);
+
+        if (property_exists($userRecord, 'id')) {
+            $userEntity->setId($userRecord->id);
+        }
+        if (property_exists($userRecord, 'password')) {
+            $userEntity->setPassword($userRecord);
+        }
+
+        return $userEntity;
     }
 
     /**
