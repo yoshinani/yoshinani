@@ -11,7 +11,7 @@ class UserFactory
      * @param stdClass $userRecord
      * @return UserEntity
      */
-    public function createRegisterUser(stdClass $userRecord): UserEntity
+    public function createUser(stdClass $userRecord): UserEntity
     {
         $userEntity = new UserEntity($userRecord);
 
@@ -23,15 +23,6 @@ class UserFactory
         }
 
         return $userEntity;
-    }
-
-    /**
-     * @param stdClass $userRecord
-     * @return UserEntity
-     */
-    public function createUser(stdClass $userRecord)
-    {
-        return new UserEntity($userRecord);
     }
 
     /**

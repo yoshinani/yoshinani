@@ -56,7 +56,7 @@ class SocialRepository implements SocialRepositoryInterface
     public function registerUser(SocialUser $socialUser): UserEntity
     {
         $userRecord = json_decode(json_encode($socialUser));
-        $userEntity = $this->userFactory->createRegisterUser($userRecord);
+        $userEntity = $this->userFactory->createUser($userRecord);
         $userId     = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
         $this->usersNickName->registerNickName($userEntity);

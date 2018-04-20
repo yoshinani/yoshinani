@@ -73,7 +73,7 @@ class ManualRepository implements ManualRepositoryInterface
         }
         $userDetail = (object) $result;
 
-        return $this->userFactory->createRegisterUser($userDetail);
+        return $this->userFactory->createUser($userDetail);
     }
 
     /**
@@ -81,7 +81,7 @@ class ManualRepository implements ManualRepositoryInterface
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity = $this->userFactory->createRegisterUser((object) $oldRequest);
+        $userEntity = $this->userFactory->createUser((object) $oldRequest);
         $userId             = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
         $userEntity->setPassword((object) $oldRequest);
