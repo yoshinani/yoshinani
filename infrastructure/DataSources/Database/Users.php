@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\Registers\UserEntity;
+use Domain\Entities\UserEntity;
 use stdClass;
 
 /**

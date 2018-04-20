@@ -4,7 +4,6 @@ namespace Domain\Services\Auth;
 use Exception;
 use Domain\Specification\SocialLoginSpecification;
 use Domain\Entities\UserEntity;
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
 use Domain\Entities\SocialUserAccountEntity;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
@@ -52,10 +51,10 @@ class SocialService
 
     /**
      * @param SocialUser $socialUser
-     * @return RegisterUserEntity
+     * @return UserEntity
      * @throws Exception
      */
-    protected function socialRegisterUser(SocialUser $socialUser): RegisterUserEntity
+    protected function socialRegisterUser(SocialUser $socialUser): UserEntity
     {
         $email      = $socialUser->getEmail();
         $userEntity = $this->manualRepository->getUser($email);
@@ -70,10 +69,10 @@ class SocialService
     /**
      * @param string $driverName
      * @param SocialUser $socialUser
-     * @param RegisterUserEntity $userEntity
+     * @param UserEntity $userEntity
      * @return SocialUserAccountEntity
      */
-    protected function synchronizeSocialAccount(string $driverName, SocialUser $socialUser, RegisterUserEntity $userEntity): SocialUserAccountEntity
+    protected function synchronizeSocialAccount(string $driverName, SocialUser $socialUser, UserEntity $userEntity): SocialUserAccountEntity
     {
         $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
         if (is_null($socialUserAccountEntity)) {

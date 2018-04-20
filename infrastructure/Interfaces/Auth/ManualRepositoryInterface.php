@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\Interfaces\Auth;
 
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
+use Domain\Entities\UserEntity;
 use stdClass;
 
 /**
@@ -18,13 +18,13 @@ interface ManualRepositoryInterface
 
     /**
      * @param string $email
-     * @return RegisterUserEntity|null
+     * @return UserEntity|null
      */
-    public function getUser(string $email): ?RegisterUserEntity;
+    public function getUser(string $email): ?UserEntity;
 
     /**
      * @param array $oldRequest
-     * @return RegisterUserEntity
+     * @return UserEntity
      */
-    public function registerUser(array $oldRequest): RegisterUserEntity;
+    public function registerUser(array $oldRequest): UserEntity;
 }

@@ -4,8 +4,7 @@ namespace Domain\Specification;
 use Auth;
 use Exception;
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
-use Domain\Entities\UserDetailEntity;
+use Domain\Entities\UserEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialLoginSpecification
@@ -29,14 +28,14 @@ class SocialLoginSpecification
      * @param string $driverName
      * @param SocialUser $socialUser
      * @param SocialUserAccountEntity $socialUserAccountEntity
-     * @param RegisterUserEntity $userEntity
+     * @param UserEntity $userEntity
      * @return bool
      */
     public function isCondition(
         string $driverName,
         SocialUser $socialUser,
         SocialUserAccountEntity $socialUserAccountEntity,
-        RegisterUserEntity $userEntity
+        UserEntity $userEntity
     ): bool {
         if ($socialUserAccountEntity->getDriverName() != $driverName) {
             \Log::info("\n【ERROR】Authentication drivers do not match\n"

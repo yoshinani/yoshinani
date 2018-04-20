@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\Repositories\Auth;
 
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
+use Domain\Entities\UserEntity;
 use Infrastructure\Factories\UserFactory;
 use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;
@@ -65,7 +65,7 @@ class ManualRepository implements ManualRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getUser(string $email): ?RegisterUserEntity
+    public function getUser(string $email): ?UserEntity
     {
         $result = $this->users->getUser($email);
         if (is_null($result)) {
@@ -79,16 +79,16 @@ class ManualRepository implements ManualRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(array $oldRequest): RegisterUserEntity
+    public function registerUser(array $oldRequest): UserEntity
     {
-        $registerUserEntity = $this->userFactory->createRegisterUser((object) $oldRequest);
-        $userId             = $this->users->registerUser($registerUserEntity);
-        $registerUserEntity->setId($userId);
-        $registerUserEntity->setPassword((object) $oldRequest);
-        $this->usersStatus->registerActive($registerUserEntity);
-        $this->usersPassword->registerPassword($registerUserEntity);
-        $this->userNickName->registerNickName($registerUserEntity);
+        $userEntity = $this->userFactory->createRegisterUser((object) $oldRequest);
+        $userId             = $this->users->registerUser($userEntity);
+        $userEntity->setId($userId);
+        $userEntity->setPassword((object) $oldRequest);
+        $this->usersStatus->registerActive($userEntity);
+        $this->usersPassword->registerPassword($userEntity);
+        $this->userNickName->registerNickName($userEntity);
 
-        return $registerUserEntity;
+        return $userEntity;
     }
 }

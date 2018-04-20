@@ -3,20 +3,17 @@ namespace Infrastructure\Factories;
 
 use stdClass;
 use Domain\Entities\UserEntity;
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserPasswordEntity;
 use Domain\Entities\SocialUserAccountEntity;
 
 class UserFactory
 {
     /**
      * @param stdClass $userRecord
-     * @return RegisterUserEntity
+     * @return UserEntity
      */
-    public function createRegisterUser(stdClass $userRecord): RegisterUserEntity
+    public function createRegisterUser(stdClass $userRecord): UserEntity
     {
-        $userEntity = new RegisterUserEntity($userRecord);
+        $userEntity = new UserEntity($userRecord);
 
         if (property_exists($userRecord, 'id')) {
             $userEntity->setId($userRecord->id);
@@ -35,25 +32,6 @@ class UserFactory
     public function createUser(stdClass $userRecord)
     {
         return new UserEntity($userRecord);
-    }
-
-    /**
-     * @param stdClass $userDetail
-     * @return UserDetailEntity
-     */
-    public function createUserDetail(stdClass $userDetail): UserDetailEntity
-    {
-        return new UserDetailEntity($userDetail);
-    }
-
-    /**
-     * @param int $userId
-     * @param stdClass $userPasswordRecord
-     * @return UserPasswordEntity
-     */
-    public function createUserPassword(int $userId, stdClass $userPasswordRecord): UserPasswordEntity
-    {
-        return new UserPasswordEntity($userId, $userPasswordRecord);
     }
 
     /**

@@ -2,18 +2,18 @@
 namespace Domain\Specification;
 
 use Auth;
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
+use Domain\Entities\UserEntity;
 
 class ManualLoginSpecification
 {
     /**
      * @param array $oldRequest
-     * @param RegisterUserEntity $userEntity
+     * @param UserEntity $userEntity
      * @return bool
      */
     public function isCondition(
         array $oldRequest,
-        RegisterUserEntity $userEntity
+        UserEntity $userEntity
     ): bool {
         if ($oldRequest['email'] !== $userEntity->getEmail()) {
             \Log::info("\n【ERROR】Email does not match\n"

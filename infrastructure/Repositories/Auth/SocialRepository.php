@@ -2,7 +2,7 @@
 namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\Registers\UserEntity as RegisterUserEntity;
+use Domain\Entities\UserEntity;
 use Infrastructure\Factories\UserFactory;
 use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;
@@ -53,16 +53,16 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function registerUser(SocialUser $socialUser): RegisterUserEntity
+    public function registerUser(SocialUser $socialUser): UserEntity
     {
-        $userRecord                 = json_decode(json_encode($socialUser));
-        $registerUserEntity         = $this->userFactory->createRegisterUser($userRecord);
-        $userId                     = $this->users->registerUser($registerUserEntity);
-        $registerUserEntity->setId($userId);
-        $this->usersNickName->registerNickName($registerUserEntity);
-        $this->usersStatus->registerActive($registerUserEntity);
+        $userRecord = json_decode(json_encode($socialUser));
+        $userEntity = $this->userFactory->createRegisterUser($userRecord);
+        $userId     = $this->users->registerUser($userEntity);
+        $userEntity->setId($userId);
+        $this->usersNickName->registerNickName($userEntity);
+        $this->usersStatus->registerActive($userEntity);
 
-        return $registerUserEntity;
+        return $userEntity;
     }
 
     /**
