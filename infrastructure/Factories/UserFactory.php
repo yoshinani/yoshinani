@@ -3,7 +3,9 @@ namespace Infrastructure\Factories;
 
 use stdClass;
 use Domain\Entities\UserEntity;
+use Domain\Entities\Registers\SocialUserEntity;
 use Domain\Entities\SocialUserAccountEntity;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class UserFactory
 {
@@ -23,6 +25,17 @@ class UserFactory
         }
 
         return $userEntity;
+    }
+
+    /**
+     * @param int $userId
+     * @param string $driverName
+     * @param SocialUser $socialUser
+     * @return SocialUserEntity
+     */
+    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): SocialUserEntity
+    {
+        return new SocialUserEntity($userId, $driverName, $socialUser);
     }
 
     /**
