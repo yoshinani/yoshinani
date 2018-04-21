@@ -3,7 +3,6 @@ namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\UserEntity;
 use Infrastructure\Factories\UserFactory;
-use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
@@ -22,7 +21,6 @@ class ManualRepository implements ManualRepositoryInterface
     private $userNickName;
     private $usersPassword;
     private $userFactory;
-    private $registerUserFactory;
 
     /**
      * ManualRepository constructor.
@@ -31,22 +29,19 @@ class ManualRepository implements ManualRepositoryInterface
      * @param UsersNickName $userNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
-     * @param RegisterUserFactory $registerUserFactory
      */
     public function __construct(
         Users               $users,
         UsersStatus         $usersStatus,
         UsersNickName       $userNickName,
         UsersPassword       $usersPassword,
-        UserFactory         $userFactory,
-        RegisterUserFactory $registerUserFactory
+        UserFactory         $userFactory
     ) {
         $this->users               = $users;
         $this->usersStatus         = $usersStatus;
         $this->userNickName        = $userNickName;
         $this->usersPassword       = $usersPassword;
         $this->userFactory         = $userFactory;
-        $this->registerUserFactory = $registerUserFactory;
     }
 
     /**
