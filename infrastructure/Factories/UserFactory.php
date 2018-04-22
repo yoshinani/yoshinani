@@ -3,7 +3,7 @@ namespace Infrastructure\Factories;
 
 use stdClass;
 use Domain\Entities\UserEntity;
-use Domain\Entities\Registers\SocialUserEntity;
+use Domain\Entities\SocialUserEntity;
 use Domain\Entities\SocialUserAccountEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
