@@ -12,53 +12,111 @@ class UserEntityTest extends TestCase
     {
         parent::setUp();
         $userRecord = (object) [
-            'id'    => 1,
-            'name'  => 'testName',
-            'email' => 'test@test.test',
+            'id'       => 1,
+            'email'    => 'test@test.test',
+            'name'     => 'testName',
+            'nickname' => 'testNickName',
+            'password' => encrypt('password'),
+            'active'   => 1
         ];
         $this->user = new UserEntity($userRecord);
+        $this->user->setId(1);
+        $this->user->setPassword($userRecord);
     }
 
     /**
-     * Array key matches
-     * 配列のキーが一致します。
      * @test
      */
-    public function toArrayMatch()
+    public function toArray()
     {
         $this->assertArrayHasKey('id', $this->user->toArray());
-        $this->assertArrayHasKey('name', $this->user->toArray());
         $this->assertArrayHasKey('email', $this->user->toArray());
-        $this->assertCount(3, $this->user->toArray());
+        $this->assertArrayHasKey('name', $this->user->toArray());
+        $this->assertArrayHasKey('nickname', $this->user->toArray());
+        $this->assertArrayHasKey('password', $this->user->toArray());
+        $this->assertArrayHasKey('active', $this->user->toArray());
+        $this->assertArrayHasKey('created_at', $this->user->toArray());
+        $this->assertArrayHasKey('updated_at', $this->user->toArray());
+        $this->assertCount(8, $this->user->toArray());
     }
 
     /**
-     * Matches the acquired id.
-     * 取得したidと一致します。
      * @test
      */
-    public function getUserIdMatch()
+    public function getId()
     {
         $this->assertEquals($this->user->getId(), 1);
     }
 
     /**
-     * Matches the acquired name.
-     * 取得した名前と一致します。
      * @test
      */
-    public function getNameMatch()
+    public function getEmail()
+    {
+        $this->assertEquals($this->user->getEmail(), 'test@test.test');
+    }
+
+    /**
+     * @test
+     */
+    public function getUserName()
     {
         $this->assertEquals($this->user->getName(), 'testName');
     }
 
     /**
-     * Matches the acquired email.
-     * 取得した電子メールに一致します。
      * @test
      */
-    public function getEmailMatch()
+    public function getNickName()
     {
-        $this->assertEquals($this->user->getEmail(), 'test@test.test');
+        $this->assertEquals($this->user->getNickName(), 'testNickName');
+    }
+
+    /**
+     * @test
+     */
+    public function createPassword()
+    {
+        $userRequest = (object) [
+            'email'    => 'test@test.test',
+            'name'     => 'testName',
+            'nickname' => 'testNickName',
+            'password' => 'password'
+        ];
+        $userEntity = new UserEntity($userRequest);
+        $userEntity->setPassword($userRequest);
+        $this->assertInternalType('string', $this->user->createPassword());
+    }
+
+    /**
+     * @test
+     */
+    public function getPassword()
+    {
+        $this->assertEquals($this->user->getPassword(), 'password');
+    }
+
+    /**
+     * @test
+     */
+    public function getActive()
+    {
+        $this->assertEquals($this->user->getActive(), 1);
+    }
+
+    /**
+     * @test
+     */
+    public function getCreatedAt()
+    {
+        $this->assertEquals($this->user->getCreatedAt(), date('Y-m-d H:i:s'));
+    }
+
+    /**
+     * @test
+     */
+    public function getUpdatedAt()
+    {
+        $this->assertEquals($this->user->getUpdatedAt(), date('Y-m-d H:i:s'));
     }
 }
