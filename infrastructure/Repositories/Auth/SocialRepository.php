@@ -44,7 +44,7 @@ class SocialRepository implements SocialRepositoryInterface
         $this->usersStatus         = $usersStatus;
         $this->userFactory         = $userFactory;
     }
-    
+
     /**
      * {@inheritdoc}
      */

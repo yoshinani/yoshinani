@@ -76,7 +76,7 @@ class ManualRepository implements ManualRepositoryInterface
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity = $this->userFactory->createUser((object) $oldRequest);
+        $userEntity         = $this->userFactory->createUser((object) $oldRequest);
         $userId             = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
         $userEntity->setPassword((object) $oldRequest);
