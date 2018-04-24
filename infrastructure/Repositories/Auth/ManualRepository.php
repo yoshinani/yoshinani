@@ -2,15 +2,13 @@
 namespace Infrastructure\Repositories\Auth;
 
 use Domain\Entities\UserEntity;
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserPasswordEntity;
 use Infrastructure\Factories\UserFactory;
-use Infrastructure\Factories\RegisterUserFactory;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
+use stdClass;
 
 /**
  * Class ManualRepository
@@ -23,7 +21,6 @@ class ManualRepository implements ManualRepositoryInterface
     private $userNickName;
     private $usersPassword;
     private $userFactory;
-    private $registerUserFactory;
 
     /**
      * ManualRepository constructor.
@@ -32,93 +29,61 @@ class ManualRepository implements ManualRepositoryInterface
      * @param UsersNickName $userNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
-     * @param RegisterUserFactory $registerUserFactory
      */
     public function __construct(
         Users               $users,
         UsersStatus         $usersStatus,
         UsersNickName       $userNickName,
         UsersPassword       $usersPassword,
-        UserFactory         $userFactory,
-        RegisterUserFactory $registerUserFactory
+        UserFactory         $userFactory
     ) {
         $this->users               = $users;
         $this->usersStatus         = $usersStatus;
         $this->userNickName        = $userNickName;
         $this->usersPassword       = $usersPassword;
         $this->userFactory         = $userFactory;
-        $this->registerUserFactory = $registerUserFactory;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findUser(string $email): ?UserEntity
-    {
-        $result = $this->users->findUser($email);
-        if (is_null($result)) {
-            return null;
-        }
-        $userRecord = (object) $result;
-
-        return $this->userFactory->createUser($userRecord);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserPassword(int $userId): ?UserPasswordEntity
+    public function getUserPassword(int $userId): ?stdClass
     {
         $result = $this->usersPassword->getUserPassword($userId);
         if (is_null($result)) {
             return null;
         }
-        $userPasswordRecord = (object) $result;
 
-        return $this->userFactory->createUserPassword($userId, $userPasswordRecord);
+        return (object) $result;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getUserId(array $oldRequest): ?int
+    public function getUser(string $email): ?UserEntity
     {
-        $result = $this->users->getUserId($oldRequest['email']);
-        if (is_null($result)) {
-            return null;
-        }
-
-        return $result;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserDetail(int $userId): ?UserDetailEntity
-    {
-        $result = $this->users->getUserDetail($userId);
+        $result = $this->users->getUser($email);
         if (is_null($result)) {
             return null;
         }
         $userDetail = (object) $result;
 
-        return $this->userFactory->createUserDetail($userDetail);
+        return $this->userFactory->createUser($userDetail);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function registerUser(array $oldRequest): int
+    public function registerUser(array $oldRequest): UserEntity
     {
-        $userRecord         = (object) $oldRequest;
-        $registerUserEntity = $this->registerUserFactory->createUser($userRecord);
-        $userId             = $this->users->registerUser($registerUserEntity);
-        $this->usersStatus->registerActive($userId, $registerUserEntity);
-        $registerUserPasswordEntity = $this->registerUserFactory->createPassword($userId, $userRecord);
-        $this->usersPassword->registerPassword($userId, $registerUserPasswordEntity);
-        $registerUserNickNameEntity = $this->registerUserFactory->createNickName($userId, $userRecord);
-        $this->userNickName->registerNickName($userId, $registerUserNickNameEntity);
+        $userEntity         = $this->userFactory->createUser((object) $oldRequest);
+        $userId             = $this->users->registerUser($userEntity);
+        $userEntity->setId($userId);
+        $userEntity->setPassword((object) $oldRequest);
+        $this->usersStatus->registerActive($userEntity);
+        $this->usersPassword->registerPassword($userEntity);
+        $this->userNickName->registerNickName($userEntity);
 
-        return $userId;
+        return $userEntity;
     }
 }

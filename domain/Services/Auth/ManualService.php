@@ -2,9 +2,7 @@
 namespace Domain\Services\Auth;
 
 use Domain\Specification\ManualLoginSpecification;
-use Exception;
 use Domain\Entities\UserEntity;
-use Domain\Entities\UserDetailEntity;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
@@ -35,10 +33,11 @@ class ManualService
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity = $this->manualRepository->findUser($oldRequest['email']);
+        $userEntity = $this->manualRepository->getUser($oldRequest['email']);
         if (is_null($userEntity)) {
-            $this->manualRepository->registerUser($oldRequest);
-            $userEntity = $this->manualRepository->findUser($oldRequest['email']);
+            $userEntity = $this->manualRepository->registerUser($oldRequest);
+            $password   = $this->manualRepository->getUserPassword($userEntity->getId());
+            $userEntity->setPassword($password);
         }
 
         return $userEntity;
@@ -46,28 +45,11 @@ class ManualService
 
     /**
      * @param array $oldRequest
-     * @return UserDetailEntity
-     * @throws Exception
-     */
-    public function getUserDetail(array $oldRequest): UserDetailEntity
-    {
-        $userId = $this->manualRepository->getUserId($oldRequest);
-        if (is_null($userId)) {
-            throw new Exception('User does not exist');
-        }
-
-        return $this->manualRepository->getUserDetail($userId);
-    }
-
-    /**
-     * @param array $oldRequest
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @return bool
      */
-    public function login(array $oldRequest, int $userId): bool
+    public function login(array $oldRequest, UserEntity $userEntity): bool
     {
-        $userDetailEntity = $this->manualRepository->getUserDetail($userId);
-
-        return $this->manualLoginSpecification->isCondition($oldRequest, $userDetailEntity);
+        return $this->manualLoginSpecification->isCondition($oldRequest, $userEntity);
     }
 }

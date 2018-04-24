@@ -54,7 +54,7 @@ class ManualController extends Controller
     {
         $oldRequest = $request->old();
         $userEntity = $this->authDomainService->registerUser($oldRequest);
-        $result     = $this->authDomainService->login($oldRequest, $userEntity->getId());
+        $result     = $this->authDomainService->login($oldRequest, $userEntity);
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }
@@ -79,8 +79,8 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userEntity = $this->manualRepository->findUser($oldRequest['email']);
-        $result     = $this->authDomainService->login($oldRequest, $userEntity->getId());
+        $userEntity = $this->manualRepository->getUser($oldRequest['email']);
+        $result     = $this->authDomainService->login($oldRequest, $userEntity);
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }

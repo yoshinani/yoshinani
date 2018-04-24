@@ -1,9 +1,8 @@
 <?php
 namespace Infrastructure\Interfaces\Auth;
 
-use Domain\Entities\UserDetailEntity;
 use Domain\Entities\UserEntity;
-use Domain\Entities\UserPasswordEntity;
+use stdClass;
 
 /**
  * Interface ManualRepositoryInterface
@@ -12,32 +11,20 @@ use Domain\Entities\UserPasswordEntity;
 interface ManualRepositoryInterface
 {
     /**
+     * @param int $userId
+     * @return stdClass|null
+     */
+    public function getUserPassword(int $userId): ?stdClass;
+
+    /**
      * @param string $email
      * @return UserEntity|null
      */
-    public function findUser(string $email): ?UserEntity;
-
-    /**
-     * @param int $userId
-     * @return UserPasswordEntity|null
-     */
-    public function getUserPassword(int $userId): ?UserPasswordEntity;
+    public function getUser(string $email): ?UserEntity;
 
     /**
      * @param array $oldRequest
-     * @return int|null
+     * @return UserEntity
      */
-    public function getUserId(array $oldRequest): ?int;
-
-    /**
-     * @param int $userId
-     * @return UserDetailEntity|null
-     */
-    public function getUserDetail(int $userId): ?UserDetailEntity;
-
-    /**
-     * @param array $oldRequest
-     * @return int
-     */
-    public function registerUser(array $oldRequest): int;
+    public function registerUser(array $oldRequest): UserEntity;
 }

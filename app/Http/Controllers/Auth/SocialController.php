@@ -57,7 +57,7 @@ class SocialController extends Controller
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $userEntity = $this->manualRepository->findUser($socialUser->getEmail());
+        $userEntity = $this->manualRepository->getUser($socialUser->getEmail());
 
         return redirect('/home')->with('message', 'ようこそ ' . $userEntity->getName() . ' さん');
     }

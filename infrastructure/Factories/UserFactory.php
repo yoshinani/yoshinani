@@ -3,9 +3,9 @@ namespace Infrastructure\Factories;
 
 use stdClass;
 use Domain\Entities\UserEntity;
-use Domain\Entities\UserDetailEntity;
-use Domain\Entities\UserPasswordEntity;
+use Domain\Entities\SocialUserEntity;
 use Domain\Entities\SocialUserAccountEntity;
+use Laravel\Socialite\Contracts\User as SocialUser;
 
 class UserFactory
 {
@@ -13,28 +13,29 @@ class UserFactory
      * @param stdClass $userRecord
      * @return UserEntity
      */
-    public function createUser(stdClass $userRecord)
+    public function createUser(stdClass $userRecord): UserEntity
     {
-        return new UserEntity($userRecord);
-    }
+        $userEntity = new UserEntity($userRecord);
 
-    /**
-     * @param stdClass $userDetail
-     * @return UserDetailEntity
-     */
-    public function createUserDetail(stdClass $userDetail): UserDetailEntity
-    {
-        return new UserDetailEntity($userDetail);
+        if (property_exists($userRecord, 'id')) {
+            $userEntity->setId($userRecord->id);
+        }
+        if (property_exists($userRecord, 'password')) {
+            $userEntity->setPassword($userRecord);
+        }
+
+        return $userEntity;
     }
 
     /**
      * @param int $userId
-     * @param stdClass $userPasswordRecord
-     * @return UserPasswordEntity
+     * @param string $driverName
+     * @param SocialUser $socialUser
+     * @return SocialUserEntity
      */
-    public function createUserPassword(int $userId, stdClass $userPasswordRecord): UserPasswordEntity
+    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): SocialUserEntity
     {
-        return new UserPasswordEntity($userId, $userPasswordRecord);
+        return new SocialUserEntity($userId, $driverName, $socialUser);
     }
 
     /**

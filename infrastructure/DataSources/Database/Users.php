@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\Registers\UserEntity;
+use Domain\Entities\UserEntity;
 use stdClass;
 
 /**
@@ -12,22 +12,9 @@ class Users extends Bass
 {
     /**
      * @param string $email
-     * @return \Illuminate\Database\Eloquent\Model|null|static
-     */
-    public function findUser(string $email)
-    {
-        $result = $this->db->table('users')
-            ->where('email', $email)
-            ->first();
-
-        return $result;
-    }
-
-    /**
-     * @param string $email
      * @return int|null
      */
-    public function getUserId(string $email): ?int
+    protected function getUserId(string $email): ?int
     {
         $result = $this->db->table('users')
             ->where('email', $email)
@@ -37,11 +24,12 @@ class Users extends Bass
     }
 
     /**
-     * @param $userId
+     * @param string $email
      * @return null|stdClass
      */
-    public function getUserDetail($userId): ?stdClass
+    public function getUser(string $email): ?stdClass
     {
+        $userId = $this->getUserId($email);
         $result = $this->db->table('users')
             ->join('users_status', 'users_status.user_id', '=', 'users.id')
             ->leftJoin('users_nickname', 'users_nickname.user_id', '=', 'users.id')

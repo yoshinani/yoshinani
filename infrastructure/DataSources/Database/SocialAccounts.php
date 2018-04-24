@@ -1,7 +1,7 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\Registers\SocialUserEntity;
+use Domain\Entities\SocialUserEntity;
 use stdClass;
 
 /**

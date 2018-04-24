@@ -1,5 +1,5 @@
 <?php
-namespace Domain\Entities\Registers;
+namespace Domain\Entities;
 
 use Domain\ValueObjects\SocialUserValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
