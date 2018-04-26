@@ -18,12 +18,12 @@ interface SocialRepositoryInterface
     public function registerUser(SocialUser $socialUser): UserEntity;
 
     /**
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @param string $driverName
      * @param SocialUser $socialUser
      * @return SocialUserAccountEntity|null
      */
-    public function getSocialAccount(int $userId, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity;
+    public function getSocialAccount(UserEntity $userEntity, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity;
 
     /**
      * @param int $userId

@@ -39,12 +39,12 @@ class UserFactory
     }
 
     /**
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @param stdClass $socialAccountRecord
      * @return SocialUserAccountEntity
      */
-    public function createSocialUserAccount(int $userId, stdClass $socialAccountRecord): SocialUserAccountEntity
+    public function createSocialUserAccount(UserEntity $userEntity, stdClass $socialAccountRecord): SocialUserAccountEntity
     {
-        return new SocialUserAccountEntity($userId, $socialAccountRecord);
+        return new SocialUserAccountEntity($userEntity->getId(), $socialAccountRecord);
     }
 }

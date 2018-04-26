@@ -63,7 +63,7 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getSocialAccount(int $userId, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity
+    public function getSocialAccount(UserEntity $userEntity, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity
     {
         $result = $this->socialAccounts->getSocialAccount($socialUser->getId(), $driverName);
         if (is_null($result)) {
@@ -71,7 +71,7 @@ class SocialRepository implements SocialRepositoryInterface
         }
         $socialAccountRecord = (object) $result;
 
-        return $this->userFactory->createSocialUserAccount($userId, $socialAccountRecord);
+        return $this->userFactory->createSocialUserAccount($userEntity, $socialAccountRecord);
     }
 
     /**
