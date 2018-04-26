@@ -30,5 +30,5 @@ interface SocialRepositoryInterface
      * @param string $driverName
      * @param SocialUser $socialUser
      */
-    public function synchronizeSocialAccount(int $userId, string $driverName, SocialUser $socialUser);
+    public function syncAccount(int $userId, string $driverName, SocialUser $socialUser);
 }

@@ -44,7 +44,7 @@ class SocialService
     public function socialLogin(string $driverName, SocialUser $socialUser): bool
     {
         $userEntity              = $this->socialRegisterUser($socialUser);
-        $socialUserAccountEntity = $this->synchronizeSocialAccount($driverName, $socialUser, $userEntity);
+        $socialUserAccountEntity = $this->syncAccount($driverName, $socialUser, $userEntity);
 
         return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userEntity);
     }
@@ -72,11 +72,11 @@ class SocialService
      * @param UserEntity $userEntity
      * @return SocialUserAccountEntity
      */
-    protected function synchronizeSocialAccount(string $driverName, SocialUser $socialUser, UserEntity $userEntity): SocialUserAccountEntity
+    protected function syncAccount(string $driverName, SocialUser $socialUser, UserEntity $userEntity): SocialUserAccountEntity
     {
         $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
         if (is_null($socialUserAccountEntity)) {
-            $this->socialRepository->synchronizeSocialAccount($userEntity->getId(), $driverName, $socialUser);
+            $this->socialRepository->syncAccount($userEntity->getId(), $driverName, $socialUser);
             $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
         }
 
