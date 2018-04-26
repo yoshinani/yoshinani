@@ -76,7 +76,7 @@ class SocialService
     {
         $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity, $driverName, $socialUser);
         if (is_null($socialUserAccountEntity)) {
-            $this->socialRepository->syncAccount($userEntity->getId(), $driverName, $socialUser);
+            $this->socialRepository->syncAccount($userEntity, $driverName, $socialUser);
             $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity, $driverName, $socialUser);
         }
 

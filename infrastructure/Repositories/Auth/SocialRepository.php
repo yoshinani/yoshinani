@@ -77,9 +77,9 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function syncAccount(int $userId, string $driverName, SocialUser $socialUser)
+    public function syncAccount(UserEntity $userEntity, string $driverName, SocialUser $socialUser)
     {
-        $registerSocialUserEntity = $this->userFactory->createSocialUser($userId, $driverName, $socialUser);
+        $registerSocialUserEntity = $this->userFactory->createSocialUser($userEntity, $driverName, $socialUser);
         $this->socialAccounts->registerSocialAccount($registerSocialUserEntity);
     }
 }

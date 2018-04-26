@@ -28,14 +28,14 @@ class UserFactory
     }
 
     /**
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @param string $driverName
      * @param SocialUser $socialUser
      * @return SocialUserEntity
      */
-    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): SocialUserEntity
+    public function createSocialUser(UserEntity $userEntity, string $driverName, SocialUser $socialUser): SocialUserEntity
     {
-        return new SocialUserEntity($userId, $driverName, $socialUser);
+        return new SocialUserEntity($userEntity, $driverName, $socialUser);
     }
 
     /**

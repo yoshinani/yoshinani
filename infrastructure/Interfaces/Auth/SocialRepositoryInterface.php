@@ -26,9 +26,9 @@ interface SocialRepositoryInterface
     public function getSocialAccount(UserEntity $userEntity, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity;
 
     /**
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @param string $driverName
      * @param SocialUser $socialUser
      */
-    public function syncAccount(int $userId, string $driverName, SocialUser $socialUser);
+    public function syncAccount(UserEntity $userEntity, string $driverName, SocialUser $socialUser);
 }
