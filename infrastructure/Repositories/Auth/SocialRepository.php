@@ -63,9 +63,9 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getSocialAccount(UserEntity $userEntity, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity
+    public function getSocialAccount(UserEntity $userEntity): ?SocialUserAccountEntity
     {
-        $result = $this->socialAccounts->getSocialAccount($socialUser, $driverName);
+        $result = $this->socialAccounts->getSocialAccount($userEntity);
         if (is_null($result)) {
             return null;
         }
