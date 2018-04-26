@@ -1,9 +1,9 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Laravel\Socialite\Contracts\User as SocialUser;
+use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserEntity;
-use stdClass;
+use Illuminate\Support\Collection;
 
 /**
  * Class SocialAccounts
@@ -12,16 +12,14 @@ use stdClass;
 class SocialAccounts extends Bass
 {
     /**
-     * @param SocialUser $socialUser
-     * @param string $driverName
-     * @return null|stdClass
+     * @param UserEntity $userEntity
+     * @return Collection
      */
-    public function getSocialAccount(SocialUser $socialUser, string $driverName): ?stdClass
+    public function getSocialAccount(UserEntity $userEntity): Collection
     {
         $result = $this->db->table('social_accounts')
-            ->where('driver_name', $driverName)
-            ->where('social_user_id', $socialUser->getId())
-            ->first();
+            ->where('user_id', $userEntity->getId())
+            ->get();
 
         return $result;
     }
