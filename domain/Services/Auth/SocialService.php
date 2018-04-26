@@ -74,10 +74,10 @@ class SocialService
      */
     protected function syncAccount(string $driverName, SocialUser $socialUser, UserEntity $userEntity): SocialUserAccountEntity
     {
-        $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
+        $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity->getId(), $driverName, $socialUser);
         if (is_null($socialUserAccountEntity)) {
             $this->socialRepository->syncAccount($userEntity->getId(), $driverName, $socialUser);
-            $socialUserAccountEntity = $this->socialRepository->findSocialAccount($userEntity->getId(), $driverName, $socialUser);
+            $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity->getId(), $driverName, $socialUser);
         }
 
         return $socialUserAccountEntity;

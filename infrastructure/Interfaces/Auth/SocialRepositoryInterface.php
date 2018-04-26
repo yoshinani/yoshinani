@@ -23,7 +23,7 @@ interface SocialRepositoryInterface
      * @param SocialUser $socialUser
      * @return SocialUserAccountEntity|null
      */
-    public function findSocialAccount(int $userId, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity;
+    public function getSocialAccount(int $userId, string $driverName, SocialUser $socialUser): ?SocialUserAccountEntity;
 
     /**
      * @param int $userId
