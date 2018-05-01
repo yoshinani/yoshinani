@@ -36,8 +36,8 @@ class SocialUserAccountEntity implements Arrayable
     {
         return [
             'id'           => $this->getId(),
-            'driverName'   => $this->getDriverName(),
-            'socialUserId' => $this->getSocialUserId(),
+            'driverNames'   => $this->getDriverNames(),
+            'socialUserIds' => $this->getSocialUserIds(),
         ];
     }
 
@@ -50,18 +50,18 @@ class SocialUserAccountEntity implements Arrayable
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getDriverName(): string
+    public function getDriverNames(): array
     {
-        return $this->socialAccount->getDriverName();
+        return $this->socialAccount->getDriverNames();
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getSocialUserId(): string
+    public function getSocialUserIds(): array
     {
-        return $this->socialAccount->getSocialUserId();
+        return $this->socialAccount->getSocialUserIds();
     }
 }
