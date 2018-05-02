@@ -21,27 +21,10 @@ class SocialAccountValueObject
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getDriverNames(): array
+    public function getSocialAccounts(): Collection
     {
-        $driverNames = [];
-        foreach ($this->socialAccounts as $account) {
-            $driverNames[] = $account->driver_name;
-        }
-        return $driverNames;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSocialUserIds(): array
-    {
-        $socialUserIds = [];
-        foreach ($this->socialAccounts as $account) {
-            $socialUserIds[] = $account->social_user_id;
-        }
-
-        return $socialUserIds;
+        return $this->socialAccounts;
     }
 }
