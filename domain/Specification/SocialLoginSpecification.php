@@ -33,7 +33,6 @@ class SocialLoginSpecification
     public function hasSocialAccount(SocialUserAccountEntity $socialUserAccountEntity, string $driverName, SocialUser $socialUser): bool
     {
         foreach ($socialUserAccountEntity->getSocialAccounts() as $account) {
-
             if (in_array($driverName, $account, true)) {
                 return false;
             }
@@ -43,7 +42,6 @@ class SocialLoginSpecification
         }
 
         return true;
-
     }
 
     /**
@@ -59,7 +57,6 @@ class SocialLoginSpecification
         SocialUserAccountEntity $socialUserAccountEntity,
         UserEntity $userEntity
     ): bool {
-
         if ($this->hasSocialAccount($socialUserAccountEntity, $driverName, $socialUser)) {
             return false;
         }

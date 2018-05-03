@@ -56,8 +56,8 @@ class SocialUserAccountEntity implements Arrayable
         $socialAccounts = [];
         foreach ($this->socialAccount->getSocialAccounts() as $accounts) {
             $socialAccounts[] = [
-                'userId' => $accounts->user_id,
-                'driverName' => $accounts->driver_name,
+                'userId'       => $accounts->user_id,
+                'driverName'   => $accounts->driver_name,
                 'socialUserId' => $accounts->social_user_id
             ];
         }
