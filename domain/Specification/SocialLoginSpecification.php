@@ -24,7 +24,13 @@ class SocialLoginSpecification
         }
     }
 
-    public function hasSocialAccount(SocialUserAccountEntity $socialUserAccountEntity, string $driverName, SocialUser $socialUser)
+    /**
+     * @param SocialUserAccountEntity $socialUserAccountEntity
+     * @param string $driverName
+     * @param SocialUser $socialUser
+     * @return bool
+     */
+    public function hasSocialAccount(SocialUserAccountEntity $socialUserAccountEntity, string $driverName, SocialUser $socialUser): bool
     {
         foreach ($socialUserAccountEntity->getSocialAccounts() as $account) {
 
