@@ -75,7 +75,7 @@ class SocialService
     protected function syncAccount(string $driverName, SocialUser $socialUser, UserEntity $userEntity): SocialUserAccountEntity
     {
         $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity);
-        if (is_null($socialUserAccountEntity)) {
+        if ($this->socialLoginSpecification->hasSocialAccount($socialUserAccountEntity, $driverName, $socialUser)) {
             $this->socialRepository->syncAccount($userEntity, $driverName, $socialUser);
             $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity);
         }
