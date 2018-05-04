@@ -11,19 +11,19 @@ use Illuminate\Support\Collection;
  */
 class SocialUserAccountEntity implements Arrayable
 {
-    private $id;
+    private $userEntity;
     private $socialAccount;
 
     /**
      * SocialUserAccountEntity constructor.
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @param Collection $accountCollection
      */
     public function __construct(
-        int $userId,
+        UserEntity $userEntity,
         Collection $accountCollection
     ) {
-        $this->id            = $userId;
+        $this->userEntity    = $userEntity;
         $this->socialAccount = new SocialAccountValueObject($accountCollection);
     }
 
@@ -45,7 +45,7 @@ class SocialUserAccountEntity implements Arrayable
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->userEntity->getId();
     }
 
     /**

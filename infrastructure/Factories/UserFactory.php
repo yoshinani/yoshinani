@@ -46,6 +46,6 @@ class UserFactory
      */
     public function createSocialUserAccount(UserEntity $userEntity, Collection $accountCollection): SocialUserAccountEntity
     {
-        return new SocialUserAccountEntity($userEntity->getId(), $accountCollection);
+        return new SocialUserAccountEntity($userEntity, $accountCollection);
     }
 }
