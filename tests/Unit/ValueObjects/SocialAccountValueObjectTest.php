@@ -33,8 +33,8 @@ class SocialAccountValueObjectTest extends TestCase
                 'updated_at'     => '2018-04-30 23:59:59'
                 ]
         ];
-        $socialAccountRecord  = new Collection($items);
-        $this->socialAccounts = new SocialAccountValueObject($socialAccountRecord);
+        $socialAccountRecord     = new Collection($items);
+        $this->socialAccounts    = new SocialAccountValueObject($socialAccountRecord);
         $this->getSocialAccounts = $this->socialAccounts->getSocialAccounts();
     }
 
