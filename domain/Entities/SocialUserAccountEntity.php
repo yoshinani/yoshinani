@@ -3,7 +3,7 @@ namespace Domain\Entities;
 
 use Domain\ValueObjects\SocialAccountValueObject;
 use Illuminate\Contracts\Support\Arrayable;
-use stdClass;
+use Illuminate\Support\Collection;
 
 /**
  * Class SocialUserAccountEntity
@@ -11,20 +11,20 @@ use stdClass;
  */
 class SocialUserAccountEntity implements Arrayable
 {
-    private $id;
+    private $userEntity;
     private $socialAccount;
 
     /**
      * SocialUserAccountEntity constructor.
-     * @param int $userId
-     * @param stdClass $socialAccountRecord
+     * @param UserEntity $userEntity
+     * @param Collection $accountCollection
      */
     public function __construct(
-        int $userId,
-        stdClass $socialAccountRecord
+        UserEntity $userEntity,
+        Collection $accountCollection
     ) {
-        $this->id            = $userId;
-        $this->socialAccount = new SocialAccountValueObject($socialAccountRecord);
+        $this->userEntity    = $userEntity;
+        $this->socialAccount = new SocialAccountValueObject($accountCollection);
     }
 
     /**
@@ -35,9 +35,8 @@ class SocialUserAccountEntity implements Arrayable
     public function toArray(): array
     {
         return [
-            'id'           => $this->getId(),
-            'driverName'   => $this->getDriverName(),
-            'socialUserId' => $this->getSocialUserId(),
+            'id'             => $this->getId(),
+            'socialAccounts' => $this->getSocialAccounts()
         ];
     }
 
@@ -46,22 +45,23 @@ class SocialUserAccountEntity implements Arrayable
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->userEntity->getId();
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getDriverName(): string
+    public function getSocialAccounts(): array
     {
-        return $this->socialAccount->getDriverName();
-    }
+        $socialAccounts = [];
+        foreach ($this->socialAccount->getSocialAccounts() as $accounts) {
+            $socialAccounts[] = [
+                'userId'       => $accounts->user_id,
+                'driverName'   => $accounts->driver_name,
+                'socialUserId' => $accounts->social_user_id
+            ];
+        }
 
-    /**
-     * @return string
-     */
-    public function getSocialUserId(): string
-    {
-        return $this->socialAccount->getSocialUserId();
+        return $socialAccounts;
     }
 }

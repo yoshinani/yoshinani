@@ -12,22 +12,22 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  */
 class SocialUserEntity implements Arrayable
 {
-    private $id;
+    private $userEntity;
     private $socialUser;
     private $timeStamp;
 
     /**
-     * RegisterSocialUserEntity constructor.
-     * @param int $userId
+     * SocialUserEntity constructor.
+     * @param UserEntity $userEntity
      * @param string $driverName
      * @param SocialUser $socialUser
      */
     public function __construct(
-        int $userId,
+        UserEntity $userEntity,
         string $driverName,
         SocialUser $socialUser
     ) {
-        $this->id         = $userId;
+        $this->userEntity = $userEntity;
         $this->socialUser = new SocialUserValueObject($driverName, $socialUser);
         $this->timeStamp  = new TimeStampValueObject();
     }
@@ -53,7 +53,7 @@ class SocialUserEntity implements Arrayable
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->userEntity->getId();
     }
 
     /**

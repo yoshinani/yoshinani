@@ -1,6 +1,7 @@
 <?php
 namespace Infrastructure\Factories;
 
+use Illuminate\Support\Collection;
 use stdClass;
 use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserEntity;
@@ -28,23 +29,23 @@ class UserFactory
     }
 
     /**
-     * @param int $userId
+     * @param UserEntity $userEntity
      * @param string $driverName
      * @param SocialUser $socialUser
      * @return SocialUserEntity
      */
-    public function createSocialUser(int $userId, string $driverName, SocialUser $socialUser): SocialUserEntity
+    public function createSocialUser(UserEntity $userEntity, string $driverName, SocialUser $socialUser): SocialUserEntity
     {
-        return new SocialUserEntity($userId, $driverName, $socialUser);
+        return new SocialUserEntity($userEntity, $driverName, $socialUser);
     }
 
     /**
-     * @param int $userId
-     * @param stdClass $socialAccountRecord
+     * @param UserEntity $userEntity
+     * @param Collection $accountCollection
      * @return SocialUserAccountEntity
      */
-    public function createSocialUserAccount(int $userId, stdClass $socialAccountRecord): SocialUserAccountEntity
+    public function createSocialUserAccount(UserEntity $userEntity, Collection $accountCollection): SocialUserAccountEntity
     {
-        return new SocialUserAccountEntity($userId, $socialAccountRecord);
+        return new SocialUserAccountEntity($userEntity, $accountCollection);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Domain\ValueObjects;
 
-use stdClass;
+use Illuminate\Support\Collection;
 
 /**
  * Class SocialAccountValueObject
@@ -9,38 +9,22 @@ use stdClass;
  */
 class SocialAccountValueObject
 {
-    private $socialAccount;
+    private $socialAccounts;
 
     /**
      * SocialAccountValueObject constructor.
-     * @param stdClass $socialAccountRecord
+     * @param Collection $socialAccountRecord
      */
-    public function __construct(stdClass $socialAccountRecord)
+    public function __construct(Collection $socialAccountRecord)
     {
-        $this->socialAccount = $socialAccountRecord;
+        $this->socialAccounts = $socialAccountRecord;
     }
 
     /**
-     * @return int
+     * @return Collection
      */
-    public function getUserId(): int
+    public function getSocialAccounts(): Collection
     {
-        return $this->socialAccount->user_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDriverName(): string
-    {
-        return $this->socialAccount->driver_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSocialUserId(): string
-    {
-        return $this->socialAccount->social_user_id;
+        return $this->socialAccounts;
     }
 }

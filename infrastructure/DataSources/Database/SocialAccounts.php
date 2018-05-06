@@ -1,8 +1,9 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
+use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserEntity;
-use stdClass;
+use Illuminate\Support\Collection;
 
 /**
  * Class SocialAccounts
@@ -11,16 +12,14 @@ use stdClass;
 class SocialAccounts extends Bass
 {
     /**
-     * @param int $socialUserId
-     * @param string $driverName
-     * @return null|stdClass
+     * @param UserEntity $userEntity
+     * @return Collection
      */
-    public function getSocialAccount(int $socialUserId, string $driverName): ?stdClass
+    public function getSocialAccounts(UserEntity $userEntity): Collection
     {
         $result = $this->db->table('social_accounts')
-            ->where('driver_name', $driverName)
-            ->where('social_user_id', $socialUserId)
-            ->first();
+            ->where('user_id', $userEntity->getId())
+            ->get();
 
         return $result;
     }
