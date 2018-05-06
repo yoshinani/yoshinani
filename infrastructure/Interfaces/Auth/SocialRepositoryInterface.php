@@ -21,7 +21,7 @@ interface SocialRepositoryInterface
      * @param UserEntity $userEntity
      * @return SocialUserAccountEntity
      */
-    public function getSocialAccount(UserEntity $userEntity): SocialUserAccountEntity;
+    public function getSocialAccounts(UserEntity $userEntity): SocialUserAccountEntity;
 
     /**
      * @param UserEntity $userEntity

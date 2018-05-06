@@ -15,7 +15,7 @@ class SocialAccounts extends Bass
      * @param UserEntity $userEntity
      * @return Collection
      */
-    public function getSocialAccount(UserEntity $userEntity): Collection
+    public function getSocialAccounts(UserEntity $userEntity): Collection
     {
         $result = $this->db->table('social_accounts')
             ->where('user_id', $userEntity->getId())

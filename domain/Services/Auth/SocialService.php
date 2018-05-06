@@ -48,7 +48,7 @@ class SocialService
             $userEntity = $this->socialRegisterUser($socialUser);
         }
 
-        $socialUserAccountEntity = $this->socialRepository->getSocialAccount($userEntity);
+        $socialUserAccountEntity = $this->socialRepository->getSocialAccounts($userEntity);
         if ($this->socialLoginSpecification->hasSocialAccount($socialUserAccountEntity, $driverName, $socialUser)) {
             $socialUserAccountEntity = $this->syncAccount($driverName, $socialUser, $userEntity);
         }
@@ -78,6 +78,6 @@ class SocialService
     {
         $this->socialRepository->syncAccount($userEntity, $driverName, $socialUser);
 
-        return $this->socialRepository->getSocialAccount($userEntity);
+        return $this->socialRepository->getSocialAccounts($userEntity);
     }
 }

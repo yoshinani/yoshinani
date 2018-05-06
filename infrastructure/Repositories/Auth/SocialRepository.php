@@ -63,9 +63,9 @@ class SocialRepository implements SocialRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function getSocialAccount(UserEntity $userEntity): SocialUserAccountEntity
+    public function getSocialAccounts(UserEntity $userEntity): SocialUserAccountEntity
     {
-        $accountCollection = $this->socialAccounts->getSocialAccount($userEntity);
+        $accountCollection = $this->socialAccounts->getSocialAccounts($userEntity);
 
         return $this->userFactory->createSocialUserAccount($userEntity, $accountCollection);
     }
