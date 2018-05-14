@@ -1,11 +1,22 @@
 <?php
 namespace Domain\Specification;
 
-use Auth;
+use Illuminate\Auth\AuthManager;
 use Domain\Entities\UserEntity;
 
 class ManualLoginSpecification
 {
+    private $authManager;
+
+    /**
+     * ManualLoginSpecification constructor.
+     * @param AuthManager $authManager
+     */
+    public function __construct(AuthManager $authManager)
+    {
+        $this->authManager = $authManager->guard('web');
+    }
+
     /**
      * @param array $oldRequest
      * @param UserEntity $userEntity
@@ -42,7 +53,7 @@ class ManualLoginSpecification
             return false;
         }
 
-        if (!Auth::loginUsingId($userEntity->getId(), true)) {
+        if (!$this->authManager->loginUsingId($userEntity->getId(), true)) {
             \Log::info("\n【ERROR】It is a User that does not exist\n"
                 . 'Email:' . $oldRequest['email'] . "\n"
                 . 'Password:' . encrypt($oldRequest['password'])
