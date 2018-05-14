@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
 use Domain\Services\Auth\ManualService as AuthDomainService;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
+use Illuminate\Auth\AuthManager;
 
 /**
  * Class ManualController
@@ -17,13 +18,16 @@ class ManualController extends Controller
 {
     private $manualRepository;
     private $authDomainService;
+    private $authManager;
 
     public function __construct(
         ManualRepositoryInterface $manualRepository,
-        AuthDomainService $authService
+        AuthDomainService $authService,
+        AuthManager $authManager
     ) {
         $this->manualRepository  = $manualRepository;
         $this->authDomainService = $authService;
+        $this->authManager       = $authManager->guard('web');
     }
 
     /**
@@ -93,7 +97,7 @@ class ManualController extends Controller
      */
     public function logout()
     {
-        \Auth::logout();
+        $this->authManager->logout();
 
         return redirect()->to('/login');
     }
