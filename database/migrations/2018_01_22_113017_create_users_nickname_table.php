@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -6,6 +7,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersNicknameTable extends Migration
 {
+    private $table = 'users_nickname';
+
     /**
      * Run the migrations.
      *
@@ -13,7 +16,7 @@ class CreateUsersNicknameTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_nickname', function (Blueprint $table)
+        Schema::create($this->table, function (Blueprint $table)
         {
             $table->increments('id');
             $table->bigInteger('user_id');
@@ -29,6 +32,6 @@ class CreateUsersNicknameTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_nickname');
+        Schema::dropIfExists($this->table);
     }
 }

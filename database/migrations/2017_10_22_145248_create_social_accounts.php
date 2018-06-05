@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -6,6 +7,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateSocialAccounts extends Migration
 {
+    private $table = 'social_accounts';
+
     /**
      * Run the migrations.
      *
@@ -13,7 +16,7 @@ class CreateSocialAccounts extends Migration
      */
     public function up()
     {
-        Schema::create('social_accounts', function (Blueprint $table)
+        Schema::create($this->table, function (Blueprint $table)
         {
             $table->increments('id');
             $table->bigInteger('user_id');
@@ -30,6 +33,6 @@ class CreateSocialAccounts extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_accounts');
+        Schema::dropIfExists($this->table);
     }
 }
