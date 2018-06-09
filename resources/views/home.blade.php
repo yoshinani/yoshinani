@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['user' => $userEntity])
 
 @section('content')
 <div class="container">
