@@ -6,9 +6,11 @@ use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserAccountEntity;
 use Exception;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Http\RedirectResponse;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use Socialite;
 
 /**
  * Class SocialService
@@ -38,6 +40,24 @@ class SocialService
         $this->socialLoginSpecification = $socialLoginSpecification;
         $this->manualRepository         = $manualRepository;
         $this->socialRepository         = $socialRepository;
+    }
+
+    /**
+     * @param $driverName
+     * @return RedirectResponse
+     */
+    public function redirectToProvider($driverName): RedirectResponse
+    {
+        return Socialite::driver($driverName)->redirect();
+    }
+
+    /**
+     * @param $driverName
+     * @return SocialUser
+     */
+    public function getSocialUser($driverName): SocialUser
+    {
+        return Socialite::driver($driverName)->user();
     }
 
     /**

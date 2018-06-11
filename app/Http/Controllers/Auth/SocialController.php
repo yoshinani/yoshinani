@@ -6,7 +6,6 @@ use Domain\Services\SocialService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
-use Socialite;
 
 /**
  * Class SocialController
@@ -34,9 +33,9 @@ class SocialController extends Controller
      * @param $driverName
      * @return RedirectResponse
      */
-    public function redirectToSocialService($driverName): RedirectResponse
+    public function redirectToProvider($driverName): RedirectResponse
     {
-        return Socialite::driver($driverName)->redirect();
+        return $this->socialService->redirectToProvider($driverName);
     }
 
     /**
@@ -44,10 +43,10 @@ class SocialController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function handleSocialServiceCallback($driverName): RedirectResponse
+    public function handleProviderCallback($driverName): RedirectResponse
     {
         try {
-            $socialUser = Socialite::driver($driverName)->user();
+            $socialUser = $this->socialService->getSocialUser($driverName);
         } catch (Exception $e) {
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
@@ -57,7 +56,7 @@ class SocialController extends Controller
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $userEntity = $this->manualRepository->getUser($socialUser->email);
+        $userEntity = $this->manualRepository->getUser($socialUser->getEmail());
 
         return redirect('/home')->with('message', 'ようこそ ' . $userEntity->getName() . ' さん');
     }
