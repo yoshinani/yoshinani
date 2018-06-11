@@ -1,5 +1,5 @@
 <?php
-namespace Domain\Services\Auth;
+namespace Domain\Services;
 
 use Domain\Specification\SocialLoginSpecification;
 use Domain\Entities\UserEntity;

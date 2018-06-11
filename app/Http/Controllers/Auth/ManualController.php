@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
-use Domain\Services\Auth\AuthService;
+use Domain\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Domain\Services\Auth\SocialService;
+use Domain\Services\SocialService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
