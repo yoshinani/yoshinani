@@ -1,15 +1,15 @@
 <?php
 namespace Domain\Services\Auth;
 
-use Domain\Specification\ManualLoginSpecification;
 use Domain\Entities\UserEntity;
+use Domain\Specification\ManualLoginSpecification;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
  * Class ManualService
  * @package Domain\Services\Auth
  */
-class ManualService
+class AuthService
 {
     private $manualLoginSpecification;
     private $manualRepository;
