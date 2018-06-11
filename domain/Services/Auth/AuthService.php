@@ -3,6 +3,7 @@ namespace Domain\Services\Auth;
 
 use Domain\Entities\UserEntity;
 use Domain\Specification\ManualLoginSpecification;
+use Illuminate\Auth\AuthManager;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
@@ -11,18 +12,22 @@ use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
  */
 class AuthService
 {
+    private $authManager;
     private $manualLoginSpecification;
     private $manualRepository;
 
     /**
-     * ManualService constructor.
+     * AuthService constructor.
+     * @param AuthManager $authManager
      * @param ManualLoginSpecification $manualLoginSpecification
      * @param ManualRepositoryInterface $manualRepository
      */
     public function __construct(
+        AuthManager $authManager,
         ManualLoginSpecification $manualLoginSpecification,
         ManualRepositoryInterface $manualRepository
     ) {
+        $this->authManager = $authManager->guard('web');
         $this->manualLoginSpecification = $manualLoginSpecification;
         $this->manualRepository         = $manualRepository;
     }
@@ -50,6 +55,10 @@ class AuthService
      */
     public function login(array $oldRequest, UserEntity $userEntity): bool
     {
-        return $this->manualLoginSpecification->isCondition($oldRequest, $userEntity);
+        $condition = $this->manualLoginSpecification->isCondition($oldRequest, $userEntity);
+        if ($condition) {
+            $this->authManager->loginUsingId($userEntity->getId(), true);
+        }
+        return $condition;
     }
 }
