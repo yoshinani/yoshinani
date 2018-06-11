@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use Domain\Services\Auth\SocialService;
+use Exception;
+use Illuminate\Http\RedirectResponse;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Socialite;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Controllers\Controller;
-use Domain\Services\Auth\SocialService as AuthDomainService;
-use Exception;
 
 /**
  * Class SocialController
@@ -14,19 +14,19 @@ use Exception;
  */
 class SocialController extends Controller
 {
-    private $authDomainService;
+    private $socialService;
     private $manualRepository;
 
     /**
      * SocialController constructor.
-     * @param AuthDomainService $authDomainService
+     * @param SocialService $socialService
      * @param ManualRepositoryInterface $manualRepository
      */
     public function __construct(
-        AuthDomainService $authDomainService,
+        SocialService $socialService,
         ManualRepositoryInterface $manualRepository
     ) {
-        $this->authDomainService = $authDomainService;
+        $this->socialService = $socialService;
         $this->manualRepository  = $manualRepository;
     }
 
@@ -52,7 +52,7 @@ class SocialController extends Controller
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $result = $this->authDomainService->socialLogin($driverName, $socialUser);
+        $result = $this->socialService->socialLogin($driverName, $socialUser);
         if (!$result) {
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }

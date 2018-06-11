@@ -1,10 +1,11 @@
 <?php
 namespace Domain\Services\Auth;
 
-use Exception;
 use Domain\Specification\SocialLoginSpecification;
 use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserAccountEntity;
+use Exception;
+use Illuminate\Auth\AuthManager;
 use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -15,21 +16,25 @@ use Laravel\Socialite\Contracts\User as SocialUser;
  */
 class SocialService
 {
+    private $authManager;
     private $socialLoginSpecification;
     private $manualRepository;
     private $socialRepository;
 
     /**
      * SocialService constructor.
+     * @param AuthManager $authManager
      * @param SocialLoginSpecification $socialLoginSpecification
      * @param ManualRepositoryInterface $manualRepository
      * @param SocialRepositoryInterface $socialRepository
      */
     public function __construct(
+        AuthManager $authManager,
         SocialLoginSpecification $socialLoginSpecification,
         ManualRepositoryInterface $manualRepository,
         SocialRepositoryInterface $socialRepository
     ) {
+        $this->authManager = $authManager->guard('web');
         $this->socialLoginSpecification = $socialLoginSpecification;
         $this->manualRepository         = $manualRepository;
         $this->socialRepository         = $socialRepository;
@@ -53,7 +58,11 @@ class SocialService
             $socialUserAccountEntity = $this->syncAccount($driverName, $socialUser, $userEntity);
         }
 
-        return $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userEntity);
+        $condition = $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userEntity);
+        if ($condition) {
+            $this->authManager->loginUsingId($socialUserAccountEntity->getId());
+        }
+        return $condition;
     }
 
     /**
