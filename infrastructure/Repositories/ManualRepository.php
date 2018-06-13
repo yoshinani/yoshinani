@@ -1,5 +1,5 @@
 <?php
-namespace Infrastructure\Repositories\Auth;
+namespace Infrastructure\Repositories;
 
 use Domain\Entities\UserEntity;
 use Infrastructure\Factories\UserFactory;
@@ -7,7 +7,7 @@ use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\UsersPassword;
-use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
+use Infrastructure\Interfaces\ManualRepositoryInterface;
 use stdClass;
 
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace Infrastructure\Repositories\Auth;
+namespace Infrastructure\Repositories;
 
 use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;
@@ -8,7 +8,7 @@ use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\SocialAccounts;
-use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
+use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**

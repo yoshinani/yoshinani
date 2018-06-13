@@ -8,7 +8,7 @@ use Domain\Services\AuthService;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
+use Infrastructure\Interfaces\ManualRepositoryInterface;
 
 /**
  * Class ManualController

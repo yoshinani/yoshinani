@@ -1,5 +1,5 @@
 <?php
-namespace Infrastructure\Interfaces\Auth;
+namespace Infrastructure\Interfaces;
 
 use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;

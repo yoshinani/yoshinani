@@ -6,7 +6,7 @@ use Domain\Services\AuthService;
 use Domain\Services\SocialService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
+use Infrastructure\Interfaces\ManualRepositoryInterface;
 
 /**
  * Class SocialController

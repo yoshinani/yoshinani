@@ -4,7 +4,7 @@ namespace Domain\Services;
 use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;
 use Illuminate\Http\RedirectResponse;
-use Infrastructure\Interfaces\Auth\SocialRepositoryInterface;
+use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Socialite;
 
