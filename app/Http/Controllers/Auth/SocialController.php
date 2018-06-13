@@ -29,8 +29,8 @@ class SocialController extends Controller
         SocialService $socialService,
         ManualRepositoryInterface $manualRepository
     ) {
-        $this->authService   = $authService;
-        $this->socialService = $socialService;
+        $this->authService       = $authService;
+        $this->socialService     = $socialService;
         $this->manualRepository  = $manualRepository;
     }
 

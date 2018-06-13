@@ -27,6 +27,7 @@ class HomeController extends Controller
             'password' => encrypt('password'),
             'active'   => 1
         ];
+
         return view('home', compact('userEntity'));
     }
 }

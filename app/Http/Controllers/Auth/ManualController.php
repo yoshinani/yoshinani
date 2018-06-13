@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use Domain\Services\AuthService;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 use Illuminate\Auth\AuthManager;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
 
 /**
  * Class ManualController
@@ -26,7 +26,7 @@ class ManualController extends Controller
         AuthManager $authManager
     ) {
         $this->manualRepository  = $manualRepository;
-        $this->authService = $authService;
+        $this->authService       = $authService;
         $this->authManager       = $authManager->guard('web');
     }
 

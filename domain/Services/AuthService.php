@@ -40,7 +40,7 @@ class AuthService
         SocialService $socialService,
         ManualRepositoryInterface $manualRepository
     ) {
-        $this->authManager = $authManager->guard('web');
+        $this->authManager              = $authManager->guard('web');
         $this->manualLoginSpecification = $manualLoginSpecification;
         $this->socialLoginSpecification = $socialLoginSpecification;
         $this->socialRepository         = $socialRepository;
@@ -75,6 +75,7 @@ class AuthService
         if ($condition) {
             $this->authManager->loginUsingId($userEntity->getId(), true);
         }
+
         return $condition;
     }
 
@@ -100,6 +101,7 @@ class AuthService
         if ($condition) {
             $this->authManager->loginUsingId($socialUserAccountEntity->getId());
         }
+
         return $condition;
     }
 
