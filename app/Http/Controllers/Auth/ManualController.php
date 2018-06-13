@@ -8,7 +8,7 @@ use Domain\Services\AuthService;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 
 /**
  * Class ManualController
@@ -16,18 +16,18 @@ use Infrastructure\Interfaces\ManualRepositoryInterface;
  */
 class ManualController extends Controller
 {
-    private $manualRepository;
+    private $userRepository;
     private $authService;
     private $authManager;
 
     public function __construct(
-        ManualRepositoryInterface $manualRepository,
+        UserRepositoryInterface $userRepository,
         AuthService $authService,
         AuthManager $authManager
     ) {
-        $this->manualRepository  = $manualRepository;
-        $this->authService       = $authService;
-        $this->authManager       = $authManager->guard('web');
+        $this->userRepository = $userRepository;
+        $this->authService    = $authService;
+        $this->authManager    = $authManager->guard('web');
     }
 
     /**
@@ -83,7 +83,7 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userEntity = $this->manualRepository->getUser($oldRequest['email']);
+        $userEntity = $this->userRepository->getUser($oldRequest['email']);
         $result     = $this->authService->login($oldRequest, $userEntity);
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');

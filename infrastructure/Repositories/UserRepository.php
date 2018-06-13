@@ -7,14 +7,14 @@ use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\UsersPassword;
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 use stdClass;
 
 /**
- * Class ManualRepository
+ * Class UserRepository
  * @package Infrastructure\Repositories
  */
-class ManualRepository implements ManualRepositoryInterface
+class UserRepository implements UserRepositoryInterface
 {
     private $users;
     private $usersStatus;
@@ -23,7 +23,7 @@ class ManualRepository implements ManualRepositoryInterface
     private $userFactory;
 
     /**
-     * ManualRepository constructor.
+     * UserRepository constructor.
      * @param Users $users
      * @param UsersStatus $usersStatus
      * @param UsersNickName $userNickName

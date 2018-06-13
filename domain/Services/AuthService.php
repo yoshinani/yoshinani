@@ -6,7 +6,7 @@ use Domain\Specification\ManualLoginSpecification;
 use Domain\Specification\SocialLoginSpecification;
 use Exception;
 use Illuminate\Auth\AuthManager;
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -21,7 +21,7 @@ class AuthService
     private $socialLoginSpecification;
     private $socialRepository;
     private $socialService;
-    private $manualRepository;
+    private $userRepository;
 
     /**
      * AuthService constructor.
@@ -30,7 +30,7 @@ class AuthService
      * @param SocialLoginSpecification $socialLoginSpecification
      * @param SocialRepositoryInterface $socialRepository
      * @param SocialService $socialService
-     * @param ManualRepositoryInterface $manualRepository
+     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(
         AuthManager $authManager,
@@ -38,14 +38,14 @@ class AuthService
         SocialLoginSpecification $socialLoginSpecification,
         SocialRepositoryInterface $socialRepository,
         SocialService $socialService,
-        ManualRepositoryInterface $manualRepository
+        UserRepositoryInterface $userRepository
     ) {
         $this->authManager              = $authManager->guard('web');
         $this->manualLoginSpecification = $manualLoginSpecification;
         $this->socialLoginSpecification = $socialLoginSpecification;
         $this->socialRepository         = $socialRepository;
         $this->socialService            = $socialService;
-        $this->manualRepository         = $manualRepository;
+        $this->userRepository           = $userRepository;
     }
 
     /**
@@ -54,10 +54,10 @@ class AuthService
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity = $this->manualRepository->getUser($oldRequest['email']);
+        $userEntity = $this->userRepository->getUser($oldRequest['email']);
         if (is_null($userEntity)) {
-            $userEntity = $this->manualRepository->registerUser($oldRequest);
-            $password   = $this->manualRepository->getUserPassword($userEntity->getId());
+            $userEntity = $this->userRepository->registerUser($oldRequest);
+            $password   = $this->userRepository->getUserPassword($userEntity->getId());
             $userEntity->setPassword($password);
         }
 
@@ -87,7 +87,7 @@ class AuthService
      */
     public function socialLogin(string $driverName, SocialUser $socialUser): bool
     {
-        $userEntity = $this->manualRepository->getUser($socialUser->getEmail());
+        $userEntity = $this->userRepository->getUser($socialUser->getEmail());
         if (is_null($userEntity)) {
             $userEntity = $this->socialRegisterUser($socialUser);
         }

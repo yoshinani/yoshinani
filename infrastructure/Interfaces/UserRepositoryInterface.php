@@ -5,10 +5,10 @@ use Domain\Entities\UserEntity;
 use stdClass;
 
 /**
- * Interface ManualRepositoryInterface
+ * Interface UserRepositoryInterface
  * @package Infrastructure\Interfaces\Auth
  */
-interface ManualRepositoryInterface
+interface UserRepositoryInterface
 {
     /**
      * @param int $userId

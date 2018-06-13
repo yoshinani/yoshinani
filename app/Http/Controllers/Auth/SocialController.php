@@ -6,7 +6,7 @@ use Domain\Services\AuthService;
 use Domain\Services\SocialService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Infrastructure\Interfaces\ManualRepositoryInterface;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 
 /**
  * Class SocialController
@@ -16,22 +16,22 @@ class SocialController extends Controller
 {
     private $authService;
     private $socialService;
-    private $manualRepository;
+    private $userRepository;
 
     /**
      * SocialController constructor.
      * @param AuthService $authService
      * @param SocialService $socialService
-     * @param ManualRepositoryInterface $manualRepository
+     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(
         AuthService $authService,
         SocialService $socialService,
-        ManualRepositoryInterface $manualRepository
+        UserRepositoryInterface $userRepository
     ) {
-        $this->authService       = $authService;
-        $this->socialService     = $socialService;
-        $this->manualRepository  = $manualRepository;
+        $this->authService    = $authService;
+        $this->socialService  = $socialService;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -61,7 +61,7 @@ class SocialController extends Controller
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $userEntity = $this->manualRepository->getUser($socialUser->getEmail());
+        $userEntity = $this->userRepository->getUser($socialUser->getEmail());
 
         return redirect('/home')->with('message', 'ようこそ ' . $userEntity->getName() . ' さん');
     }
