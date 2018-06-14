@@ -6,8 +6,8 @@ use Domain\Specification\ManualLoginSpecification;
 use Domain\Specification\SocialLoginSpecification;
 use Exception;
 use Illuminate\Auth\AuthManager;
-use Infrastructure\Interfaces\UserRepositoryInterface;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 /**

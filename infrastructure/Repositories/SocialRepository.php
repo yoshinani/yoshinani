@@ -3,8 +3,8 @@ namespace Infrastructure\Repositories;
 
 use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;
-use Infrastructure\Factories\UserFactory;
 use Infrastructure\DataSources\Database\SocialAccounts;
+use Infrastructure\Factories\UserFactory;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -23,11 +23,11 @@ class SocialRepository implements SocialRepositoryInterface
      * @param UserFactory $userFactory
      */
     public function __construct(
-        SocialAccounts      $socialAccounts,
-        UserFactory         $userFactory
+        SocialAccounts $socialAccounts,
+        UserFactory    $userFactory
     ) {
-        $this->socialAccounts      = $socialAccounts;
-        $this->userFactory         = $userFactory;
+        $this->socialAccounts = $socialAccounts;
+        $this->userFactory    = $userFactory;
     }
 
     /**

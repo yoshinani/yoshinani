@@ -2,11 +2,11 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\UserEntity;
-use Infrastructure\Factories\UserFactory;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
-use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\UsersPassword;
+use Infrastructure\DataSources\Database\UsersStatus;
+use Infrastructure\Factories\UserFactory;
 use Infrastructure\Interfaces\UserRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
@@ -32,17 +32,17 @@ class UserRepository implements UserRepositoryInterface
      * @param UserFactory $userFactory
      */
     public function __construct(
-        Users               $users,
-        UsersStatus         $usersStatus,
-        UsersNickName       $usersNickName,
-        UsersPassword       $usersPassword,
-        UserFactory         $userFactory
+        Users         $users,
+        UsersStatus   $usersStatus,
+        UsersNickName $usersNickName,
+        UsersPassword $usersPassword,
+        UserFactory   $userFactory
     ) {
-        $this->users               = $users;
-        $this->usersStatus         = $usersStatus;
-        $this->usersNickName        = $usersNickName;
-        $this->usersPassword       = $usersPassword;
-        $this->userFactory         = $userFactory;
+        $this->users         = $users;
+        $this->usersStatus   = $usersStatus;
+        $this->usersNickName = $usersNickName;
+        $this->usersPassword = $usersPassword;
+        $this->userFactory   = $userFactory;
     }
 
     /**
@@ -77,8 +77,8 @@ class UserRepository implements UserRepositoryInterface
      */
     public function registerUser(array $oldRequest): UserEntity
     {
-        $userEntity         = $this->userFactory->createUser((object) $oldRequest);
-        $userId             = $this->users->registerUser($userEntity);
+        $userEntity = $this->userFactory->createUser((object) $oldRequest);
+        $userId     = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
         $userEntity->setPassword((object) $oldRequest);
         $this->usersStatus->registerActive($userEntity);
