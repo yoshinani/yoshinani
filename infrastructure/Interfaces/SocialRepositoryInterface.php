@@ -12,12 +12,6 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 interface SocialRepositoryInterface
 {
     /**
-     * @param SocialUser $socialUser
-     * @return UserEntity
-     */
-    public function registerUser(SocialUser $socialUser): UserEntity;
-
-    /**
      * @param UserEntity $userEntity
      * @return SocialUserAccountEntity
      */

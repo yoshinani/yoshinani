@@ -2,6 +2,7 @@
 namespace Infrastructure\Interfaces;
 
 use Domain\Entities\UserEntity;
+use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
 
 /**
@@ -27,4 +28,10 @@ interface UserRepositoryInterface
      * @return UserEntity
      */
     public function registerUser(array $oldRequest): UserEntity;
+
+    /**
+     * @param SocialUser $socialUser
+     * @return UserEntity
+     */
+    public function socialRegisterUser(SocialUser $socialUser): UserEntity;
 }

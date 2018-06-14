@@ -8,6 +8,7 @@ use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Interfaces\UserRepositoryInterface;
+use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
 
 /**
@@ -18,7 +19,7 @@ class UserRepository implements UserRepositoryInterface
 {
     private $users;
     private $usersStatus;
-    private $userNickName;
+    private $usersNickName;
     private $usersPassword;
     private $userFactory;
 
@@ -26,20 +27,20 @@ class UserRepository implements UserRepositoryInterface
      * UserRepository constructor.
      * @param Users $users
      * @param UsersStatus $usersStatus
-     * @param UsersNickName $userNickName
+     * @param UsersNickName $usersNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
      */
     public function __construct(
         Users               $users,
         UsersStatus         $usersStatus,
-        UsersNickName       $userNickName,
+        UsersNickName       $usersNickName,
         UsersPassword       $usersPassword,
         UserFactory         $userFactory
     ) {
         $this->users               = $users;
         $this->usersStatus         = $usersStatus;
-        $this->userNickName        = $userNickName;
+        $this->usersNickName        = $usersNickName;
         $this->usersPassword       = $usersPassword;
         $this->userFactory         = $userFactory;
     }
@@ -82,7 +83,22 @@ class UserRepository implements UserRepositoryInterface
         $userEntity->setPassword((object) $oldRequest);
         $this->usersStatus->registerActive($userEntity);
         $this->usersPassword->registerPassword($userEntity);
-        $this->userNickName->registerNickName($userEntity);
+        $this->usersNickName->registerNickName($userEntity);
+
+        return $userEntity;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function socialRegisterUser(SocialUser $socialUser): UserEntity
+    {
+        $userRecord = json_decode(json_encode($socialUser));
+        $userEntity = $this->userFactory->createUser($userRecord);
+        $userId     = $this->users->registerUser($userEntity);
+        $userEntity->setId($userId);
+        $this->usersNickName->registerNickName($userEntity);
+        $this->usersStatus->registerActive($userEntity);
 
         return $userEntity;
     }

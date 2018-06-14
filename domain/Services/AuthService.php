@@ -114,6 +114,6 @@ class AuthService
     {
         $this->socialLoginSpecification->isRequiredInfo($socialUser);
 
-        return $this->socialRepository->registerUser($socialUser);
+        return $this->userRepository->socialRegisterUser($socialUser);
     }
 }
