@@ -5,6 +5,7 @@ use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;
 use Infrastructure\DataSources\Database\SocialAccounts;
 use Infrastructure\Factories\UserFactory;
+use Infrastructure\Factories\SocialAccountFactory;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
@@ -15,19 +16,23 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 class SocialRepository implements SocialRepositoryInterface
 {
     private $socialAccounts;
+    private $socialAccountFactory;
     private $userFactory;
 
     /**
      * SocialRepository constructor.
      * @param SocialAccounts $socialAccounts
+     * @param SocialAccountFactory $socialAccountFactory
      * @param UserFactory $userFactory
      */
     public function __construct(
         SocialAccounts $socialAccounts,
+        SocialAccountFactory $socialAccountFactory,
         UserFactory    $userFactory
     ) {
-        $this->socialAccounts = $socialAccounts;
-        $this->userFactory    = $userFactory;
+        $this->socialAccounts       = $socialAccounts;
+        $this->socialAccountFactory = $socialAccountFactory;
+        $this->userFactory          = $userFactory;
     }
 
     /**
@@ -37,7 +42,7 @@ class SocialRepository implements SocialRepositoryInterface
     {
         $accountCollection = $this->socialAccounts->getSocialAccounts($userEntity);
 
-        return $this->userFactory->createSocialUserAccount($userEntity, $accountCollection);
+        return $this->socialAccountFactory->createSocialUserAccount($userEntity, $accountCollection);
     }
 
     /**
