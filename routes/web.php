@@ -31,8 +31,8 @@ Route::group(['middleware' => 'guest'], function ()
     Route::post('register/complete', 'Auth\ManualController@completeRegister')->name('completeRegister');
 
     if (config('configuration.socialite')) {
-        Route::get('auth/{driverName}', 'Auth\SocialController@redirectToSocialService');
-        Route::get('auth/{driverName}/callback', 'Auth\SocialController@handleSocialServiceCallback');
+        Route::get('auth/{driverName}', 'Auth\SocialController@redirectToProvider');
+        Route::get('auth/{driverName}/callback', 'Auth\SocialController@handleProviderCallback');
     }
 });
 

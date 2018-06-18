@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use Domain\Services\AuthService;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Controllers\Controller;
-use Domain\Services\Auth\ManualService as AuthDomainService;
-use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
-use Illuminate\Auth\AuthManager;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 
 /**
  * Class ManualController
@@ -16,18 +16,18 @@ use Illuminate\Auth\AuthManager;
  */
 class ManualController extends Controller
 {
-    private $manualRepository;
-    private $authDomainService;
+    private $userRepository;
+    private $authService;
     private $authManager;
 
     public function __construct(
-        ManualRepositoryInterface $manualRepository,
-        AuthDomainService $authService,
+        UserRepositoryInterface $userRepository,
+        AuthService $authService,
         AuthManager $authManager
     ) {
-        $this->manualRepository  = $manualRepository;
-        $this->authDomainService = $authService;
-        $this->authManager       = $authManager->guard('web');
+        $this->userRepository = $userRepository;
+        $this->authService    = $authService;
+        $this->authManager    = $authManager->guard('web');
     }
 
     /**
@@ -57,8 +57,8 @@ class ManualController extends Controller
     public function completeRegister(Request $request)
     {
         $oldRequest = $request->old();
-        $userEntity = $this->authDomainService->registerUser($oldRequest);
-        $result     = $this->authDomainService->login($oldRequest, $userEntity);
+        $userEntity = $this->authService->registerUser($oldRequest);
+        $result     = $this->authService->login($oldRequest, $userEntity);
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }
@@ -83,8 +83,8 @@ class ManualController extends Controller
     {
         $request->flash();
         $oldRequest = $request->old();
-        $userEntity = $this->manualRepository->getUser($oldRequest['email']);
-        $result     = $this->authDomainService->login($oldRequest, $userEntity);
+        $userEntity = $this->userRepository->getUser($oldRequest['email']);
+        $result     = $this->authService->login($oldRequest, $userEntity);
         if (!$result) {
             return back()->with('message', 'ログインに失敗しました');
         }

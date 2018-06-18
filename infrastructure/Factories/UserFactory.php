@@ -1,11 +1,9 @@
 <?php
 namespace Infrastructure\Factories;
 
-use Illuminate\Support\Collection;
 use stdClass;
 use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserEntity;
-use Domain\Entities\SocialUserAccountEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 class UserFactory
@@ -39,13 +37,4 @@ class UserFactory
         return new SocialUserEntity($userEntity, $driverName, $socialUser);
     }
 
-    /**
-     * @param UserEntity $userEntity
-     * @param Collection $accountCollection
-     * @return SocialUserAccountEntity
-     */
-    public function createSocialUserAccount(UserEntity $userEntity, Collection $accountCollection): SocialUserAccountEntity
-    {
-        return new SocialUserAccountEntity($userEntity, $accountCollection);
-    }
 }

@@ -1,12 +1,12 @@
 <?php
 namespace App\Http\Controllers\Auth;
 
-use Infrastructure\Interfaces\Auth\ManualRepositoryInterface;
-use Socialite;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
-use Domain\Services\Auth\SocialService as AuthDomainService;
+use Domain\Services\AuthService;
+use Domain\Services\SocialService;
 use Exception;
+use Illuminate\Http\RedirectResponse;
+use Infrastructure\Interfaces\UserRepositoryInterface;
 
 /**
  * Class SocialController
@@ -14,29 +14,33 @@ use Exception;
  */
 class SocialController extends Controller
 {
-    private $authDomainService;
-    private $manualRepository;
+    private $authService;
+    private $socialService;
+    private $userRepository;
 
     /**
      * SocialController constructor.
-     * @param AuthDomainService $authDomainService
-     * @param ManualRepositoryInterface $manualRepository
+     * @param AuthService $authService
+     * @param SocialService $socialService
+     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(
-        AuthDomainService $authDomainService,
-        ManualRepositoryInterface $manualRepository
+        AuthService $authService,
+        SocialService $socialService,
+        UserRepositoryInterface $userRepository
     ) {
-        $this->authDomainService = $authDomainService;
-        $this->manualRepository  = $manualRepository;
+        $this->authService    = $authService;
+        $this->socialService  = $socialService;
+        $this->userRepository = $userRepository;
     }
 
     /**
      * @param $driverName
      * @return RedirectResponse
      */
-    public function redirectToSocialService($driverName): RedirectResponse
+    public function redirectToProvider($driverName): RedirectResponse
     {
-        return Socialite::driver($driverName)->redirect();
+        return $this->socialService->redirectToProvider($driverName);
     }
 
     /**
@@ -44,20 +48,20 @@ class SocialController extends Controller
      * @return RedirectResponse
      * @throws Exception
      */
-    public function handleSocialServiceCallback($driverName): RedirectResponse
+    public function handleProviderCallback($driverName): RedirectResponse
     {
         try {
-            $socialUser = Socialite::driver($driverName)->user();
+            $socialUser = $this->socialService->getSocialUser($driverName);
         } catch (Exception $e) {
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $result = $this->authDomainService->socialLogin($driverName, $socialUser);
+        $result = $this->authService->socialLogin($driverName, $socialUser);
         if (!$result) {
             return redirect('/login')->with('message', 'ログインに失敗しました');
         }
 
-        $userEntity = $this->manualRepository->getUser($socialUser->email);
+        $userEntity = $this->userRepository->getUser($socialUser->getEmail());
 
         return redirect('/home')->with('message', 'ようこそ ' . $userEntity->getName() . ' さん');
     }

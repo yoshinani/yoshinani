@@ -1,14 +1,15 @@
 <?php
-namespace Infrastructure\Interfaces\Auth;
+namespace Infrastructure\Interfaces;
 
 use Domain\Entities\UserEntity;
+use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
 
 /**
- * Interface ManualRepositoryInterface
+ * Interface UserRepositoryInterface
  * @package Infrastructure\Interfaces\Auth
  */
-interface ManualRepositoryInterface
+interface UserRepositoryInterface
 {
     /**
      * @param int $userId
@@ -27,4 +28,10 @@ interface ManualRepositoryInterface
      * @return UserEntity
      */
     public function registerUser(array $oldRequest): UserEntity;
+
+    /**
+     * @param SocialUser $socialUser
+     * @return UserEntity
+     */
+    public function socialRegisterUser(SocialUser $socialUser): UserEntity;
 }

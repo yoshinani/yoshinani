@@ -1,25 +1,13 @@
 <?php
 namespace Domain\Specification;
 
-use Illuminate\Auth\AuthManager;
-use Exception;
 use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;
+use Exception;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
 class SocialLoginSpecification
 {
-    private $authManager;
-
-    /**
-     * SocialLoginSpecification constructor.
-     * @param AuthManager $authManager
-     */
-    public function __construct(AuthManager $authManager)
-    {
-        $this->authManager = $authManager->guard('web');
-    }
-
     /**
      * @param SocialUser $socialUser
      * @throws Exception
@@ -73,10 +61,6 @@ class SocialLoginSpecification
         }
 
         if (!$userEntity->getActive()) {
-            return false;
-        }
-
-        if (!$this->authManager->loginUsingId($socialUserAccountEntity->getId())) {
             return false;
         }
 
