@@ -1,10 +1,10 @@
 <?php
 namespace Domain\Entities;
 
-use Domain\ValueObjects\UserValueObject;
 use Domain\ValueObjects\NickNameValueObject;
 use Domain\ValueObjects\PasswordValueObject;
 use Domain\ValueObjects\TimeStampValueObject;
+use Domain\ValueObjects\UserValueObject;
 use Illuminate\Contracts\Support\Arrayable;
 use stdClass;
 

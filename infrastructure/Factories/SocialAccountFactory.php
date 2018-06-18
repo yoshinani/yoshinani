@@ -1,9 +1,9 @@
 <?php
 namespace Infrastructure\Factories;
 
-use Illuminate\Support\Collection;
-use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserAccountEntity;
+use Domain\Entities\UserEntity;
+use Illuminate\Support\Collection;
 
 class SocialAccountFactory
 {

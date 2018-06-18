@@ -1,10 +1,10 @@
 <?php
 namespace Infrastructure\Factories;
 
-use stdClass;
-use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserEntity;
+use Domain\Entities\UserEntity;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use stdClass;
 
 class UserFactory
 {
@@ -36,5 +36,4 @@ class UserFactory
     {
         return new SocialUserEntity($userEntity, $driverName, $socialUser);
     }
-
 }

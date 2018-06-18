@@ -4,8 +4,8 @@ namespace Infrastructure\Repositories;
 use Domain\Entities\SocialUserAccountEntity;
 use Domain\Entities\UserEntity;
 use Infrastructure\DataSources\Database\SocialAccounts;
-use Infrastructure\Factories\UserFactory;
 use Infrastructure\Factories\SocialAccountFactory;
+use Infrastructure\Factories\UserFactory;
 use Infrastructure\Interfaces\SocialRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
