@@ -1,8 +1,8 @@
 <?php
 namespace Infrastructure\DataSources\Database;
 
-use Domain\Entities\UserEntity;
 use Domain\Entities\SocialUserEntity;
+use Domain\Entities\UserEntity;
 use Illuminate\Support\Collection;
 
 /**
