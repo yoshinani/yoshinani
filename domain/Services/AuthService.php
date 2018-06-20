@@ -116,4 +116,14 @@ class AuthService
 
         return $this->userRepository->socialRegisterUser($socialUser);
     }
+
+    /**
+     * @return UserEntity
+     */
+    public function getLoginUser(): UserEntity
+    {
+        $userId = $this->authManager->id();
+
+        return $this->userRepository->getLoginUser($userId);
+    }
 }

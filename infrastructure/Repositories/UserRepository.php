@@ -102,4 +102,18 @@ class UserRepository implements UserRepositoryInterface
 
         return $userEntity;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLoginUser(int $userId): UserEntity
+    {
+        $userRecord = $this->users->getLoginUser($userId);
+        $userEntity = $this->userFactory->createUser($userRecord);
+        if (is_null($userEntity)) {
+            abort(500);
+        }
+
+        return $userEntity;
+    }
 }

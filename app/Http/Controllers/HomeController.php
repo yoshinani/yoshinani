@@ -1,15 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
+use Domain\Services\AuthService;
+
 class HomeController extends Controller
 {
+    private $authService;
+
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param AuthService $authService
      */
-    public function __construct()
+    public function __construct(AuthService $authService)
     {
+        $this->authService = $authService;
     }
 
     /**
@@ -19,14 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userEntity = [
-            'id'       => 1,
-            'email'    => 'test@test.test',
-            'name'     => 'testName',
-            'nickname' => 'testNickName',
-            'password' => encrypt('password'),
-            'active'   => 1
-        ];
+        $loginUser  = $this->authService->getLoginUser();
+        $userEntity = $loginUser->toArray();
 
         return view('home', compact('userEntity'));
     }
