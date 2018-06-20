@@ -34,4 +34,10 @@ interface UserRepositoryInterface
      * @return UserEntity
      */
     public function socialRegisterUser(SocialUser $socialUser): UserEntity;
+
+    /**
+     * @param int $userId
+     * @return UserEntity
+     */
+    public function getLoginUser(int $userId): UserEntity;
 }
