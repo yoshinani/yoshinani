@@ -2,10 +2,17 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\AuthManager;
 
 class RedirectIfAuthenticated
 {
+    private $authManager;
+
+    public function __construct(AuthManager $authManager)
+    {
+        $this->authManager = $authManager;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -16,7 +23,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
+        if ($this->authManager->guard($guard)->check()) {
             return redirect('/home');
         }
 
