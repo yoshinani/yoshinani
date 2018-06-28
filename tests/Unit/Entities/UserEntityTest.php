@@ -35,7 +35,7 @@ class UserEntityTest extends TestCase
         $this->assertArrayHasKey('password', $this->user->toArray());
         $this->assertArrayHasKey('created_at', $this->user->toArray());
         $this->assertArrayHasKey('updated_at', $this->user->toArray());
-        $this->assertCount(8, $this->user->toArray());
+        $this->assertCount(7, $this->user->toArray());
     }
 
     /**
