@@ -47,20 +47,14 @@ class SocialLoginSpecification
      * @param string $driverName
      * @param SocialUser $socialUser
      * @param SocialUserAccountEntity $socialUserAccountEntity
-     * @param UserEntity $userEntity
      * @return bool
      */
     public function isCondition(
         string $driverName,
         SocialUser $socialUser,
-        SocialUserAccountEntity $socialUserAccountEntity,
-        UserEntity $userEntity
+        SocialUserAccountEntity $socialUserAccountEntity
     ): bool {
         if ($this->hasSocialAccount($socialUserAccountEntity, $driverName, $socialUser)) {
-            return false;
-        }
-
-        if (!$userEntity->getActive()) {
             return false;
         }
 
