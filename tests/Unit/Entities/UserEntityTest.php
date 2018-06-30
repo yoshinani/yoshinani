@@ -16,8 +16,7 @@ class UserEntityTest extends TestCase
             'email'    => 'test@test.test',
             'name'     => 'testName',
             'nickname' => 'testNickName',
-            'password' => encrypt('password'),
-            'active'   => 1
+            'password' => encrypt('password')
         ];
         $this->user = new UserEntity($userRecord);
         $this->user->setId(1);
@@ -34,10 +33,9 @@ class UserEntityTest extends TestCase
         $this->assertArrayHasKey('name', $this->user->toArray());
         $this->assertArrayHasKey('nickname', $this->user->toArray());
         $this->assertArrayHasKey('password', $this->user->toArray());
-        $this->assertArrayHasKey('active', $this->user->toArray());
         $this->assertArrayHasKey('created_at', $this->user->toArray());
         $this->assertArrayHasKey('updated_at', $this->user->toArray());
-        $this->assertCount(8, $this->user->toArray());
+        $this->assertCount(7, $this->user->toArray());
     }
 
     /**
@@ -94,14 +92,6 @@ class UserEntityTest extends TestCase
     public function getPassword()
     {
         $this->assertEquals($this->user->getPassword(), 'password');
-    }
-
-    /**
-     * @test
-     */
-    public function getActive()
-    {
-        $this->assertEquals($this->user->getActive(), 1);
     }
 
     /**

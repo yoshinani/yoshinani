@@ -5,7 +5,6 @@ use Domain\Entities\UserEntity;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersPassword;
-use Infrastructure\DataSources\Database\UsersStatus;
 use Infrastructure\Factories\UserFactory;
 use Infrastructure\Interfaces\UserRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
@@ -18,7 +17,6 @@ use stdClass;
 class UserRepository implements UserRepositoryInterface
 {
     private $users;
-    private $usersStatus;
     private $usersNickName;
     private $usersPassword;
     private $userFactory;
@@ -26,20 +24,17 @@ class UserRepository implements UserRepositoryInterface
     /**
      * UserRepository constructor.
      * @param Users $users
-     * @param UsersStatus $usersStatus
      * @param UsersNickName $usersNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
      */
     public function __construct(
         Users         $users,
-        UsersStatus   $usersStatus,
         UsersNickName $usersNickName,
         UsersPassword $usersPassword,
         UserFactory   $userFactory
     ) {
         $this->users         = $users;
-        $this->usersStatus   = $usersStatus;
         $this->usersNickName = $usersNickName;
         $this->usersPassword = $usersPassword;
         $this->userFactory   = $userFactory;
@@ -81,7 +76,6 @@ class UserRepository implements UserRepositoryInterface
         $userId     = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
         $userEntity->setPassword((object) $oldRequest);
-        $this->usersStatus->registerActive($userEntity);
         $this->usersPassword->registerPassword($userEntity);
         $this->usersNickName->registerNickName($userEntity);
 
@@ -98,7 +92,6 @@ class UserRepository implements UserRepositoryInterface
         $userId     = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
         $this->usersNickName->registerNickName($userEntity);
-        $this->usersStatus->registerActive($userEntity);
 
         return $userEntity;
     }

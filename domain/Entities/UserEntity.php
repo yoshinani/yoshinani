@@ -60,7 +60,6 @@ class UserEntity implements Arrayable
             'name'       => $this->getName(),
             'nickname'   => $this->getNickName(),
             'password'   => $this->getPassword(),
-            'active'     => $this->getActive(),
             'created_at' => $this->getCreatedAt(),
             'updated_at' => $this->getUpdatedAt(),
         ];
@@ -112,14 +111,6 @@ class UserEntity implements Arrayable
     public function getPassword(): string
     {
         return $this->password->getDecryption();
-    }
-
-    /**
-     * @return bool
-     */
-    public function getActive(): bool
-    {
-        return true;
     }
 
     /**

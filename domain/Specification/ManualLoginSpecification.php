@@ -32,15 +32,6 @@ class ManualLoginSpecification
             return false;
         }
 
-        if (!$userEntity->getActive()) {
-            \Log::info("\n【ERROR】Not a living user\n"
-                . 'Email:' . $oldRequest['email'] . "\n"
-                . 'Password:' . encrypt($oldRequest['password'])
-            );
-
-            return false;
-        }
-
         return true;
     }
 }

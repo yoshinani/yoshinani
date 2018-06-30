@@ -31,11 +31,10 @@ class Users extends Bass
     {
         $userId = $this->getUserId($email);
         $result = $this->db->table('users')
-            ->join('users_status', 'users_status.user_id', '=', 'users.id')
             ->leftJoin('users_nickname', 'users_nickname.user_id', '=', 'users.id')
             ->leftjoin('users_password', 'users_password.user_id', '=', 'users.id')
             ->where('users.id', $userId)
-            ->select('users.id', 'users.email', 'users.name', 'users_nickname.nickname', 'users_password.password', 'users_status.active')
+            ->select('users.id', 'users.email', 'users.name', 'users_nickname.nickname', 'users_password.password')
             ->first();
 
         return $result;
@@ -48,11 +47,10 @@ class Users extends Bass
     public function getLoginUser(int $userId): ?stdClass
     {
         $result = $this->db->table('users')
-            ->join('users_status', 'users_status.user_id', '=', 'users.id')
             ->leftJoin('users_nickname', 'users_nickname.user_id', '=', 'users.id')
             ->leftjoin('users_password', 'users_password.user_id', '=', 'users.id')
             ->where('users.id', $userId)
-            ->select('users.id', 'users.email', 'users.name', 'users_nickname.nickname', 'users_password.password', 'users_status.active')
+            ->select('users.id', 'users.email', 'users.name', 'users_nickname.nickname', 'users_password.password')
             ->first();
 
         return $result;
