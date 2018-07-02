@@ -39,6 +39,10 @@ Route::group(['middleware' => 'guest'], function ()
 Route::group(['middleware' => 'auth'], function ()
 {
     Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::post('/home/user', 'Home\UserController@index')->name('home.user');
+    Route::get('/home/user/withdrawal', 'Home\UserController@withdrawal')->name('home.user.withdrawal');
+
 });
 
 Route::post('logout', 'Auth\ManualController@logout')->name('logout');
