@@ -11,6 +11,11 @@
                     </div>
                 @endif
                 <div class="panel-heading">Dashboard</div>
+                <div class="panel-heading">
+                    <a href="{{ route('home.user.withdrawal') }}">
+                        Withdrawal
+                    </a>
+                </div>
 
                 <div class="panel-body">
                     @if (session('status'))

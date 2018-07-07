@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use Domain\Services\AuthService;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -29,5 +30,13 @@ class UserController extends Controller
         $userEntity = $loginUser->toArray();
 
         return view('home.user', compact('userEntity'));
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function withdrawal(): RedirectResponse
+    {
+        return redirect('/');
     }
 }
