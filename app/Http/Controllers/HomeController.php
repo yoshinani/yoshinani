@@ -24,9 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $loginUser  = $this->authService->getLoginUser();
-        $userEntity = $loginUser->toArray();
-
-        return view('home', compact('userEntity'));
+        return view('home');
     }
 }
