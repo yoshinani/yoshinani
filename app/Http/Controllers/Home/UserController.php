@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use Domain\Services\AuthService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
@@ -26,17 +27,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $loginUser  = $this->authService->getLoginUser();
-        $userEntity = $loginUser->toArray();
-
-        return view('home.user', compact('userEntity'));
+        return view('home.user');
     }
 
     /**
      * @return RedirectResponse
+     * @throws Exception
      */
     public function withdrawal(): RedirectResponse
     {
+        $userEntity = $this->authService->getLoginUser();
+        $this->authService->withdrawal($userEntity);
+
         return redirect('/');
     }
 }

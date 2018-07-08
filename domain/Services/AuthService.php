@@ -126,4 +126,14 @@ class AuthService
 
         return $this->userRepository->getLoginUser($userId);
     }
+
+    /**
+     * @param UserEntity $userEntity
+     * @throws Exception
+     */
+    public function withdrawal(UserEntity $userEntity)
+    {
+        $this->userRepository->deleteUser($userEntity);
+        $this->authManager->logout();
+    }
 }
