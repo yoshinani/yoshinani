@@ -114,8 +114,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param UserEntity $userEntity
-     * @throws Exception
+     * {@inheritdoc}
      */
     public function deleteUser(UserEntity $userEntity)
     {
