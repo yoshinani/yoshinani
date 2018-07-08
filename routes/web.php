@@ -42,7 +42,6 @@ Route::group(['middleware' => 'auth'], function ()
 
     Route::get('/home/user', 'Home\UserController@index')->name('home.user');
     Route::get('/home/user/withdrawal', 'Home\UserController@withdrawal')->name('home.user.withdrawal');
-
 });
 
 Route::post('logout', 'Auth\ManualController@logout')->name('logout');
