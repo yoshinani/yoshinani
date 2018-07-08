@@ -1,13 +1,16 @@
 <?php
 namespace Infrastructure\Repositories;
 
+use DB;
 use Domain\Entities\UserEntity;
+use Exception;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Factories\UserFactory;
 use Infrastructure\Interfaces\UserRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
+use Log;
 use stdClass;
 
 /**
@@ -108,5 +111,26 @@ class UserRepository implements UserRepositoryInterface
         }
 
         return $userEntity;
+    }
+
+    /**
+     * @param UserEntity $userEntity
+     * @throws Exception
+     */
+    public function deleteUser(UserEntity $userEntity)
+    {
+        DB::beginTransaction();
+
+        try {
+            $this->users->registerDeleteUser($userEntity);
+            $this->users->deleteUser($userEntity);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('[DB][error]Action:deleteUser UserId:' . $userEntity->getId());
+            Log::error($e);
+
+            throw $e;
+        }
     }
 }

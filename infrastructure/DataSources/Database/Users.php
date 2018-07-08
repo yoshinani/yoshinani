@@ -57,21 +57,56 @@ class Users extends Bass
     }
 
     /**
-     * @param UserEntity $registerUserEntity
+     * @param UserEntity $userEntity
      * @return int
      */
-    public function registerUser(UserEntity $registerUserEntity): int
+    public function registerUser(UserEntity $userEntity): int
     {
         $result = $this->db->table('users')
             ->insertGetId(
                 [
-                    'email'      => $registerUserEntity->getEmail(),
-                    'name'       => $registerUserEntity->getName(),
-                    'created_at' => $registerUserEntity->getCreatedAt(),
-                    'updated_at' => $registerUserEntity->getUpdatedAt(),
+                    'email'      => $userEntity->getEmail(),
+                    'name'       => $userEntity->getName(),
+                    'created_at' => $userEntity->getCreatedAt(),
+                    'updated_at' => $userEntity->getUpdatedAt(),
                 ]
             );
 
         return $result;
+    }
+
+    /**
+     * @param UserEntity $userEntity
+     * @return int
+     */
+    public function registerDeleteUser(UserEntity $userEntity): int
+    {
+        $result = $this->db->table('deleted_users')
+            ->insert(
+                [
+                    'user_id'    => $userEntity->getId(),
+                    'email'      => $userEntity->getEmail(),
+                    'name'       => $userEntity->getName(),
+                    'created_at' => $userEntity->getCreatedAt(),
+                    'updated_at' => $userEntity->getUpdatedAt(),
+                ]
+            );
+
+        return $result;
+    }
+
+    /**
+     * @param UserEntity $userEntity
+     */
+    public function deleteUser(UserEntity $userEntity)
+    {
+        $this->db->table('users')
+            ->where('id', $userEntity->getId())
+            ->update(
+                [
+                    'email'      => null,
+                    'updated_at' => $userEntity->getUpdatedAt(),
+                ]
+            );
     }
 }

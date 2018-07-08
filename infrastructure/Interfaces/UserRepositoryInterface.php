@@ -2,6 +2,7 @@
 namespace Infrastructure\Interfaces;
 
 use Domain\Entities\UserEntity;
+use Exception;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use stdClass;
 
@@ -40,4 +41,10 @@ interface UserRepositoryInterface
      * @return UserEntity
      */
     public function getLoginUser(int $userId): UserEntity;
+
+    /**
+     * @param UserEntity $userEntity
+     * @throws Exception
+     */
+    public function deleteUser(UserEntity $userEntity);
 }
