@@ -2,6 +2,9 @@
 namespace Infrastructure\Repositories;
 
 use Domain\Entities\UserEntity;
+use Exception;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Log\LogManager;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersPassword;
@@ -16,6 +19,8 @@ use stdClass;
  */
 class UserRepository implements UserRepositoryInterface
 {
+    private $databaseManager;
+    private $logManager;
     private $users;
     private $usersNickName;
     private $usersPassword;
@@ -23,21 +28,27 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * UserRepository constructor.
+     * @param DatabaseManager $databaseManager
+     * @param LogManager $logManager
      * @param Users $users
      * @param UsersNickName $usersNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
      */
     public function __construct(
+        DatabaseManager $databaseManager,
+        LogManager    $logManager,
         Users         $users,
         UsersNickName $usersNickName,
         UsersPassword $usersPassword,
         UserFactory   $userFactory
     ) {
-        $this->users         = $users;
-        $this->usersNickName = $usersNickName;
-        $this->usersPassword = $usersPassword;
-        $this->userFactory   = $userFactory;
+        $this->databaseManager = $databaseManager;
+        $this->logManager      = $logManager;
+        $this->users           = $users;
+        $this->usersNickName   = $usersNickName;
+        $this->usersPassword   = $usersPassword;
+        $this->userFactory     = $userFactory;
     }
 
     /**
@@ -108,5 +119,25 @@ class UserRepository implements UserRepositoryInterface
         }
 
         return $userEntity;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function deleteUser(UserEntity $userEntity)
+    {
+        $this->databaseManager->beginTransaction();
+
+        try {
+            $this->users->registerDeleteUser($userEntity);
+            $this->users->deleteUser($userEntity);
+            $this->databaseManager->commit();
+        } catch (Exception $e) {
+            $this->databaseManager->rollBack();
+            $this->logManager->error('[DB][error]Action:deleteUser UserId:' . $userEntity->getId());
+            $this->logManager->error($e);
+
+            throw $e;
+        }
     }
 }

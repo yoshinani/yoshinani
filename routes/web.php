@@ -26,7 +26,7 @@ Route::group(['middleware' => 'guest'], function ()
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
-    Route::get('register/edit', 'Auth\ManualController@registerEdit')->name('register');
+    Route::get('register', 'Auth\ManualController@registerEdit')->name('register');
     Route::post('register/confirmation', 'Auth\ManualController@confirmationRegister')->name('confirmationRegister');
     Route::post('register/complete', 'Auth\ManualController@completeRegister')->name('completeRegister');
 
@@ -39,6 +39,9 @@ Route::group(['middleware' => 'guest'], function ()
 Route::group(['middleware' => 'auth'], function ()
 {
     Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/home/user', 'Home\UserController@index')->name('home.user');
+    Route::get('/home/user/withdrawal', 'Home\UserController@withdrawal')->name('home.user.withdrawal');
 });
 
 Route::post('logout', 'Auth\ManualController@logout')->name('logout');
