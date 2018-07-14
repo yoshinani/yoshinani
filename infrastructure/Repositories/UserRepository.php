@@ -1,16 +1,16 @@
 <?php
 namespace Infrastructure\Repositories;
 
-use DB;
 use Domain\Entities\UserEntity;
 use Exception;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Log\LogManager;
 use Infrastructure\DataSources\Database\Users;
 use Infrastructure\DataSources\Database\UsersNickName;
 use Infrastructure\DataSources\Database\UsersPassword;
 use Infrastructure\Factories\UserFactory;
 use Infrastructure\Interfaces\UserRepositoryInterface;
 use Laravel\Socialite\Contracts\User as SocialUser;
-use Log;
 use stdClass;
 
 /**
@@ -19,6 +19,8 @@ use stdClass;
  */
 class UserRepository implements UserRepositoryInterface
 {
+    private $databaseManager;
+    private $logManager;
     private $users;
     private $usersNickName;
     private $usersPassword;
@@ -26,21 +28,27 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * UserRepository constructor.
+     * @param DatabaseManager $databaseManager
+     * @param LogManager $logManager
      * @param Users $users
      * @param UsersNickName $usersNickName
      * @param UsersPassword $usersPassword
      * @param UserFactory $userFactory
      */
     public function __construct(
+        DatabaseManager $databaseManager,
+        LogManager    $logManager,
         Users         $users,
         UsersNickName $usersNickName,
         UsersPassword $usersPassword,
         UserFactory   $userFactory
     ) {
-        $this->users         = $users;
-        $this->usersNickName = $usersNickName;
-        $this->usersPassword = $usersPassword;
-        $this->userFactory   = $userFactory;
+        $this->databaseManager = $databaseManager;
+        $this->logManager      = $logManager;
+        $this->users           = $users;
+        $this->usersNickName   = $usersNickName;
+        $this->usersPassword   = $usersPassword;
+        $this->userFactory     = $userFactory;
     }
 
     /**
@@ -118,16 +126,16 @@ class UserRepository implements UserRepositoryInterface
      */
     public function deleteUser(UserEntity $userEntity)
     {
-        DB::beginTransaction();
+        $this->databaseManager->beginTransaction();
 
         try {
             $this->users->registerDeleteUser($userEntity);
             $this->users->deleteUser($userEntity);
-            DB::commit();
+            $this->databaseManager->commit();
         } catch (Exception $e) {
-            DB::rollback();
-            Log::error('[DB][error]Action:deleteUser UserId:' . $userEntity->getId());
-            Log::error($e);
+            $this->databaseManager->rollBack();
+            $this->logManager->error('[DB][error]Action:deleteUser UserId:' . $userEntity->getId());
+            $this->logManager->error($e);
 
             throw $e;
         }
