@@ -35,7 +35,7 @@ class ManualLoginSpecification
             return false;
         }
 
-        if ($oldRequest['password'] !== $userEntity->getPassword()) {
+        if ($oldRequest['password'] !== $userEntity->getDecryptionPassword()) {
             $this->logManager->info("\n【ERROR】Password does not match\n"
                 . 'Email:' . $oldRequest['email'] . "\n"
                 . 'Password:' . encrypt($oldRequest['password'])
