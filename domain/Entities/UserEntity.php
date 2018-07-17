@@ -100,6 +100,10 @@ class UserEntity implements Arrayable
      */
     public function getEncryptionPassword(): string
     {
+        if (is_null($this->password)) {
+            abort(500);
+        }
+
         return $this->password->getEncryption();
     }
 
@@ -108,6 +112,10 @@ class UserEntity implements Arrayable
      */
     public function getDecryptionPassword(): string
     {
+        if (is_null($this->password)) {
+            abort(500);
+        }
+
         return $this->password->getDecryption();
     }
 
