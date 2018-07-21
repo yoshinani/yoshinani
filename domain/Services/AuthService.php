@@ -97,7 +97,7 @@ class AuthService
             $socialUserAccountEntity = $this->socialService->syncAccount($driverName, $socialUser, $userEntity);
         }
 
-        $condition = $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity, $userEntity);
+        $condition = $this->socialLoginSpecification->isCondition($driverName, $socialUser, $socialUserAccountEntity);
         if ($condition) {
             $this->authManager->loginUsingId($socialUserAccountEntity->getId());
         }
