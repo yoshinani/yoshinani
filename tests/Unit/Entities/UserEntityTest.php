@@ -71,16 +71,8 @@ class UserEntityTest extends TestCase
     /**
      * @test
      */
-    public function createPassword()
+    public function getEncryptionPassword()
     {
-        $userRequest = (object) [
-            'email'    => 'test@test.test',
-            'name'     => 'testName',
-            'nickname' => 'testNickName',
-            'password' => 'password'
-        ];
-        $userEntity = new UserEntity($userRequest);
-        $userEntity->setPassword($userRequest);
         $this->assertInternalType('string', $this->user->getEncryptionPassword());
     }
 
@@ -90,6 +82,14 @@ class UserEntityTest extends TestCase
     public function getDecryptionPassword()
     {
         $this->assertEquals($this->user->getDecryptionPassword(), 'password');
+    }
+
+    /**
+     * @test
+     */
+    public function getMaskingPassword()
+    {
+        $this->assertEquals($this->user->getMaskingPassword() , '********');
     }
 
     /**

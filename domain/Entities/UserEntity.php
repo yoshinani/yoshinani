@@ -59,7 +59,7 @@ class UserEntity implements Arrayable
             'email'      => $this->getEmail(),
             'name'       => $this->getName(),
             'nickname'   => $this->getNickName(),
-            'password'   => $this->getDecryptionPassword(),
+            'password'   => $this->getMaskingPassword(),
         ];
     }
 
@@ -117,6 +117,14 @@ class UserEntity implements Arrayable
         }
 
         return $this->password->getDecryption();
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaskingPassword(): string
+    {
+        return str_repeat('*', strlen($this->getDecryptionPassword()));
     }
 
     /**
