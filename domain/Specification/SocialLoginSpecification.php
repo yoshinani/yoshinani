@@ -2,7 +2,6 @@
 namespace Domain\Specification;
 
 use Domain\Entities\SocialUserAccountEntity;
-use Domain\Entities\UserEntity;
 use Exception;
 use Laravel\Socialite\Contracts\User as SocialUser;
 

@@ -33,9 +33,7 @@ class UserEntityTest extends TestCase
         $this->assertArrayHasKey('name', $this->user->toArray());
         $this->assertArrayHasKey('nickname', $this->user->toArray());
         $this->assertArrayHasKey('password', $this->user->toArray());
-        $this->assertArrayHasKey('created_at', $this->user->toArray());
-        $this->assertArrayHasKey('updated_at', $this->user->toArray());
-        $this->assertCount(7, $this->user->toArray());
+        $this->assertCount(5, $this->user->toArray());
     }
 
     /**
@@ -73,25 +71,25 @@ class UserEntityTest extends TestCase
     /**
      * @test
      */
-    public function createPassword()
+    public function getEncryptionPassword()
     {
-        $userRequest = (object) [
-            'email'    => 'test@test.test',
-            'name'     => 'testName',
-            'nickname' => 'testNickName',
-            'password' => 'password'
-        ];
-        $userEntity = new UserEntity($userRequest);
-        $userEntity->setPassword($userRequest);
-        $this->assertInternalType('string', $this->user->createPassword());
+        $this->assertInternalType('string', $this->user->getEncryptionPassword());
     }
 
     /**
      * @test
      */
-    public function getPassword()
+    public function getDecryptionPassword()
     {
-        $this->assertEquals($this->user->getPassword(), 'password');
+        $this->assertEquals($this->user->getDecryptionPassword(), 'password');
+    }
+
+    /**
+     * @test
+     */
+    public function getMaskingPassword()
+    {
+        $this->assertEquals($this->user->getMaskingPassword() , '********');
     }
 
     /**

@@ -59,9 +59,7 @@ class UserEntity implements Arrayable
             'email'      => $this->getEmail(),
             'name'       => $this->getName(),
             'nickname'   => $this->getNickName(),
-            'password'   => $this->getPassword(),
-            'created_at' => $this->getCreatedAt(),
-            'updated_at' => $this->getUpdatedAt(),
+            'password'   => $this->getMaskingPassword(),
         ];
     }
 
@@ -100,17 +98,33 @@ class UserEntity implements Arrayable
     /**
      * @return string
      */
-    public function createPassword(): string
+    public function getEncryptionPassword(): string
     {
+        if (is_null($this->password)) {
+            abort(500);
+        }
+
         return $this->password->getEncryption();
     }
 
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getDecryptionPassword(): string
     {
+        if (is_null($this->password)) {
+            abort(500);
+        }
+
         return $this->password->getDecryption();
+    }
+
+    /**
+     * @return string
+     */
+    public function getMaskingPassword(): string
+    {
+        return str_repeat('*', strlen($this->getDecryptionPassword()));
     }
 
     /**

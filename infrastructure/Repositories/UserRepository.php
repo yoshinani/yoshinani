@@ -86,9 +86,8 @@ class UserRepository implements UserRepositoryInterface
         $userEntity = $this->userFactory->createUser((object) $oldRequest);
         $userId     = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
-        $userEntity->setPassword((object) $oldRequest);
-        $this->usersPassword->registerPassword($userEntity);
-        $this->usersNickName->registerNickName($userEntity);
+        $this->registerPassword($userEntity);
+        $this->registerNickName($userEntity);
 
         return $userEntity;
     }
@@ -102,9 +101,25 @@ class UserRepository implements UserRepositoryInterface
         $userEntity = $this->userFactory->createUser($userRecord);
         $userId     = $this->users->registerUser($userEntity);
         $userEntity->setId($userId);
-        $this->usersNickName->registerNickName($userEntity);
+        $this->registerNickName($userEntity);
 
         return $userEntity;
+    }
+
+    /**
+     * @param UserEntity $userEntity
+     */
+    private function registerPassword(UserEntity $userEntity)
+    {
+        $this->usersPassword->registerPassword($userEntity);
+    }
+
+    /**
+     * @param UserEntity $userEntity
+     */
+    private function registerNickName(UserEntity $userEntity)
+    {
+        $this->usersNickName->registerNickName($userEntity);
     }
 
     /**

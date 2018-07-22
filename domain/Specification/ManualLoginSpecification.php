@@ -2,9 +2,21 @@
 namespace Domain\Specification;
 
 use Domain\Entities\UserEntity;
+use Illuminate\Log\LogManager;
 
 class ManualLoginSpecification
 {
+    private $logManager;
+
+    /**
+     * ManualLoginSpecification constructor.
+     * @param LogManager $logManager
+     */
+    public function __construct(LogManager $logManager)
+    {
+        $this->logManager = $logManager;
+    }
+
     /**
      * @param array $oldRequest
      * @param UserEntity $userEntity
@@ -15,7 +27,7 @@ class ManualLoginSpecification
         UserEntity $userEntity
     ): bool {
         if ($oldRequest['email'] !== $userEntity->getEmail()) {
-            \Log::info("\n【ERROR】Email does not match\n"
+            $this->logManager->info("\n【ERROR】Email does not match\n"
                 . 'Email:' . $oldRequest['email'] . "\n"
                 . 'Password:' . encrypt($oldRequest['password'])
             );
@@ -23,8 +35,8 @@ class ManualLoginSpecification
             return false;
         }
 
-        if ($oldRequest['password'] !== $userEntity->getPassword()) {
-            \Log::info("\n【ERROR】Password does not match\n"
+        if ($oldRequest['password'] !== $userEntity->getDecryptionPassword()) {
+            $this->logManager->info("\n【ERROR】Password does not match\n"
                 . 'Email:' . $oldRequest['email'] . "\n"
                 . 'Password:' . encrypt($oldRequest['password'])
             );
